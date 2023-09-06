@@ -14,9 +14,9 @@ class AuthController extends Controller
 
     public function createUser()
     {
-        return 'create user form';
+        //return 'create user form';
 
-        return view('admin.user.create');
+        // return view('admin.user.create');
     }
 
     public function login(Request $request)
