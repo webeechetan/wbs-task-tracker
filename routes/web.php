@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\OurClientController;
+use App\Http\Controllers\UserController;
+
 
 Route::get('/', function () {
     return view('admin.layouts.app');
@@ -20,9 +21,32 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/user/create', [AuthController::class, 'createUser'])
+    Route::get('/user/create', [UserController::class, 'create'])
     ->name('user-create')
     ->middleware('admin');
+
+
+    Route::post('/user/store', [UserController::class,'store'])
+    ->name('user-store')
+    ->middleware('admin');
+
+    Route::get('/user/index', [UserController::class,'index'])
+    ->name('user-index')
+    ->middleware('admin');
+    
+    Route::get('/user/edit/{user}', [UserController::class,'edit'])
+    ->name('user-edit')
+    ->middleware('admin');
+
+    Route::delete('/user/destroy/{user}', [UserController::class,'destroy'])
+    ->name('user-destroy')
+    ->middleware('admin');
+
+    Route::put('/user/update/{user}', [UserController::class,'update'])
+    ->name('user-update')
+    ->middleware('admin');
+
+    
 
 
 

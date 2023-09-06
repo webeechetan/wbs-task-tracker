@@ -1,0 +1,66 @@
+@extends('admin.layouts.app')
+@section('title', 'Registration')
+@section('content')
+<div class="row">
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">New User</h5>
+                <small class="text-muted float-end">
+                    <a href="{{ route('user-index')}}"><button class="btn btn-primary btn-sm">All Users</button></a>
+                </small>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('user-store') }}">
+                    @csrf
+
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="emp_name" class="col-form-label">Name</label>
+                            <input type="text" class="form-control" id="emp_name" name="emp_name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input type="email" class="form-control" id="emp_email" name="emp_email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="col-form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="department" class="col-form-label">Type</label>
+                            <select class="form-control" id="type" name="type" required>
+
+                                <option value="">Select Type</option>
+                                <option value="1">Admin</option>
+                                <option value="2">Manager</option>
+                                <option value="3">Employee</option>
+                               
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="designation" class="col-form-label">Slack Id</label>
+                            <input type="text" class="form-control" id="emp_slack_id" name="emp_slack_id" required>
+                        </div>
+                    </div>
+
+
+
+
+                    @error('image')
+                    <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
