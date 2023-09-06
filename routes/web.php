@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\OurClientController;
+use App\Http\Controllers\TeamController;
 
 Route::get('/', function () {
     return view('admin.layouts.app');
@@ -21,8 +21,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/user/create', [AuthController::class, 'createUser'])
-    ->name('user-create')
-    ->middleware('admin');
+            ->name('user-create')
+            ->middleware('admin');
+
+    /*--------------------------------- Team Routes ---------------------------------*/
+
+    Route::get('/teams',[TeamController::class,'index'])
+            ->name('teams-index')
+            ->middleware('admin'); 
+    Route::post('/teams',[TeamController::class,'store'])
+            ->name('teams-store')
+            ->middleware('admin');
+    Route::post('/teams/update',[TeamController::class,'update'])
+            ->name('teams-update')
+            ->middleware('admin');
+    Route::get('/teams/delete/{team}',[TeamController::class,'destroy'])
+            ->name('teams-destroy')
+            ->middleware('admin');
+    
 
 
 
