@@ -15,7 +15,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        echo "List-of employees";
         $users = User::all();
         return view('admin.user.index', compact('users'));
     }
@@ -38,8 +37,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        echo ("stored successfully");
-
+       
         $user = new User();
 
         $user->name = $request->emp_name;
@@ -55,7 +53,7 @@ class UserController extends Controller
         $this->alert('error', 'Something went wrong', 'error');
         return redirect()->back();
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -75,7 +73,6 @@ class UserController extends Controller
      */
     public function edit(user $user)
     {
-        echo "edit";
         return view('admin.user.edit', ['users' => $user]);
     }
 
