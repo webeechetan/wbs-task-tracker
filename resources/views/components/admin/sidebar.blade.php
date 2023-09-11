@@ -1,10 +1,10 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+  <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <a href="index.html" class="app-brand-link">
+      <a href="" class="app-brand-link">
         <span class="app-brand-logo demo">
-          
+
         </span>
-        <span class="app-brand-text demo menu-text fw-bolder ms-2">WeBeeSocial</span>
+        <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src="https://webeesocial.ca/wp-content/uploads/2022/12/logo-tm.png" width="120" height="auto"></span>
       </a>
 
       <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -23,7 +23,29 @@
         </a>
       </li>
 
-      <!-- Layouts -->
+
+      {{---To-do's---}}
+
+
+      <li class="menu-item">
+        <a href="{{ route('task-index')}}" class="menu-link ">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">To-do's</div>
+        </a>
+      </li>
+
+
+      {{-- Teams --}}
+
+      <li class="menu-item">
+        <a href="{{ route('teams-index') }}" class="menu-link ">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Teams</div>
+        </a>
+      </li>
+
+
+      {{-- Employee--}}
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -43,14 +65,44 @@
           </li>
         </ul>
       </li>
-      {{-- Teams --}}
+
+      {{-- Team Task --}}
 
       <li class="menu-item">
-        <a href="{{ route('teams-index') }}" class="menu-link ">
+        <a href="" class="menu-link ">
           <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Teams</div>
+          <div data-i18n="Layouts">Team Tasks</div>
         </a>
       </li>
+
+      {{-- Clients --}}
+
+      <li class="menu-item">
+        <a href="" class="menu-link ">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Clients</div>
+        </a>
+      </li>
+
+      {{-- Projects --}}
+
+      <li class="menu-item">
+        <a href="" class="menu-link ">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Projects</div>
+        </a>
+      </li>
+
+      {{-- Activities --}}
+
+      <li class="menu-item">
+        <a href="" class="menu-link ">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Activities</div>
+        </a>
+      </li>
+
+
 
     </ul>
   </aside>

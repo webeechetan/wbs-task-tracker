@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 
@@ -63,5 +64,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/user/update/{user}', [UserController::class, 'update'])->name('user-update')
         ->middleware('admin');
 
+
+        
+    /*--------------------------------- To do's ---------------------------------*/
+
+
+    Route::get('/tasks', [TaskController:: class, 'index'])->name('task-index')->middleware('auth');
+
+    Route::post('/tasks/store', [TaskController::class, 'store'])->name('task-store')->middleware('auth');
+
+    Route::get('/tasks/edit/{task}', [TaskController:: class,'edit'])->name('task-edit')->middleware('auth');
+
+
+    Route::put('/tasks/update/{task}', [TaskController::class, 'update'])->name('task-update')->middleware('auth');
+
+    Route::delete('/tasks/destroy/{task}', [TaskController::class, 'destroy'])->name('task-destroy')->middleware('auth');
         
 });
