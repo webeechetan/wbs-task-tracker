@@ -1,5 +1,3 @@
-
-
 @extends('admin.layouts.app')
 @section('title', 'Tasks List')
 
@@ -105,7 +103,23 @@
                     <tr>
 
                         <td>{{$task->name}}</td>
-                        <td>{{$task->due_date}}</td>
+                        <td>
+                            @php
+                            $dueDate = \Carbon\Carbon::parse($task->due_date);
+                            $today = \Carbon\Carbon::today();
+
+                            if ($dueDate->isToday()) {
+                            $colorClass = 'text-yellow'; // Date is today, show in yellow
+                            } elseif ($dueDate->isPast()) {
+                            $colorClass = 'text-red'; // Date is in the past, show in red
+                            } else {
+                            $colorClass = 'text-default'; // Date is in the future, show in black
+                            }
+                            @endphp
+
+                            <span class="{{ $colorClass }}">{{ $task->due_date }}</span>
+                            
+                        </td>
                         <td>{{$task->project_id}}</td>
 
                         <td>{{ $task->status }}</td>
