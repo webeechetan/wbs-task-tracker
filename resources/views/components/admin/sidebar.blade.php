@@ -52,5 +52,16 @@
         </a>
       </li>
 
+      {{-- Clients --}}
+
+      <li class="menu-item">
+        <a href="{{ route('clients-index') }}" class="menu-link ">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Clients</div>
+        </a>
+      </li>
+
+      
+
     </ul>
   </aside>

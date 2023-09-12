@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClientController;
 
 
 Route::get('/', function () {
@@ -39,6 +40,21 @@ Route::group(['middleware' => 'auth'], function () {
             ->middleware('admin');
     Route::get('/teams/delete/{team}',[TeamController::class,'destroy'])
             ->name('teams-destroy')
+            ->middleware('admin');
+
+    /*--------------------------------- Clients Routes ---------------------------------*/
+
+    Route::get('/clients',[ClientController::class,'index'])
+            ->name('clients-index')
+            ->middleware('admin'); 
+    Route::post('/clients',[ClientController::class,'store'])
+            ->name('clients-store')
+            ->middleware('admin');
+    Route::post('/clients/update',[ClientController::class,'update'])
+            ->name('clients-update')
+            ->middleware('admin');
+    Route::get('/clients/delete/{client}',[ClientController::class,'destroy'])
+            ->name('clients-destroy')
             ->middleware('admin');
 
     
