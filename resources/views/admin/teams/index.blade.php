@@ -85,7 +85,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="" method="POST" id="edit_team_form">
-                @csrf
+                @csrf   
                 <input type="hidden" name="" id="team_id">
                 <div class="modal-body">
                     <div class="row">

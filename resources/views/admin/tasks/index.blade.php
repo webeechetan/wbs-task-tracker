@@ -25,14 +25,16 @@
             <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name" required>
         </div>
 
+
         <div class="form-group col-md-3">
             <select class="form-control" id="project_id" name="project_id">
 
-                <option value="">Select Task</option>
+                <option value="">Select Project</option>
                 <option value="1">Acma</option>
                 <option value="2">Swift</option>
             </select>
         </div>
+
 
         <div class="form-group col-md-3">
             <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
@@ -42,42 +44,6 @@
 
 </form>
 
-
-@foreach ($tasks as $task)
-
-
-<form method="POST" action="{{ route('task-update',[$task->id]) }}" id="todo_task_update_form" style="display: none;">
-
-    @endforeach
-
-    @csrf
-
-    <div class="row mt-5" style="background-color: #E5E4E2; padding: 20px;" id="parent">
-
-        <div class="form-group col-md-3">
-            <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date" required>
-        </div>
-
-        <div class="form-group col-md-3">
-            <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name" required>
-        </div>
-
-        <div class="form-group col-md-3">
-            <select class="form-control" id="project_id" name="project_id">
-
-                <option value="">Select Task</option>
-                <option value="1">Acma</option>
-                <option value="2">Swift</option>
-            </select>
-        </div>
-
-        <div class="form-group col-md-3">
-            <button type="submit" id="action_btn_update" class="btn btn-primary action_btn">Update</button>
-        </div>
-    </div>
-
-
-</form>
 
 <div class="row mt-5">
 
@@ -109,16 +75,16 @@
                             $today = \Carbon\Carbon::today();
 
                             if ($dueDate->isToday()) {
-                            $colorClass = 'text-yellow'; // Date is today, show in yellow
+                            $colorClass = 'text-yellow';
                             } elseif ($dueDate->isPast()) {
-                            $colorClass = 'text-red'; // Date is in the past, show in red
+                            $colorClass = 'text-red';
                             } else {
-                            $colorClass = 'text-default'; // Date is in the future, show in black
+                            $colorClass = 'text-default';
                             }
                             @endphp
 
                             <span class="{{ $colorClass }}">{{ $task->due_date }}</span>
-                            
+
                         </td>
                         <td>{{$task->project_id}}</td>
 
