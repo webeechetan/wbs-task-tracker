@@ -28,8 +28,8 @@
                             <td>{{ $team->name }}</td>
                             <td>{{ $team->lead->name }}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm edit_team" data-team='{{ json_encode($team) }}'>Edit</button>
-                                <a href="{{ route('teams-destroy', $team->id) }}" class="btn btn-danger btn-sm">Delete</a>
+                                <button class="btn btn-primary btn-sm edit_team" data-team='{{ json_encode($team) }}'><i class='bx bx-edit'></i></button>
+                                <a href="{{ route('teams-destroy', $team->id) }}" class="btn btn-danger btn-sm"><i class='bx bxs-trash'></i></a>
                             </td>
                         </tr>
                         @endforeach

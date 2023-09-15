@@ -72,7 +72,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('admin.tasks.index', compact('edit_task'));
     }
 
     /**
@@ -82,28 +82,67 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
-    {
+    // public function update(Request $request, Task $task)
+    // {
 
-        // echo "update";
-        // exit
-        $request ->validate([
-            'due_date' => 'required',
-            'task_name' => 'required',
-        ]);
-        $task->due_date = $request->due_date;
-        $task->task_name = $request->task_name;
-        $task->project_id = $request->project_id;
+    //     echo "update";
+    //     // exit
+    //     $request ->validate([
+    //         'due_date' => 'required',
+    //         'task_name' => 'required',
+    //     ]);
+    //     $task->due_date = $request->due_date;
+    //     $task->task_name = $request->task_name;
+    //     $task->project_id = $request->project_id;
 
         
-        if($task->save()){
-            $this->alert('success','Task Updated successfully','success');
-            return redirect()->route('task-index');
-        }
-        $this->alert('error','Something went wrong','danger');
-        return redirect()->back();
+    //     if($task->save()){
+    //         $this->alert('success','Task Updated successfully','success');
+    //         return redirect()->route('task-index');
+    //     }
+    //     $this->alert('error','Something went wrong','danger');
+    //     return redirect()->back();
 
+    // }
+
+    public function update(Request $request)
+{
+    $taskData = [
+        'due_date' => $request->input('due_date'),
+        'name' => $request->input('task_name'),
+        'project_id' => $request->input('project_id'),
+    ];
+
+    // Check if task_id is present to determine if it's an update
+    if ($request->filled('task_id')) {
+        // Update an existing task
+        $task = Task::find($request->input('task_id'));
+        $task->update($taskData);
+    } else {
+        // Create a new task
+        Task::create($taskData);
     }
+
+    // Optionally, return a response or redirect as needed
+}
+
+
+    
+// public function update(Request $request, Task $task)
+// {
+//     // Validate the incoming request data
+//     $validatedData = $request->validate([
+//         'due_date' => 'required|date',
+//         'name' => 'required|string|max:255',
+//         'project_id' => 'required|integer',
+//     ]);
+
+//     // Update the task with the validated data
+//     $task->update($validatedData);
+
+//     // Optionally, you can return a response indicating success
+//     return response()->json(['message' => 'Task updated successfully']);
+// }
 
     /**
      * Remove the specified resource from storage.

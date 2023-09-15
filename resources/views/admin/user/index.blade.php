@@ -41,11 +41,11 @@
 
 
                         <td>
-                            <a href="{{route('user-edit', $user->id)}}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{{route('user-edit', $user->id)}}" class="btn btn-primary btn-sm"><i class='bx bx-edit'></i></a>
                             <form action="{{route('user-destroy',$user->id)}}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash'></i></button>
                             </form>
                         </td>
                     </tr>

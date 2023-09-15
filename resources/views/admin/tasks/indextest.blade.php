@@ -25,14 +25,16 @@
             <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name" required>
         </div>
 
+
         <div class="form-group col-md-3">
             <select class="form-control" id="project_id" name="project_id">
 
-                <option value="">Select Task</option>
+                <option value="">Select Project</option>
                 <option value="1">Acma</option>
                 <option value="2">Swift</option>
             </select>
         </div>
+
 
         <div class="form-group col-md-3">
             <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
@@ -43,38 +45,6 @@
 </form>
 
 
-
-<form method="POST" action="{{ route('task-update',[$task->id]) }}" id="todo_task_update_form" style="display: none;">
-
-    @csrf
-
-    <div class="row mt-5" style="background-color: #E5E4E2; padding: 20px;" id="parent">
-
-        <div class="form-group col-md-3">
-            <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date" required>
-        </div>
-
-        <div class="form-group col-md-3">
-            <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name" required>
-        </div>
-
-        <div class="form-group col-md-3">
-            <select class="form-control" id="project_id" name="project_id">
-
-                <option value="">Select Task</option>
-                <option value="1">Acma</option>
-                <option value="2">Swift</option>
-            </select>
-        </div>
-
-        <div class="form-group col-md-3">
-            <button type="submit" id="action_btn_update" class="btn btn-primary action_btn">Update</button>
-        </div>
-    </div>
-
-
-</form>
-
 <div class="row mt-5">
 
 
@@ -83,9 +53,11 @@
             <table class="table table-hover" id="tasksTable">
                 <thead>
                     <tr>
-                        <th>Task</th>
-                        <th>Project</th>
+
+                        <th>Task Name</th>
                         <th>Due Date</th>
+                        <th>Project</th>
+
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -95,18 +67,17 @@
                     @foreach ($tasks as $task)
 
                     <tr>
+
                         <td>{{$task->name}}</td>
+                        <td>{{ $task->due_date }}</td>
                         <td>{{$task->project_id}}</td>
-                        <td>{{$task->due_date}}</td>
                         <td>{{ $task->status }}</td>
-
-
                         <td>
-                            <button class="btn btn-primary btn-sm edit_task" data-task='{{ json_encode($task) }}'>Edit</button>
+                            <a href="{{ route('task-edit', [$task->id]) }}" class="btn btn-primary btn-sm"> <i class='bx bxs-edit'></i></a>
                             <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash'></i></button>
                             </form>
                         </td>
                     </tr>
@@ -136,48 +107,48 @@
 
     $(document).ready(function() {
 
-        let table = $('#tasksTable').DataTable({
-            responsive: true,
-        });
-
-        $(".edit_task").on('click', function(e) {
-            e.preventDefault();
-
-            let task = $(this).data('task');
-
-            // console.log(task);
-
-            $('#due_date').val(task.due_date);
-            $('#task_name').val(task.name);
-            $('#project_id').val(task.project_id);
-
-            $('.action_btn').html('Update');
+        // let table = $('#tasksTable').DataTable({
+        //     responsive: true,
 
 
-        });
+        // $(".edit_task").on('click', function(e) {
+        //     e.preventDefault();
+
+        //     let task = $(this).data('task');
+
+        //     // console.log(task);
+
+        //     $('#due_date').val(task.due_date);
+        //     $('#task_name').val(task.name);
+        //     $('#project_id').val(task.project_id);
+
+        //     $('.action_btn').html('Update');
+
+
+        // });
 
     });
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const addTaskForm = document.getElementById('todo_task_add_form');
-        const updateTaskForm = document.getElementById('todo_task_update_form');
-        const showAddFormButton = document.getElementById('action_btn');
-        const showUpdateFormButton = document.getElementById('action_btn_update');
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const addTaskForm = document.getElementById('todo_task_add_form');
+    //     const updateTaskForm = document.getElementById('todo_task_update_form');
+    //     const showAddFormButton = document.getElementById('action_btn');
+    //     const showUpdateFormButton = document.getElementById('action_btn_update');
 
-        // Show the "Add Task" form and hide the "Update Task" form
-        showAddFormButton.addEventListener('click', function() {
-            addTaskForm.style.display = 'block';
-            updateTaskForm.style.display = 'none';
-        });
+    //     // Show the "Add Task" form and hide the "Update Task" form
+    //     showAddFormButton.addEventListener('click', function() {
+    //         addTaskForm.style.display = 'block';
+    //         updateTaskForm.style.display = 'none';
+    //     });
 
-        // Show the "Update Task" form and hide the "Add Task" form
-        showUpdateFormButton.addEventListener('click', function() {
-            addTaskForm.style.display = 'none';
-            updateTaskForm.style.display = 'block';
-        });
-    });
+    //     // Show the "Update Task" form and hide the "Add Task" form
+    //     showUpdateFormButton.addEventListener('click', function() {
+    //         addTaskForm.style.display = 'none';
+    //         updateTaskForm.style.display = 'block';
+    //     });
+    // });
 </script>
 
 
