@@ -106,25 +106,22 @@ class TaskController extends Controller
     // }
 
     public function update(Request $request)
-{
-    $taskData = [
-        'due_date' => $request->input('due_date'),
-        'name' => $request->input('task_name'),
-        'project_id' => $request->input('project_id'),
-    ];
+    {
+        $task = Task::find($request->taskId);
+        $task->due_date = $request->due_date;
+        $task->name = $request->task_name;
+        $task->project_id = $request->project_id;
+        try{
+            $task->save();
+            $this->alert('success','Task Updated successfully','success');
+            return redirect()->route('task-index');
+        }
+        catch(\Exception $e){
+            $this->alert('error','Something went wrong','danger');
+            return redirect()->back();
+        }
 
-    // Check if task_id is present to determine if it's an update
-    if ($request->filled('task_id')) {
-        // Update an existing task
-        $task = Task::find($request->input('task_id'));
-        $task->update($taskData);
-    } else {
-        // Create a new task
-        Task::create($taskData);
     }
-
-    // Optionally, return a response or redirect as needed
-}
 
 
     
