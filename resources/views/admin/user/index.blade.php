@@ -18,7 +18,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Password</th>
+
                         <th>Type</th>
                         <th>Slack ID</th>
                         <th>Actions</th>
@@ -31,11 +31,15 @@
                     <tr>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
-                        <td>{{$user->password}}</td>
-                        <td>{{$user->type}}</td>
+
+                        <td> @if ($user->type == 1) Admin
+                            @elseif ($user->type == 2) Manager
+                            @else Employee
+                            @endif
+                        </td>
                         <td>{{$user->slack_id}}</td>
 
-                        
+
                         <td>
                             <a href="{{route('user-edit', $user->id)}}" class="btn btn-primary btn-sm">Edit</a>
                             <form action="{{route('user-destroy',$user->id)}}" method="POST" class="d-inline">

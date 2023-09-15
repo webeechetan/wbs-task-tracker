@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
@@ -20,12 +21,12 @@ Route::post('/login', [AuthController::class, 'login'])->name('login')->middlewa
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/user/create', [AuthController::class, 'createUser'])
-            ->name('user-create')
-            ->middleware('admin');
+        ->name('user-create')
+        ->middleware('admin');
 
     /*--------------------------------- Team Routes ---------------------------------*/
 
@@ -59,32 +60,40 @@ Route::group(['middleware' => 'auth'], function () {
 
     
     /*--------------------------------- User Routes ---------------------------------*/
-    
-    Route::get('/user/create', [UserController::class, 'create'])
-            ->name('user-create')
-            ->middleware('admin');
+
+    Route::get('/user/create', [UserController::class, 'create'])->name('user-create')
+        ->middleware('admin');
 
 
-    Route::post('/user/store', [UserController::class,'store'])
-            ->name('user-store')
-            ->middleware('admin');
+    Route::post('/user/store', [UserController::class, 'store'])->name('user-store')
+        ->middleware('admin');
 
-    Route::get('/users', [UserController::class,'index'])
-            ->name('user-index')
-            ->middleware('admin');
-    
-    Route::get('/user/edit/{user}', [UserController::class,'edit'])
-            ->name('user-edit')
-            ->middleware('admin');
+    Route::get('/users', [UserController::class, 'index'])->name('user-index')
+        ->middleware('admin');
 
-    Route::delete('/user/destroy/{user}', [UserController::class,'destroy'])
-            ->name('user-destroy')
-            ->middleware('admin');
+    Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('user-edit')
+        ->middleware('admin');
 
-    Route::put('/user/update/{user}', [UserController::class,'update'])
-            ->name('user-update')
-            ->middleware('admin');
+    Route::delete('/user/destroy/{user}', [UserController::class, 'destroy'])->name('user-destroy')
+        ->middleware('admin');
 
+    Route::put('/user/update/{user}', [UserController::class, 'update'])->name('user-update')
+        ->middleware('admin');
+
+
+        
+    /*--------------------------------- To do's ---------------------------------*/
+
+
+    Route::get('/tasks', [TaskController:: class, 'index'])->name('task-index')->middleware('auth');
+
+    Route::post('/tasks/store', [TaskController::class, 'store'])->name('task-store')->middleware('auth');
+
+    Route::get('/tasks/edit/{task}', [TaskController:: class,'edit'])->name('task-edit')->middleware('auth');
+
+
+    Route::put('/tasks/update/{task}', [TaskController::class, 'update'])->name('task-update')->middleware('auth');
+
+    Route::delete('/tasks/destroy/{task}', [TaskController::class, 'destroy'])->name('task-destroy')->middleware('auth');
+        
 });
-
-
