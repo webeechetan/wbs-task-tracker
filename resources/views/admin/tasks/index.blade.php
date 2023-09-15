@@ -9,9 +9,7 @@
 
 @section('content')
 
-
-
-<form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form " style="display: block">
+<form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form">
 
     @csrf
 
@@ -39,59 +37,18 @@
         </div>
     </div>
 
-
 </form>
 
-
-@foreach ($tasks as $task)
-
-
-<form method="POST" action="{{ route('task-update',[$task->id]) }}" id="todo_task_update_form" style="display: none;">
-
-    @endforeach
-
-    @csrf
-
-    <div class="row mt-5" style="background-color: #E5E4E2; padding: 20px;" id="parent">
-
-        <div class="form-group col-md-3">
-            <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date" required>
-        </div>
-
-        <div class="form-group col-md-3">
-            <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name" required>
-        </div>
-
-        <div class="form-group col-md-3">
-            <select class="form-control" id="project_id" name="project_id">
-
-                <option value="">Select Task</option>
-                <option value="1">Acma</option>
-                <option value="2">Swift</option>
-            </select>
-        </div>
-
-        <div class="form-group col-md-3">
-            <button type="submit" id="action_btn_update" class="btn btn-primary action_btn">Update</button>
-        </div>
-    </div>
-
-
-</form>
 
 <div class="row mt-5">
-
-
     <div class="table-responsive text-nowrap">
         <div class="container">
             <table class="table table-hover" id="tasksTable">
                 <thead>
                     <tr>
-
-                        <th>Task Name</th>
-                        <th>Due Date</th>
+                        <th>Task</th>
                         <th>Project</th>
-
+                        <th>Due Date</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -101,36 +58,17 @@
                     @foreach ($tasks as $task)
 
                     <tr>
-
                         <td>{{$task->name}}</td>
-                        <td>
-                            @php
-                            $dueDate = \Carbon\Carbon::parse($task->due_date);
-                            $today = \Carbon\Carbon::today();
-
-                            if ($dueDate->isToday()) {
-                            $colorClass = 'text-yellow'; // Date is today, show in yellow
-                            } elseif ($dueDate->isPast()) {
-                            $colorClass = 'text-red'; // Date is in the past, show in red
-                            } else {
-                            $colorClass = 'text-default'; // Date is in the future, show in black
-                            }
-                            @endphp
-
-                            <span class="{{ $colorClass }}">{{ $task->due_date }}</span>
-                            
-                        </td>
                         <td>{{$task->project_id}}</td>
-
+                        <td>{{$task->due_date}}</td>
                         <td>{{ $task->status }}</td>
 
-
                         <td>
-                            <a href="{{ route('task-edit', [$task->id]) }}" class="btn btn-primary btn-sm"> <i class='bx bxs-edit'></i></a>
+                            <button class="btn btn-primary btn-sm edit_task" data-task='{{ json_encode($task) }}'><i class='bx bx-edit' ></i></button>
                             <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash'></i></button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash' ></i></button>
                             </form>
                         </td>
                     </tr>
@@ -160,25 +98,25 @@
 
     $(document).ready(function() {
 
-        // let table = $('#tasksTable').DataTable({
-        //     responsive: true,
+        let table = $('#tasksTable').DataTable({
+            responsive: true,
+        });
+
+        $(".edit_task").on('click', function(e) {
+            e.preventDefault();
+
+            let task = $(this).data('task');
+
+            // console.log(task);
+
+            $('#due_date').val(task.due_date);
+            $('#task_name').val(task.name);
+            $('#project_id').val(task.project_id);
+
+            $('.action_btn').html('Update');
 
 
-        // $(".edit_task").on('click', function(e) {
-        //     e.preventDefault();
-
-        //     let task = $(this).data('task');
-
-        //     // console.log(task);
-
-        //     $('#due_date').val(task.due_date);
-        //     $('#task_name').val(task.name);
-        //     $('#project_id').val(task.project_id);
-
-        //     $('.action_btn').html('Update');
-
-
-        // });
+        });
 
     });
 </script>
