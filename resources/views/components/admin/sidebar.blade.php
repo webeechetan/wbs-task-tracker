@@ -75,23 +75,16 @@
         </a>
       </li>
 
-      {{-- Clients --}}
-
-      <li class="menu-item">
-        <a href="" class="menu-link ">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Clients</div>
-        </a>
-      </li>
+     
 
       {{-- Projects --}}
 
-      <li class="menu-item">
+      <!-- <li class="menu-item">
         <a href="" class="menu-link ">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">Projects</div>
         </a>
-      </li>
+      </li> -->
 
       {{-- Clients --}}
 
@@ -106,7 +99,7 @@
       {{-- Activities --}}
 
       <li class="menu-item">
-        <a href="" class="menu-link ">
+        <a href="{{route('tracker-index')}}" class="menu-link ">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">Activities</div>
         </a>

@@ -7,7 +7,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
-
+use App\Http\Controllers\TrackerController;
 
 Route::get('/', function () {
     return view('admin.layouts.app');
@@ -95,5 +95,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/tasks/update', [TaskController::class, 'update'])->name('task-update')->middleware('auth');
 
     Route::delete('/tasks/destroy/{task}', [TaskController::class, 'destroy'])->name('task-destroy')->middleware('auth');
-        
+     
+    
+
+    /*----------------------------------Tracker <Route------------------*/
+
+    Route::get('/tracker', [TrackerController:: class, 'index'])->name('tracker-index')->middleware('auth');
+
+
 });
