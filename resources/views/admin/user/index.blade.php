@@ -18,28 +18,29 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-
                         <th>Type</th>
                         <th>Slack ID</th>
+                        <th>Teams</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @foreach($users as $user)
-
-
                     <tr>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
-
-                        <td> @if ($user->type == 1) Admin
+                        <td> 
+                            @if ($user->type == 1) Admin
                             @elseif ($user->type == 2) Manager
                             @else Employee
                             @endif
                         </td>
                         <td>{{$user->slack_id}}</td>
-
-
+                        <td>
+                            @foreach ($user->teams as $team)
+                            <span class="badge bg-primary">{{$team->name}}</span>
+                            @endforeach
+                        </td>
                         <td>
                             <a href="{{route('user-edit', $user->id)}}" class="btn btn-primary btn-sm"><i class='bx bx-edit'></i></a>
                             <form action="{{route('user-destroy',$user->id)}}" method="POST" class="d-inline">
@@ -50,7 +51,6 @@
                         </td>
                     </tr>
                     @endforeach
-
                 </tbody>
             </table>
         </div>

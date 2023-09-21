@@ -16,10 +16,37 @@
 
     <ul class="menu-inner py-1">
       <!-- Dashboard -->
-      <li class="menu-item active">
+      <li class="menu-item @if(request()->routeIs('dashboard')) active @endif">
         <a href="" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Dashboard</div>
+        </a>
+      </li>
+
+      {{-- Employee--}}
+      <li class="menu-item @if(request()->routeIs('user-index') || request()->routeIs('user-create') || request()->routeIs('user-edit')) active @endif">
+        <a href="{{ route('user-index') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Employees</div>
+        </a>
+      </li>
+
+      
+      {{-- Teams --}}
+
+      <li class="menu-item @if(request()->routeIs('teams-index') || request()->routeIs('teams-create') || request()->routeIs('teams-edit')) active @endif">
+        <a href="{{ route('teams-index') }}" class="menu-link ">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Teams</div>
+        </a>
+      </li>
+
+      {{-- Activities --}}
+
+      <li class="menu-item @if(request()->routeIs('activity-index') || request()->routeIs('activity-create') || request()->routeIs('activity-edit')) active @endif">
+        <a href="{{ route('activity-index') }}" class="menu-link ">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Activities</div>
         </a>
       </li>
 
@@ -27,92 +54,12 @@
       {{---To-do's---}}
 
 
-      <li class="menu-item">
+      <li class="menu-item @if(request()->routeIs('task-index') || request()->routeIs('task-create') || request()->routeIs('task-edit')) active @endif">
         <a href="{{ route('task-index')}}" class="menu-link ">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">To-do's</div>
         </a>
       </li>
-
-
-      {{-- Teams --}}
-
-      <li class="menu-item">
-        <a href="{{ route('teams-index') }}" class="menu-link ">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Teams</div>
-        </a>
-      </li>
-
-
-      {{-- Employee--}}
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Employees</div>
-        </a>
-
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="{{ route('user-index') }}" class="menu-link">
-              <div data-i18n="Without menu">All Employees</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="{{ route('user-create') }}" class="menu-link">
-              <div data-i18n="Without menu">New Employees</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-      {{-- Team Task --}}
-
-      <li class="menu-item">
-        <a href="" class="menu-link ">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Team Tasks</div>
-        </a>
-      </li>
-
-      {{-- Clients --}}
-
-      <li class="menu-item">
-        <a href="" class="menu-link ">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Clients</div>
-        </a>
-      </li>
-
-      {{-- Projects --}}
-
-      <li class="menu-item">
-        <a href="" class="menu-link ">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Projects</div>
-        </a>
-      </li>
-
-      {{-- Clients --}}
-
-      <li class="menu-item">
-        <a href="{{ route('clients-index') }}" class="menu-link ">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Clients</div>
-        </a>
-      </li>
-
-      
-      {{-- Activities --}}
-
-      <li class="menu-item">
-        <a href="" class="menu-link ">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Activities</div>
-        </a>
-      </li>
-
-
 
     </ul>
   </aside>

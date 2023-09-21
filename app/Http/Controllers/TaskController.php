@@ -17,8 +17,8 @@ class TaskController extends Controller
     {
 
         $tasks = Task::all();
-
-        return view('admin.tasks.index', compact('tasks'));
+        $clients = Task::select('client')->distinct()->get();
+        return view('admin.tasks.index', compact('tasks','clients'));
     }
 
     /**
@@ -43,7 +43,7 @@ class TaskController extends Controller
         $task->user_id = 1;
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
-        $task->project_id = $request->project_id;
+        $task->client = $request->client;
 
         if ($task->save()) {
             $this->alert('success', 'Task Added successfully', 'success');
@@ -82,35 +82,13 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, Task $task)
-    // {
-
-    //     echo "update";
-    //     // exit
-    //     $request ->validate([
-    //         'due_date' => 'required',
-    //         'task_name' => 'required',
-    //     ]);
-    //     $task->due_date = $request->due_date;
-    //     $task->task_name = $request->task_name;
-    //     $task->project_id = $request->project_id;
-
-        
-    //     if($task->save()){
-    //         $this->alert('success','Task Updated successfully','success');
-    //         return redirect()->route('task-index');
-    //     }
-    //     $this->alert('error','Something went wrong','danger');
-    //     return redirect()->back();
-
-    // }
 
     public function update(Request $request)
     {
         $task = Task::find($request->taskId);
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
-        $task->project_id = $request->project_id;
+        $task->client = $request->client;
         try{
             $task->save();
             $this->alert('success','Task Updated successfully','success');
@@ -122,24 +100,6 @@ class TaskController extends Controller
         }
 
     }
-
-
-    
-// public function update(Request $request, Task $task)
-// {
-//     // Validate the incoming request data
-//     $validatedData = $request->validate([
-//         'due_date' => 'required|date',
-//         'name' => 'required|string|max:255',
-//         'project_id' => 'required|integer',
-//     ]);
-
-//     // Update the task with the validated data
-//     $task->update($validatedData);
-
-//     // Optionally, you can return a response indicating success
-//     return response()->json(['message' => 'Task updated successfully']);
-// }
 
     /**
      * Remove the specified resource from storage.

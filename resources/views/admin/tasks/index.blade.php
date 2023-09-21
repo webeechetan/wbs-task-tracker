@@ -2,9 +2,10 @@
 @section('title', 'Tasks List')
 
 @section('styles')
-<!-- Include Flatpickr CSS from CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 @endsection
 
 @section('content')
@@ -26,11 +27,11 @@
                 </div>
         
                 <div class="form-group col-md-3">
-                    <select class="form-control" id="project_id" name="project_id">
-        
-                        <option value="">Select Task</option>
-                        <option value="1">Acma</option>
-                        <option value="2">Swift</option>
+                    <select class="form-control" id="client" name="client">
+                        <option value="">Select Client</option>
+                        @foreach ($clients as $client)
+                            <option value="{{$client->client}}">{{$client->client}}</option>
+                        @endforeach
                     </select>
                 </div>
         
@@ -48,41 +49,48 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive text-nowrap">
-                <div class="container">
-                    <table class="table table-hover" id="tasksTable">
-                        <thead>
-                            <tr>
-                                <th>Task</th>
-                                <th>Project</th>
-                                <th>Due Date</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-border-bottom-0">
-        
-                            @foreach ($tasks as $task)
-        
-                            <tr>
-                                <td>{{$task->name}}</td>
-                                <td>{{$task->project_id}}</td>
-                                <td>{{$task->due_date}}</td>
-                                <td>{{ $task->status }}</td>
-        
-                                <td>
-                                    <button class="btn btn-primary btn-sm edit_task" data-task='{{ json_encode($task) }}'><i class='bx bx-edit' ></i></button>
-                                    <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash' ></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-        
-                        </tbody>
-                    </table>
-                </div>
+                <table class="table table-hover" id="tasksTable">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Client</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+    
+                        @foreach ($tasks as $task)
+    
+                        <tr>
+                            <td>{{$task->name}}</td>
+                            <td>{{$task->client}}</td>
+                            <td>
+                                @php 
+                                    $date = Carbon\Carbon::parse($task->due_date);
+                                @endphp
+                                @if($date->isPast())
+                                    <span class="text-danger">{{ $date->format('d-m-Y') }}</span>
+                                @else
+                                    <span class="text-success">{{ $date->format('d-m-Y') }}</span>
+                                @endif
+                            </td>
+                            <td>{{ $task->status }}</td>
+    
+                            <td>
+                                <button class="btn btn-primary btn-sm edit_task" data-task='{{ json_encode($task) }}'><i class='bx bx-edit' ></i></button>
+                                <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash' ></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+    
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -92,7 +100,7 @@
 @endsection
 
 @section('scripts')
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
 <!-- Include Flatpickr JS from CDN -->
@@ -109,13 +117,22 @@
             responsive: true,
         });
 
+        // seclect2 for client
+
+        let client = $('#client').select2({
+            placeholder: "Select Client",
+            allowClear: true,
+            tags: true,
+            height: '100%',
+        });
+
         $(".edit_task").on('click', function(e) {
             e.preventDefault();
             let task = $(this).data('task');
-            // add task due_date in flatpickr
+            console.log(task);
             flatDate.setDate(task.due_date);
             $('#task_name').val(task.name);
-            $('#project_id').val(task.project_id);
+            $('#client').select2().val(task.client).trigger('change');
             $('#taskId').val(task.id);
             $('.action_btn').html('Update');
             let taskId = $('#taskId').val();

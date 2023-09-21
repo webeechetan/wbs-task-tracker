@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ActivityController;
 
 
 Route::get('/', function () {
@@ -43,21 +43,6 @@ Route::group(['middleware' => 'auth'], function () {
             ->name('teams-destroy')
             ->middleware('admin');
 
-    /*--------------------------------- Clients Routes ---------------------------------*/
-
-    Route::get('/clients',[ClientController::class,'index'])
-            ->name('clients-index')
-            ->middleware('admin'); 
-    Route::post('/clients',[ClientController::class,'store'])
-            ->name('clients-store')
-            ->middleware('admin');
-    Route::post('/clients/update',[ClientController::class,'update'])
-            ->name('clients-update')
-            ->middleware('admin');
-    Route::get('/clients/delete/{client}',[ClientController::class,'destroy'])
-            ->name('clients-destroy')
-            ->middleware('admin');
-
     
     /*--------------------------------- User Routes ---------------------------------*/
 
@@ -77,7 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/user/destroy/{user}', [UserController::class, 'destroy'])->name('user-destroy')
         ->middleware('admin');
 
-    Route::put('/user/update/{user}', [UserController::class, 'update'])->name('user-update')
+    Route::post('/user/update/{user}', [UserController::class, 'update'])->name('user-update')
         ->middleware('admin');
 
 
@@ -91,9 +76,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/tasks/edit/{task}', [TaskController:: class,'edit'])->name('task-edit')->middleware('auth');
 
-
     Route::post('/tasks/update', [TaskController::class, 'update'])->name('task-update')->middleware('auth');
 
     Route::delete('/tasks/destroy/{task}', [TaskController::class, 'destroy'])->name('task-destroy')->middleware('auth');
-        
+    
+    /*--------------------------------- Activities ---------------------------------*/
+
+    Route::get('/activities', [ActivityController:: class, 'index'])->name('activity-index')->middleware('auth');
+    Route::post('/activities/store', [ActivityController::class, 'store'])->name('activity-store')->middleware('auth');
 });

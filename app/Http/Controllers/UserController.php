@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-
+use App\Models\Team;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -26,7 +26,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        $teams = Team::all();
+        return view('admin.user.create',compact('teams'));
     }
 
     /**
@@ -37,16 +38,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-       
         $user = new User();
-
         $user->name = $request->emp_name;
         $user->email = $request->emp_email;
         $user->password = $request->password;
         $user->type = $request->type;
         $user->slack_id = $request->emp_slack_id;
-
         if ($user->save()) {
+            $user->teams()->attach($request->team);
             $this->alert('success', 'Employee Added successfully', 'success');
             return redirect()->route('user-index');
         }
@@ -71,9 +70,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(user $user)
+    public function edit(User $user)
     {
-        return view('admin.user.edit', ['users' => $user]);
+        $teams = Team::all();
+        return view('admin.user.edit', compact('user','teams'));
     }
 
     /**
@@ -83,20 +83,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, user $user)
+    public function update(Request $request, User $user)
     {
-
         $user->name = $request->emp_name;
         $user->email = $request->emp_email;
-        $user->password = $request->password;
         $user->type = $request->type;
         $user->slack_id = $request->emp_slack_id;
-
         if ($user->save()) {
-            $this->alert('success', 'User Updated successfully', 'success');
+            $user->teams()->sync($request->team);
+            $this->alert('success', 'Employee Updated successfully', 'success');
             return redirect()->route('user-index');
         }
-        $this->alert('error', 'Something went wrong', 'danger');
+        $this->alert('error', 'Something went wrong', 'error');
         return redirect()->back();
     }
 

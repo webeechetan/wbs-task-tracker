@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\Activity;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,8 +15,11 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {
-        // $schedule->command('inspire')->hourly();
+    {  
+        $activities = Activity::where('cron_expression','!=',null)->get();
+        foreach ($activities as $activity) {
+            $schedule->command('activity:due')->cron($activity->cron_expression)->withoutOverlapping();
+        }
     }
 
     /**
