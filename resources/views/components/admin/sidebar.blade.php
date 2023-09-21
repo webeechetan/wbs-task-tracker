@@ -48,7 +48,7 @@
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">Activities</div>
         </a>
-      </li>
+      </li> -->
 
 
       {{---To-do's---}}
