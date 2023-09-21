@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\Activity;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +17,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {  
+        Log::info('Queue worker is running');
         $activities = Activity::where('cron_expression','!=',null)->get();
         foreach ($activities as $activity) {
             $schedule->command('activity:due')->cron($activity->cron_expression)->withoutOverlapping();
