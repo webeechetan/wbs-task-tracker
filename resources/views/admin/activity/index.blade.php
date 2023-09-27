@@ -150,7 +150,7 @@
        function generateCronStringFromCommand(){
             let cron_month = $('#cron_month').val();
             let cron_day = $('#cron_day').val();
-            let cron_command = `0 0 ${cron_day} ${cron_month} *`;
+            let cron_command = `30 10 ${cron_day} ${cron_month} *`;
             let cron_output = cronstrue.toString(cron_command);
             $('.cron_output').text(cron_output);
             $('#cron_string').val(cron_output);
