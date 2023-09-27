@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\Team;
+USE App\Models\User;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -17,7 +18,8 @@ class ActivityController extends Controller
     {
         $activities = Activity::all();
         $teams = Team::all();
-        return view('admin.activity.index',compact('activities','teams'));
+        $users = User::all();
+        return view('admin.activity.index',compact('activities','teams','users'));
     }
 
     /**

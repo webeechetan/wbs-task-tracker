@@ -4,6 +4,7 @@
 @section('styles')
 <!-- Include Flatpickr CSS from CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 @endsection
 
@@ -69,6 +70,17 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group col-md-6 mt-2">
+                                <label for="assign_to" class="col-form-label">Assign to</label>
+                                <select class="form-control" id="assign_to" name="assign_to[]" required multiple>
+                                    <option value="">Assign to</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
                             <div class="form-group mt-2">
                                 <button type="submit" class="btn btn-primary btn-sm">Create</button>
                             </div>
@@ -128,6 +140,7 @@
 
 <!-- Include Flatpickr JS from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     let flatDate = flatpickr('#due_date', {
         dateFormat: 'Y-m-d' 
@@ -155,8 +168,15 @@
             $('.cron_output').text(cron_output);
             $('#cron_string').val(cron_output);
        }
+
+       $('#assign_to').select2({
+            placeholder: "Assign To",
+            allowClear: true
+        });
+
     });
 </script>
 
 
 @endsection
+

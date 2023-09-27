@@ -117,4 +117,20 @@ class TaskController extends Controller
             return redirect()->back();
         }
     }
+
+
+    public function statusupdate(Request $request, Task $task)
+    {
+        // Check if the task exists
+        if (!$task) {
+            return response()->json(['message' => 'Task not found'], 404);
+        }
+
+        // Update the status to 'complete'
+        $task->status = 'complete';
+        $task->save();
+
+        return response()->json(['message' => 'Task status updated successfully'], 200);
+    }
+
 }
