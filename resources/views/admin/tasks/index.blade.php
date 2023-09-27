@@ -6,7 +6,16 @@
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+
 @endsection
+
+<style>
+    .completed-task {
+        color: black;
+        text-decoration: line-through;
+        text-decoration-thickness: 3px;
+    }
+</style>
 
 @section('content')
 
@@ -18,8 +27,7 @@
             <div class="row " id="parent">
         
                 <div class="form-group col-md-3">
-                    
-                    <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date" required>
+                    <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date" required value="<?php echo date('Y-m-d'); ?>">
                 </div>
         
                 <div class="form-group col-md-3">
@@ -85,6 +93,9 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash' ></i></button>
                                 </form>
+
+                                <input class="form-check-input mark_complete_task" data-task='{{ json_encode($task) }}' type="checkbox" value="" id="flexCheckDefault">
+                                <!-- <button type="checkbox" class="btn btn-primary btn-sm mark_complete_task" data-task='{{ json_encode($task) }}'>E</button> -->
                             </td>
                         </tr>
                         @endforeach
@@ -145,6 +156,52 @@
             let todoForm = $('#todo_task_add_form');
             todoForm.attr('action', url);
         });
+
+        $('.mark_complete_task').change(function () {
+            
+            var taskData = ($(this).data('task'));
+
+            if ($(this).is(':checked')) {
+                // Checkbox is checked, handle accordingly
+                // console.log('Task with ID ' + taskData.id + ' is checked.');
+                 $(this).closest('tr').addClass('completed-task');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/tasks/status_update/' + taskData.id,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        taskId: taskData.id,
+                        completed: true
+                    },
+                    success: function(response) {
+                        if (response.success === 'true') {
+                            console.log('Success:', response.message);
+                          
+                        } else {
+                            console.log('Error:', response.message);
+                       
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                       
+                        console.error('Error:', error);
+                    }
+                });
+
+
+                
+                // You can add additional code here to mark the task as complete.
+            } else {
+                // Checkbox is unchecked, handle accordingly
+                console.log('Task with ID ' + taskData.id + ' is unchecked.');
+                $(this).closest('tr').removeClass('completed-task');
+                
+                
+                // You can add additional code here to mark the task as incomplete.
+            }
+        });
+
 
     });
 </script>
