@@ -53,7 +53,8 @@ class ActivityController extends Controller
         $activity->second_due_date = $request->second_due_date;
         $activity->created_by = auth()->user()->id;
         if($request->has('cron_day') && $request->has('cron_month') && $request->cron_month){
-            $cron_expression = '0 0 '.$request->cron_day.' '.$request->cron_month.' *';
+            $month = implode(',',$request->cron_month);
+            $cron_expression = '30 10 '.$request->cron_day.' '.$month.' *';
             $activity->cron_expression = $cron_expression;
             $activity->cron_string = $request->cron_string;
         }

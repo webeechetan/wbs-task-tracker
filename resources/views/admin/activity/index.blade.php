@@ -62,7 +62,16 @@
                                 <div class="input-group">
                                     <span class="input-group-text">Day Month</span>
                                     <input type="text"  class="form-control" placeholder="Day" name="cron_day" id="cron_day">
-                                    <input type="text"  class="form-control" placeholder="Month" name="cron_month" id="cron_month">
+                                    @php 
+                                        $months = ['All' => '*', 'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6, 'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12];
+                                    @endphp
+                                    <select class="form-control" name="cron_month[]" id="cron_month" multiple>
+                                        <option value="">Month</option>
+                                        @foreach ($months as $key => $month)
+                                            <option value="{{$month}}">{{$key}}</option>
+                                        @endforeach
+                                    </select>
+                                    {{-- <input type="text"  class="form-control" placeholder="Month" name="cron_month" id="cron_month"> --}}
                                 </div>
                                 <b><span class="text-success cron_output"></span></b>
                                 @error('cron_command')
@@ -72,7 +81,7 @@
 
                             <div class="form-group col-md-6 mt-2">
                                 <label for="assign_to" class="col-form-label">Assign to</label>
-                                <select class="form-control" id="assign_to" name="assign_to[]" required multiple>
+                                <select class="form-control" id="assign_to" name="assign_to[]"  multiple>
                                     <option value="">Assign to</option>
                                     @foreach ($users as $user)
                                         <option value="{{$user->id}}">{{$user->name}}</option>
@@ -152,7 +161,13 @@
             responsive: true,
         });
 
-        $('#cron_month').keyup(function(){
+        $('#cron_month').select2({
+            placeholder: "Select Month",
+            allowClear: true,
+            // seap
+        });
+
+        $('#cron_month').change(function(){
             generateCronStringFromCommand();
         });
 
@@ -162,6 +177,7 @@
 
        function generateCronStringFromCommand(){
             let cron_month = $('#cron_month').val();
+            console.log(cron_month);
             let cron_day = $('#cron_day').val();
             let cron_command = `30 10 ${cron_day} ${cron_month} *`;
             let cron_output = cronstrue.toString(cron_command);
