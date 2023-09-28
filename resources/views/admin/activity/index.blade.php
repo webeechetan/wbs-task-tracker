@@ -9,7 +9,20 @@
 
 @section('content')
 
-
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Create New Activity</h5>
+            </div>
+            <div class="card-body">
+                <form action="">
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-xl">
         <div class="card mb-4">
