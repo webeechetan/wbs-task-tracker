@@ -13,7 +13,7 @@
     .completed-task {
         color: black;
         text-decoration: line-through;
-        text-decoration-thickness: 3px;
+        text-decoration-thickness: 2px;
     }
 </style>
 
