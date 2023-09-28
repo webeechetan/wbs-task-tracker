@@ -27,12 +27,15 @@
                 <tbody class="table-border-bottom-0">
                     @foreach($users as $user)
                     <tr>
-                        <td>{{$user->name}}</td>
+                        <td>{{$user->name}} 
+                            {{ count($user->activities) }} 
+                        </td>
                         <td>{{$user->email}}</td>
                         <td> 
                             @if ($user->type == 1) Admin
-                            @elseif ($user->type == 2) Manager
-                            @else Employee
+                                @elseif ($user->type == 2) Manager
+                            @else 
+                                Employee
                             @endif
                         </td>
                         <td>{{$user->slack_id}}</td>

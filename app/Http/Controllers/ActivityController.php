@@ -59,7 +59,15 @@ class ActivityController extends Controller
             $activity->cron_string = $request->cron_string;
         }
         try {
-            $activity->save();
+            try{
+
+                $activity->save();
+                $activity->assignedUsers()->attach($request->assign_to);
+            }catch(\Throwable $th){
+                $msg = $th->getMessage();
+                $this->alert('Error',$msg,'danger');
+                return redirect()->back();
+            }
             $this->alert('Success','Activity created successfully','success');
             return redirect()->back();
         } catch (\Throwable $th) {
