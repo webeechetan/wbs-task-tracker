@@ -105,3 +105,17 @@
   text-align: center;
   margin-top: 1rem;
 }
+.input-group {
+  margin-top: 5px;
+  position: relative;
+  display: flex;
+  column-gap: 10px !important;
+  width: 100%;
+}
+.select2-container .select2-selection--multiple{
+  min-height: 40px !important;
+  border: 1px solid #d9dee3 !important;
+}
+label{
+  margin-bottom: 5px;
+}
