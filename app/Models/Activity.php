@@ -32,4 +32,9 @@ class Activity extends Model
         $cron = CronExpression::factory($this->cron_expression);
         return $cron->isDue();
     }
+
+    public function assignedUsers()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

@@ -109,6 +109,7 @@
                 <tr>
                     <th>Team</th>
                     <th>Activity</th>
+                    <th>Assigned To</th>
                     <th>First Due Date</th>
                     <th>Second Due Date</th>
                     <th>Manager</th>
@@ -119,8 +120,15 @@
             <tbody class="table-border-bottom-0">
                 @foreach ($activities as $activity)
                     <tr>
-                        <td>{{ $activity->team->name }}</td>
+                        <td>
+                            {{ $activity->team->name }}
+                        </td>
                         <td>{{ $activity->name }}</td>
+                        <td>
+                            @foreach ($activity->assignedUsers as $user)
+                                <span class="badge bg-primary">{{ $user->name }}</span>
+                            @endforeach
+                        </td>
                         <td>{{ $activity->first_due_date }}</td>
                         <td>{{ $activity->second_due_date }}</td>
                         <td>{{ $activity->team->lead->name }}</td>
