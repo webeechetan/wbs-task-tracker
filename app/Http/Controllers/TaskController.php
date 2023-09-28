@@ -16,7 +16,8 @@ class TaskController extends Controller
     public function index()
     {
 
-        $tasks = Task::all();
+        // $tasks = Task::all();
+        $tasks = Task::orderBy('status')->get();
         $clients = Task::select('client')->distinct()->get();
         return view('admin.tasks.index', compact('tasks','clients'));
     }
@@ -117,4 +118,19 @@ class TaskController extends Controller
             return redirect()->back();
         }
     }
+
+
+    public function statusupdate(Request $request, Task $task)
+    {
+        if($request->status=='pending'){
+            $task->status = 'completed';
+        }
+        if($request->status=='completed'){
+            $task->status = 'pending';
+        }
+        $task->save();
+
+        return response()->json(['message' => 'Task status updated successfully'], 200);
+    }
+
 }

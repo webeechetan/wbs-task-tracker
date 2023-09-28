@@ -4,6 +4,7 @@
 @section('styles')
 <!-- Include Flatpickr CSS from CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 @endsection
 
@@ -69,18 +70,54 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div> 
-                            <div class="form-group col-md-6 mt-2">
+                            <div class="form-group col-md-9 mt-2">
                                 <label for="activity">Schedule On</label>
                                 <div class="input-group">
-                                    <span class="input-group-text">Day Month</span>
-                                    <input type="text"  class="form-control" placeholder="Day" name="cron_day" id="cron_day">
-                                    <input type="text"  class="form-control" placeholder="Month" name="cron_month" id="cron_month">
+                                    <span class="input-group-text">Day</span>
+                                    {{-- <input type="text"  class="form-control" placeholder="Day" name="cron_day" id="cron_day"> --}}
+
+
+                                     <select class="form-control" name="cron_day[]" id="cron_day" multiple>
+                                        @php
+                                            $currentDate = now();
+                                            $lastDay = $currentDate->daysInMonth;
+                                        @endphp
+                                        @for ($day = 1; $day <= $lastDay; $day++)
+                                            <option value="{{ $day }}">{{ $day }}</option>
+                                        @endfor
+                                    </select>
+
+
+                                    @php 
+                                        $months = ['All' => '*', 'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6, 'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12];
+                                    @endphp
+
+                                    <span class="input-group-text">Month</span>
+                                    <select class="form-control" name="cron_month[]" id="cron_month" multiple>
+                                        <option value="">Month</option>
+                                        @foreach ($months as $key => $month)
+                                            <option value="{{$month}}">{{$key}}</option>
+                                        @endforeach
+                                    </select>
+                                    
+                                    {{-- <input type="text"  class="form-control" placeholder="Month" name="cron_month" id="cron_month"> --}}
                                 </div>
                                 <b><span class="text-success cron_output"></span></b>
                                 @error('cron_command')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+
+                            <div class="form-group col-md-3 mt-2">
+                                <label for="assign_to" class="col-form-label">Assign to</label>
+                                <select class="form-control" id="assign_to" name="assign_to[]"  multiple>
+                                    <option value="">Assign to</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
 
                             <div class="form-group mt-2">
                                 <button type="submit" class="btn btn-primary btn-sm">Create</button>
@@ -101,6 +138,7 @@
                 <tr>
                     <th>Team</th>
                     <th>Activity</th>
+                    <th>Assigned To</th>
                     <th>First Due Date</th>
                     <th>Second Due Date</th>
                     <th>Manager</th>
@@ -111,8 +149,15 @@
             <tbody class="table-border-bottom-0">
                 @foreach ($activities as $activity)
                     <tr>
-                        <td>{{ $activity->team->name }}</td>
+                        <td>
+                            {{ $activity->team->name }}
+                        </td>
                         <td>{{ $activity->name }}</td>
+                        <td>
+                            @foreach ($activity->assignedUsers as $user)
+                                <span class="badge bg-primary">{{ $user->name }}</span>
+                            @endforeach
+                        </td>
                         <td>{{ $activity->first_due_date }}</td>
                         <td>{{ $activity->second_due_date }}</td>
                         <td>{{ $activity->team->lead->name }}</td>
@@ -141,6 +186,7 @@
 
 <!-- Include Flatpickr JS from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     let flatDate = flatpickr('#due_date', {
         dateFormat: 'Y-m-d' 
@@ -152,24 +198,62 @@
             responsive: true,
         });
 
-        $('#cron_month').keyup(function(){
+        $('#cron_month').select2({
+            placeholder: "Select Month",
+            allowClear: true,
+            // seap
+        });
+
+        $('#cron_month').change(function(){
             generateCronStringFromCommand();
         });
 
-        $('#cron_day').keyup(function(){
+        $("#cron_day").select2({
+            // tags: true,
+            tokenSeparators: [',', ' ']
+        })
+
+        $('#cron_day').change(function(){
             generateCronStringFromCommand();
         });
 
        function generateCronStringFromCommand(){
             let cron_month = $('#cron_month').val();
+            console.log(cron_month);
             let cron_day = $('#cron_day').val();
-            let cron_command = `0 0 ${cron_day} ${cron_month} *`;
+            let cron_command = `30 10 ${cron_day} ${cron_month} *`;
             let cron_output = cronstrue.toString(cron_command);
             $('.cron_output').text(cron_output);
             $('#cron_string').val(cron_output);
        }
+
+       $('#assign_to').select2({
+            placeholder: "Assign To",
+            allowClear: true
+        });
+
     });
+
+    function generateDayOptions() {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-based
+        const daysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        const daySelect = $('#cron_day');
+
+        // Clear existing options
+        daySelect.empty();
+
+        // Populate with day options
+        for (let day = 1; day <= daysInMonth; day++) {
+            daySelect.append(new Option(day, day));
+        }
+    }
+
+    // Initialize the day dropdown based on the current month
+    generateDayOptions();
+
 </script>
 
 
 @endsection
+

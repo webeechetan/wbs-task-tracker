@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\Team;
+USE App\Models\User;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -17,7 +18,8 @@ class ActivityController extends Controller
     {
         $activities = Activity::all();
         $teams = Team::all();
-        return view('admin.activity.index',compact('activities','teams'));
+        $users = User::all();
+        return view('admin.activity.index',compact('activities','teams','users'));
     }
 
     /**
@@ -51,12 +53,24 @@ class ActivityController extends Controller
         $activity->second_due_date = $request->second_due_date;
         $activity->created_by = auth()->user()->id;
         if($request->has('cron_day') && $request->has('cron_month') && $request->cron_month){
-            $cron_expression = '0 0 '.$request->cron_day.' '.$request->cron_month.' *';
+
+            $day = implode(',',$request->cron_day);
+            $month = implode(',',$request->cron_month);
+            $cron_expression = '30 10 '.$day.' '.$month.' *';
+            // $cron_expression = '30 10 '.$request->cron_day.' '.$month.' *';
             $activity->cron_expression = $cron_expression;
             $activity->cron_string = $request->cron_string;
         }
         try {
-            $activity->save();
+            try{
+
+                $activity->save();
+                $activity->assignedUsers()->attach($request->assign_to);
+            }catch(\Throwable $th){
+                $msg = $th->getMessage();
+                $this->alert('Error',$msg,'danger');
+                return redirect()->back();
+            }
             $this->alert('Success','Activity created successfully','success');
             return redirect()->back();
         } catch (\Throwable $th) {
