@@ -87,4 +87,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/activities', [ActivityController:: class, 'index'])->name('activity-index')->middleware('auth');
     Route::post('/activities/store', [ActivityController::class, 'store'])->name('activity-store')->middleware('auth');
+
+    Route::delete('/activities/destroy/{activity}', [ActivityController::class, 'destroy'])->name('activity-destroy')->middleware('auth');
+    
+
 });

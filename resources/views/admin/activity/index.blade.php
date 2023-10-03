@@ -311,6 +311,7 @@
         <table class="table table-hover" id="activityTable">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Team</th>
                     <th>Activity</th>
                     <th>Assigned To</th>
@@ -319,11 +320,15 @@
                     <th>Manager</th>
                     <th>Status</th>
                     <th>Schedule On</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
                 @foreach ($activities as $activity)
                     <tr>
+                        <td>
+                            <input class="form-check-input mark_complete_activity" data-task='{{ json_encode($activity)}}' type="checkbox" @checked($activity->status == 'completed')>
+                        </td>
                         <td>
                             {{ $activity->team->name }}
                         </td>
@@ -344,6 +349,13 @@
                             @endif
                         </td>
                         <td> <small> {{ $activity->cron_string }}</small></td>
+                        <td> <button class="btn btn-primary btn-sm edit_task"><i class='bx bx-edit'></i></button>
+                            <form action="{{route('activity-destroy', $activity->id)}}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash'></i></button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -428,6 +440,30 @@
 
     // Initialize the day dropdown based on the current month
     generateDayOptions();
+
+    $('.mark_complete_activity').change(function () {
+            // $(this).closest('tr').toggleClass('completed-task');
+            var taskData = ($(this).data('task'));
+            let task_status = taskData.status;
+            console.log(task_status);
+            $.ajax({
+                type: 'POST',
+                url: '/tasks/status_update/' + taskData.id,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    taskId: taskData.id,
+                    status: task_status
+                },
+                success: function (response) {
+                    location.reload();
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
 
 </script>
 

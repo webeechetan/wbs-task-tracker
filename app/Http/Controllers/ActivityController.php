@@ -40,6 +40,7 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
+        // $request = new Request();
         $request->validate([
                 'team' => 'required|int',
                 'activity' => 'required',
@@ -122,6 +123,12 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
-        //
+        if($activity->delete()){
+            $this->alert('Success','Activity deleted successfully','success');
+            return redirect()->route('activity-index');
+        }else {
+            $this->alert('Error','Something went wrong','danger');
+            return redirect()->back();
+        }
     }
 }
