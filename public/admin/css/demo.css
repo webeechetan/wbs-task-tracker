@@ -3,6 +3,13 @@
 * File include item demo only specific css only
 ******************************************************************************/
 
+:root {
+  --primary: #1FB37A;
+  --primary_hover: #08915c;
+}
+
+/* ----- Custom Default Styles ----- */
+
 .menu .app-brand.demo {
   height: 64px;
   margin-top: 12px;
@@ -112,10 +119,41 @@
   column-gap: 10px !important;
   width: 100%;
 }
-.select2-container .select2-selection--multiple{
-  min-height: 40px !important;
-  border: 1px solid #d9dee3 !important;
-}
 label{
   margin-bottom: 5px;
+}
+
+/* ----- Activities Item  ----- */
+/* .activities {
+  display: grid;
+  grid-template-columns: 1fr 150px 150px 250px 150px 90px;
+  align-items: flex-end;
+  grid-gap: 15px;
+} */
+.activities_sch-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 15px;
+}
+ul#select2-cron_day-results {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  grid-gap: 10px;
+  min-width: 330px;
+  justify-content: center;
+}
+ul#select2-cron_day-results > li {
+  width: 35px;
+  height: 35px;
+  border: 1px solid #eee;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.select2-container--open .select2-dropdown--below {
+  width: inherit !important;
+  border: none;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
