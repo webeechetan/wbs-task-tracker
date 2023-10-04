@@ -31,12 +31,15 @@
             <div class="offcanvas-body">
                 <div>
                     <label for="defaultFormControlInput" class="form-label">Activity Name</label>
-                    <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp" fdprocessedid="a5svo">
+                   <div class="input-group input-group-merge column-gap-0">
+                        <span id="basicFullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp" fdprocessedid="a5svo">
+                   </div>
                     <div id="defaultFormControlHelp" class="form-text">We'll never share your details with anyone else.</div>
-                </div>
+                </div> 
                 <div class="mt-3">
-                    <label for="" class="form-label">Team</label>
-                    <select id="xyz12" class="select2 form-select" multiple>
+                    <label for="select2Multiple" class="form-label">Team</label>
+                    <select id="select2Multiple" class="select2 form-select" multiple>
                         <optgroup label="Alaskan/Hawaiian Time Zone">
                         <option value="AK">Alaska</option>
                         <option value="HI">Hawaii</option>
@@ -99,6 +102,55 @@
                         </optgroup>
                     </select>
                 </div>
+                <div class="mt-3">
+                    <label for="" class="form-label">Due Date</label>
+                    <div class="input-group input-group-merge column-gap-0">
+                        <span id="basicDate2" class="input-group-text"><i class="bx bx-calendar"></i></span>
+                        <input type="date" class="form-control" id="first_due_date" name="first_due_date">
+                    </div>
+                </div>
+               <div class="d-flex justify-content-between column-gap-2">
+                    <div class="mt-3">
+                            <label for="" class="form-label">Schedule On</label>
+                            <div class="input-group input-group-merge flex-wrap column-gap-0">
+                                <span id="basicDate2" class="input-group-text"><i class='bx bx-calendar-week'></i></span>
+                                <input type="text"  class="form-control" placeholder="Day">
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <label for="" class="form-label">Month</label>
+                            <div class="input-group input-group-merge flex-wrap column-gap-0">
+                                <span id="basicDate2" class="input-group-text"><i class='bx bx-calendar-week'></i></span>
+                                <input type="Month"  class="form-control" placeholder="Month">
+                            </div>
+                        </div>
+               </div>
+                <div class="mt-3">
+                    <label for="" class="form-label">Reminder</label>
+                    <div class="input-groups">
+                        <div class="input-group input-group-merge column-gap-0">
+                            <span id="basicDate3" class="input-group-text"><i class='bx bx-bell'></i></span>
+                            <input type="date" class="form-control" id="first_due_date" name="first_due_date">
+                        </div>
+                        <div> <span class="reminder-plus"><i class='bx bx-plus'></i></span></div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                       <div class="activities_assign">
+                            <label for="assign_to" class="col-form-label">Assign to</label>
+                            <select class="form-control">
+                                <option value="">Admin</option>
+                                <option value="">Admin</option>
+                            </select>
+                        </div>
+                </div>
+                <div class="mt-3">
+                    <div class="activities_submit">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+            
+               
             </div>
         </div>
     </div>
@@ -381,6 +433,7 @@
 
 
     $(document).ready(function() {
+        $(".select2").select2();
         $("#xyz12").select2();
         let table = $('#activityTable').DataTable({
             responsive: true,
