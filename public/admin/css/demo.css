@@ -157,3 +157,22 @@ ul#select2-cron_day-results > li {
   border: none;
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
+/*--- Himanshu Css ---*/
+.column-gap-0{
+  column-gap: 0 !important;
+}
+.column-gap-2{
+  column-gap: 5px !important;
+}
+.input-groups{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 5px;
+}
+.reminder-plus{
+  border: 1px solid #d9dee3;
+  border-radius: 0.375rem;
+  padding: 0.58rem 0.875rem;
+  cursor: pointer;
+}
