@@ -40,6 +40,8 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
+
+       
         // $request = new Request();
         $request->validate([
                 'team' => 'required|int',
@@ -130,5 +132,22 @@ class ActivityController extends Controller
             $this->alert('Error','Something went wrong','danger');
             return redirect()->back();
         }
+    }
+
+    
+
+    public function statusupdate(Request $request, Activity $activity)
+    {
+
+        dd("Hello");
+        if($request->status=='pending'){
+            $activity->status = 'completed';
+        }
+        if($request->status=='completed'){
+            $activity->status = 'pending';
+        }
+        $task->save();
+
+        return response()->json(['message' => 'Activity status updated successfully'], 200);
     }
 }
