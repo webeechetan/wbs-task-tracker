@@ -51,7 +51,7 @@
                         </div>
                         <div class="mt-3">
                             <label for="team" class="form-label">Team</label>
-                            <select class="form-select" id="team" name="team">
+                            <select class="form-select" id="team" name="team[]" multiple>
                                 <option value="">Select Team</option>
                                 @foreach ($teams as $team)
                                     <option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -163,9 +163,9 @@
             </thead>
             <tbody class="table-border-bottom-0">
                 @foreach ($activities as $activity)
-                    <tr>
+                    <tr class=" @if($activity->status == 'completed') completed-task @endif ">
                         <td>
-                            <input class="form-check-input mark_complete_activity" data-task='{{ json_encode($activity)}}' type="checkbox" @checked($activity->status == 'completed')>
+                            <input class="form-check-input mark_complete_activity" data-activity='{{ json_encode($activity)}}' type="checkbox" @checked($activity->status == 'completed')>
                         </td>
                         <td>
                             {{ $activity->team->name }}
@@ -259,6 +259,12 @@
             $('#cron_string').val(cron_output);
        }
 
+
+       $('#team').select2({
+            placeholder: "Team",
+            allowClear: true
+        });
+
         $('#assign_to').select2({
             placeholder: "Assign To",
             allowClear: true
@@ -283,34 +289,6 @@
 
     // Initialize the day dropdown based on the current month
     generateDayOptions();
-
-    $('.mark_complete_activity').change(function () {
-
-       
-           
-            var activityData = ($(this).data('activity'));
-            let activity_status = activityData.status;
-            console.log(activity_status);
-            $.ajax({
-                type: 'POST',
-                url: '/activity/activity-statusupdate/' + activityData.id,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    taskId: activityData.id,
-                    status: activity_status
-                },
-                success: function (response) {
-                    location.reload();
-                    console.log(response);
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
-
-
-
 
 
         $(document).on('click', '.add-more', function() {
@@ -352,6 +330,34 @@
             });
 
         });
+
+
+        
+        
+    $('.mark_complete_activity').change(function () {
+
+                
+        var activityData = ($(this).data('activity'));
+        console.log(activityData);
+        let activity_status = activityData.status;
+        console.log(activity_status);
+        $.ajax({
+            type: 'POST',
+            url: '/activities/status_update/' + activityData.id,
+            data: {
+                "_token": "{{ csrf_token() }}",
+                activityId: activityData.id,
+                status: activity_status
+            },
+            success: function (response) {
+                location.reload();
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+});
        
 
 </script>
