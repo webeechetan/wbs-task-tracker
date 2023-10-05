@@ -12,7 +12,6 @@
       <link rel="stylesheet" href="{{ asset('admin') }}/vendor/fonts/boxicons.css" />
       <link rel="stylesheet" href="{{ asset('admin') }}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
       <!-- Select2 -->
-      <link rel="stylesheet" href="{{ asset('admin') }}/vendor/libs/select2/select2.css" />
       <link rel="stylesheet" href="{{ asset('admin') }}/vendor/css/core.css" class="template-customizer-core-css" />
       <link rel="stylesheet" href="{{ asset('admin') }}/vendor/css/theme-default.css" class="template-customizer-theme-css" />
       <link rel="stylesheet" href="{{ asset('admin') }}/css/demo.css" />

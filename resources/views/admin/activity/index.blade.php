@@ -6,6 +6,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('admin') }}/vendor-pro/libs/bootstrap-select/bootstrap-select.css" />
+<link rel="stylesheet" href="{{ asset('admin') }}/vendor-pro/libs/tagify/tagify.css" />
+<link rel="stylesheet" href="{{ asset('admin') }}/vendor-pro/libs/select2/select2.css" />
 @endsection
 
 
@@ -51,7 +54,7 @@
                         </div>
                         <div class="mt-3">
                             <label for="team" class="form-label">Team</label>
-                            <select class="form-select" id="team" name="team[]" multiple>
+                            <select class="form-select selectpicker select2" id="team" name="team[]" multiple>
                                 <option value="">Select Team</option>
                                 @foreach ($teams as $team)
                                     <option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -213,6 +216,17 @@
 
 <!-- Include Flatpickr JS from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+<script src="{{ asset('admin') }}/vendor-pro/libs/select2/select2.js"></script>
+<script src="{{ asset('admin') }}/vendor-pro/libs/tagify/tagify.js"></script>
+<script src="{{ asset('admin') }}/vendor-pro/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="{{ asset('admin') }}/vendor-pro/libs/typeahead-js/typeahead.js"></script>
+<script src="{{ asset('admin') }}/vendor-pro/libs/bloodhound/bloodhound.js"></script>
+<script src="{{ asset('admin') }}/js/pro/forms-selects.js"></script>
+<script src="{{ asset('admin') }}/js/pro/forms-tagify.js"></script>
+<script src="{{ asset('admin') }}/js/pro/forms-typeahead.js"></script>
+
 {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 <script>
     let flatDate = flatpickr('#due_date', {
