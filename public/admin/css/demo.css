@@ -298,3 +298,13 @@ table.dataTable tbody tr.even {
 .task-form{
   column-gap: 30px;
 }
+
+.completed-task {
+  color: black;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.light-style span.select2-dropdown {
+  z-index: 99999;
+}

@@ -5,6 +5,8 @@
 <!-- Include Flatpickr CSS from CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+
+
 <link rel="stylesheet" href="{{ asset('admin') }}/vendor-pro/css/rtl/core.css" class="template-customizer-core-css" />
 
 {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
@@ -17,42 +19,38 @@
 <link rel="stylesheet" href="{{ asset('admin') }}/vendor-pro/libs/typeahead-js/typeahead.css" />
 @endsection
 
+
+<style>
+    .completed-task {
+        color: black;
+        text-decoration: line-through;
+        text-decoration-thickness: 2px;
+    }
+</style>
+
 @section('content')
 
-<!-- Add Product -->
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-    <div class="d-flex flex-column justify-content-center">
-        <h4 class="d-flex align-items-center">
-            <div class="avatar me-2">
-                <span class="avatar-initial rounded bg-label-primary"><i class='bx bx-task'></i></span>
-            </div>
-            All Activity
-        </h4>
-    </div>
-    <div class="d-flex align-content-center flex-wrap gap-3">
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth"><i class='bx bx-plus'></i> Add Activity</button>
-        <!-- Offcanvas -->
-   
-        <div class="offcanvas offcanvas-end show" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel" style="visiblity: visible;">
-            <div class="offcanvas-header border-bottom py-3 my-1">
-                <h5 id="offcanvasBothLabel" class="offcanvas-title">Add Activity</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                    <form action="{{ route('activity-store') }}" method="POST" id="activity_add_form">
-                        @csrf
-                        <input type="hidden" name="activityId" id="activityId">
-                        <input type="hidden" name="cron_string" id="cron_string">
-                        <div>
-                            <label for="activity" class="form-label">Activity Name</label>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-5">
+            <div class="card-body">
+                <form action="{{ route('activity-store') }}" method="POST" class="form_activity">
+                    @csrf
+                    <input type="hidden" name="activityId" id="activityId">
+                    <input type="hidden" name="cron_string" id="cron_string">
+                    <div class="activities">
+                        <!-- Activity Title -->
+                        <div class="activities_title">
+                            <label for="activity">Activity</label>
                             <input type="text" class="form-control" id="activity" name="activity" placeholder="Activity">
                             @error('activity')
-                                <div class="text-danger">{{ $message }}</div>
+                                <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="mt-3">
-                            <label for="team" class="form-label">Team</label>
-                            
+                        <!-- Activity Team -->
+                        <div class="activities_team">
+                            <label for="team">Team</label>
                             <select class="form-control" id="team" name="team">
                                 <option value="">Select Team</option>
                                 @foreach ($teams as $team)
@@ -61,55 +59,53 @@
                                 @endforeach
                             </select>
                             @error('team')
-                                <div class="text-danger">{{ $message }}</div>
+                                <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div>                      
-                        <div class="mt-3">
-                            <label for="activity">First Due Date</label>
+                        </div>
+                        <!-- Due Date -->
+                        <div class="activities_dueDate">
+                            <label for="activity">Due Date</label>
                             <input type="date" class="form-control" id="first_due_date" name="first_due_date">
                             @error('first_due_date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div>                      
-                                      
-                        <div class="mt-3">
+                        </div>
+                        <!-- Schedule On -->
+                        <div class="activities_sch">
                             <label for="activity">Schedule On</label>
-                            <div class="input-group">                                      
-                                <select class="form-control" name="cron_day[]" id="cron_day" multiple>
-                                    @php
-                                        $currentDate = now();
-                                        $lastDay = $currentDate->daysInMonth;
+                            <div class="activities_sch-group">
+                                <div>
+                                    <select class="select2 form-select" name="cron_day[]" id="cron_day" multiple>
+                                        @php
+                                            $currentDate = now();
+                                            $lastDay = $currentDate->daysInMonth;
+                                        @endphp
+                                        @for ($day = 1; $day <= $lastDay; $day++)
+                                            <option value="{{ $day }}">{{ $day }}</option>
+                                        @endfor
+                                    </select>
+
+                                    @php 
+                                        $months = ['All' => '*', 'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6, 'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12];
                                     @endphp
-                                    @for ($day = 1; $day <= $lastDay; $day++)
-                                        <option value="{{ $day }}">{{ $day }}</option>
-                                    @endfor
-                                </select>
-                                
+                                </div>
+
+                                <div>
+                                    <select class="form-control" name="cron_month[]" id="cron_month" multiple>
+                                        <option value="">Month</option>
+                                        @foreach ($months as $key => $month)
+                                            <option value="{{$month}}">{{$key}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
+                            <b><span class="text-success cron_output"></span></b>
+                            @error('cron_command')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-
-                        @php 
-                        $months = ['All' => '*', 'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6, 'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12];
-                        @endphp
-
-                        <div class="mt-3">
-                            <label for="month">Month</label>
-                            <div class="input-group">
-                                <select class="form-control mt-3" name="cron_month[]" id="cron_month" multiple>
-                                    <option value="">Month</option>
-                                    @foreach ($months as $key => $month)
-                                        <option value="{{$month}}">{{$key}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                        </div>
-                        <b><span class="text-success cron_output"></span></b>
-                        @error('cron_command')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-
-                        <div class="mt-3">
+                        <!-- Assign to -->
+                        <div class="activities_assign">
                             <label for="assign_to" class="col-form-label">Assign to</label>
                             <select class="form-control" id="assign_to" name="assign_to[]"  multiple>
                                 <option value="">Assign to</option>
@@ -119,29 +115,24 @@
                             </select>
                         </div>
 
-                        <div class="mt-3 reminder_date_div first-div">
+                        <div class="form-group">
                             <label for="activity">Reminder Date</label>
-                            <input type="date" class="form-control" id="second_due_date" name="second_due_date">
+                            <input type="date" class="form-control" id="second_due_date" name="second_due_date" class="reminder_date">
                             @error('second_due_date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                               
-                        </div>
+                        </div> 
+                        <button type="button" class="btn btn-primary add-more mt-3"><b>+</b></button>
 
-                        <button type="button" class="btn btn-primary add-more mt-2">+</button>
-
-                       
-                        <!-- Additional form fields go here -->
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary action_btn">Create</button>
-                        </div>
-                    </form>
-                </div>
+                        <button type="submit" class="btn btn-primary add-more mt-3"><b>Create</b></button>
+                    
+                    </div>
+                </form>
             </div>
         </div>
-        
     </div>
 </div>
+
 
 
     <div class="card">
@@ -154,7 +145,7 @@
                         <th>Team</th>
                         <th>Activity</th>
                         <th>Assigned To</th>
-                        <th>Due Date</th>
+                        <th>First Due Date</th>
                         <th>Reminder Date</th>
                         <th>Manager</th>
                         <th>Status</th>
@@ -164,6 +155,14 @@
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @foreach ($activities as $activity)
+
+                    {{-- // $activity = Activity::find($activity->id); // Replace $activityId with the actual activity ID
+                    // $assignedUsers = $activity->assignedUsers; // This returns a collection of related users
+
+                    // $userNames = $activity->assignedUsers->pluck('name')->toArray(); --}}
+
+                    {{-- {{count($activity->assignedUsers)}} --}}
+                    
                         <tr class=" @if($activity->status == 'completed') completed-task @endif ">
                             <td>
                                 <input class="form-check-input mark_complete_activity" data-activity='{{ json_encode($activity)}}' type="checkbox" @checked($activity->status == 'completed')>
@@ -188,7 +187,7 @@
                                 @endif
                             </td>
                             <td> <small> {{ $activity->cron_string }}</small></td>
-                            <td><button class="btn btn-primary btn-sm edit_activity" data-activity='{{ json_encode($activity)}}'><i class='bx bx-edit'></i></button>
+                            <td> <button class="btn btn-primary btn-sm edit_activity" data-activity='{{ json_encode($activity)}}'><i class='bx bx-edit'></i></button>
                                 <form action="{{route('activity-destroy', $activity->id)}}" method="POST" class="d-inline delete_form">
                                     @csrf
                                     @method('DELETE')
@@ -223,9 +222,6 @@
 <script src="{{ asset('admin') }}/js/pro/forms-selects.js"></script>
 <script src="{{ asset('admin') }}/js/pro/forms-tagify.js"></script>
 <script src="{{ asset('admin') }}/js/pro/forms-typeahead.js"></script>
-
-
-
 <!-- Include Flatpickr JS from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -235,14 +231,8 @@
         dateFormat: 'Y-m-d'
     });
 
-    let reminderdate = flatpickr('#second_due_date', {
-        dateFormat: 'Y-m-d'
-    });
-    
-
 
     $(document).ready(function() {
-
          $(".select2").select2();
       
         let table = $('#activityTable').DataTable({
@@ -312,22 +302,27 @@
             }
         }
 
+    // Initialize the day dropdown based on the current month
+        generateDayOptions();
+
+
         var cloneCount = 0;
 
-        // Clone the div when clicking the plus button
-        var cloneCount = 0;
-
-        // Clone the div when clicking the plus button
-        $('.add-more').on('click', function () {
-            var $originalDiv = $('.first-div').first(); // Select the first div with class 'first-div'
+         // Clone the div when clicking the plus button
+        $(document).on('click', '.add-more', function () {
+            var $originalDiv = $(this).prev('.form-group');
             var $clonedDiv = $originalDiv.clone();
+            $originalDiv.after($clonedDiv);
             cloneCount++;
 
-            // Clear the input field in the cloned div
+            // Add a class to the cloned div to distinguish it
+            $clonedDiv.addClass('cloned-div');
             $clonedDiv.find('input[type="date"]').val('');
+            
 
-            // Insert the cloned div after the last .first-div
-            $originalDiv.after($clonedDiv);
+
+        
+        
         });
 
         //Remove the nearest cloned div when clicking the minus button
@@ -393,37 +388,30 @@
    
 
 
+
     $(".edit_activity").on('click', function (e) {
             e.preventDefault();
 
-           
             let activityData = $(this).data('activity');
             console.log(activityData);
 
             flatDate.setDate(activityData.first_due_date);
             $('#activity').val(activityData.name);
-            reminderdate.setDate(activityData.second_due_date);
-            
-            
-             $('.action_btn').html('Update');
-
-            $("#offcanvasBoth").offcanvas("show");
-
+            $('#second_due_date').val(activityData.second_due_date);
+          
+            // $('#assign_to').select2().val(activityData.assignTo).trigger('change');
+            // $('#team').select2().val(task.team).trigger('change');
             $('#activityId').val(activityData.id);
-            let activityId = $('#activityId').val();
+            $('.action_btn').html('Update');
+            let activityID = $('#activityId').val();
 
-           
-            if(activityId) {
-               
+            if(activityID) {
                 var url = "{{ route('activity-update')}}";
-                url = url.replace(':id',activityId);
+                url = url.replace(':id',activityID);
 
             }else {
                 var url = "{{ route('activity-store')}}";
             }
-
-            let activityForm = $('#activity_add_form');
-            activityForm.attr('action', url);
 
         });
        
