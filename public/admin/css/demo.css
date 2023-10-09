@@ -6,6 +6,7 @@
 :root {
   --primary: #1FB37A;
   --primary_hover: #08915c;
+  --primary-light: #e8fadf;
 }
 
 /* ----- Custom Default Styles ----- */
@@ -177,9 +178,123 @@ ul#select2-cron_day-results > li {
   cursor: pointer;
 }
 
-.btn-primary {
-  color: #fff!important; 
-  background-color: var(--primary)!important;
-  border-color: var(--primary);
+.card-body .dataTables_wrapper .dataTables_paginate .paginate_button.current{
+  background: #1FB37A !important;
+  color: #fff !important;
+  border: 1px solid #1FB37A !important;
+  border-radius: 50%;
+  box-shadow: none;
+  cursor: pointer;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:active{
+  background: #1FB37A !important;
+  color: #fff !important;
+  border: 1px solid #1FB37A !important;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.card-body .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+  background: #000 !important;
+  color: #fff !important;
+  border: 1px solid #000 !important;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.card-body .dataTables_wrapper .dataTables_paginate .paginate_button.current:focus{
+  background: #ffd401 !important;
+  color: #fff !important;
+  border: 1px solid #ffd401 !important;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.custom_search_filter {
+  width: 350px;
+  position: relative;
+}
+.custom_search_filter_inputMask {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+}
+.search-filter-form{
+  top: -10px;
+}
+.select-group{
+  width: 133px;
+}
+.dataTables_wrapper > .bottom{
+  display: grid;
+  grid-template-columns: 240px 1fr 240px;
+}
+.dataTables_wrapper  > .bottom .dataTables_info{
+  text-align: center;
+}
+.table thead{
+  background-color: var(--primary);
+
+}
+.table thead th{
+  color: #fff !important;
+}
+div table.dataTable.no-footer{
+  border-bottom: none;
+}
+div table.dataTable tbody td {
+    border: none;
+    padding: 15px 10px;
+    vertical-align: middle;
+}
+.dataTables_wrapper tbody tr:hover, .dataTables_wrapper tbody tr.clicked {
+  background-color: var(--primary-light)!important;
+}
+table.dataTable tbody tr.even {
+  background-color: #f5f5f5;
 }
 
+.dataTables_filter{
+  display: none !important;
+}
+/*--- Buttons---*/
+.btn-primary{
+  box-shadow: none !important;
+}
+.btn-primary:hover{
+  transform: none !important;
+}
+.btn-danger{
+  box-shadow: none !important;
+  background-color: transparent !important;
+  color:  #ff3e1d !important;
+  border: none !important;
+}
+.btn-danger:hover{
+  transform: none !important;
+}
+.edit_team{
+  background-color: transparent !important;
+  color: var(--primary);
+  border: none !important;
+}
+.edit_team:hover{
+  transform: none !important;
+  color: var(--primary);
+}
+.task-group{
+  column-gap: 20px;
+}
+.select2-dropdown--below{
+  top: 10px !important;
+  max-width: 300px !important;
+  padding: 10px 15px !important;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.07);
+}
+.select2-dropdown--below .select2-search__field{
+  min-height: 40px;
+}
+.task-form{
+  column-gap: 30px;
+}

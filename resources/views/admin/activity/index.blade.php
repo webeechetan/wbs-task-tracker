@@ -124,14 +124,6 @@
                             @enderror
                         </div> 
                         <button type="button" class="btn btn-primary add-more mt-3"><b>+</b></button>
-                       
-                        <!-- Submit -->
-                        <div class="activities_submit mt-5">
-                            <button type="submit" id="action_btn" class="btn btn-primary action_btn">Create</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 </div>
@@ -236,12 +228,11 @@
 
 
     $(document).ready(function() {
-
-        
          $(".select2").select2();
       
         let table = $('#activityTable').DataTable({
             responsive: true,
+            dom: '<"top"f>rt<"bottom"lip><"clear">'
         });
 
 

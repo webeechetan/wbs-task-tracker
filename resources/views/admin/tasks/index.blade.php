@@ -20,24 +20,30 @@
 @section('content')
 
 <div class="card">
-    <div class="card-body">
+    <div class="card-header d-flex task-group align-items-center">
+        <div class="custom_search_filter">
+            <form action="#" method="GET">
+                    <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
+                    <div class="custom_search_filter_inputMask search-filter-form"><i class="bx bx-search"></i></div>
+            </form>
+        </div>
         <form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form">
             @csrf
             <input type="hidden" name="taskId" id="taskId">
-            <div class="row " id="parent">
+            <div class="d-flex justify-content-between align-items-center task-form" id="parent">
 
-                <div class="form-group col-md-3">
+                <div class="form-group">
                     <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date"
                         required value="<?php echo date('Y-m-d'); ?>">
                 </div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group">
                     <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name"
                         required>
                 </div>
 
-                <div class="form-group col-md-3">
-                    <select class="form-control" id="client" name="client">
+                <div class="form-group select-group" >
+                    <select class="form-control select-control" id="client" name="client">
                         <option value="">Select Client</option>
                         @foreach ($clients as $client)
                         <option value="{{$client->client}}">{{$client->client}}</option>
@@ -45,21 +51,16 @@
                     </select>
                 </div>
 
-                <div class="form-group col-md-3">
+                <div class="form-group">
                     <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
                 </div>
             </div>
 
         </form>
     </div>
-</div>
-
-
-<div class="row mt-5">
-    <div class="card">
-        <div class="card-body">
+    <div class="card-body">
             <div class="table-responsive text-nowrap">
-                <table class="table table-hover" id="tasksTable">
+                <table class="table table-hover mb-3" id="tasksTable">
                     <thead>
                         <tr>
                             <th></th>
@@ -92,7 +93,7 @@
                                 <td>{{ $task->status }}</td>
 
                                 <td>
-                                    <button class="btn btn-primary btn-sm edit_task" data-task='{{ json_encode($task) }}'><i
+                                    <button class="btn btn-primary btn-sm edit_task edit_team" data-task='{{ json_encode($task) }}'><i
                                             class='bx bx-edit'></i></button>
                                     <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
                                         @csrf
@@ -108,10 +109,7 @@
                 </table>
             </div>
         </div>
-    </div>
 </div>
-
-
 @endsection
 
 @section('scripts')
@@ -130,6 +128,7 @@
     $(document).ready(function () {
         let table = $('#tasksTable').DataTable({
             responsive: true,
+            dom: '<"top"f>rt<"bottom"lip><"clear">'
         });
 
         // seclect2 for client
