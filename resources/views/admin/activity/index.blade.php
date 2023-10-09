@@ -6,6 +6,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('admin') }}/vendor-pro/libs/bootstrap-select/bootstrap-select.css" />
+<link rel="stylesheet" href="{{ asset('admin') }}/vendor-pro/libs/tagify/tagify.css" />
+<link rel="stylesheet" href="{{ asset('admin') }}/vendor-pro/libs/select2/select2.css" />
 @endsection
 
 
@@ -51,7 +54,7 @@
                         </div>
                         <div class="mt-3">
                             <label for="team" class="form-label">Team</label>
-                            <select class="form-select" id="team" name="team">
+                            <select class="form-select selectpicker select2" id="team" name="team[]" multiple>
                                 <option value="">Select Team</option>
                                 @foreach ($teams as $team)
                                     <option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -142,30 +145,56 @@
 </div>
 
 <div class="card">
-    <div class="card-header d-flex align-items-center justify-content-between">
-            <div class="custom_search_filter">
-                <form action="#" method="GET">
-                        <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
-                        <div class="custom_search_filter_inputMask search-filter-form"><i class="bx bx-search"></i></div>
-                </form>
-            </div>
-            <h5>Activities</h5>
-    </div>   
-    <div class="card-body">
-        <div class="table-responsive text-nowrap">
-            <table class="table table-hover mb-3" id="activityTable">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Team</th>
-                        <th>Activity</th>
-                        <th>Assigned To</th>
-                        <th>First Due Date</th>
-                        <th>Second Due Date</th>
-                        <th>Manager</th>
-                        <th>Status</th>
-                        <th>Schedule On</th>
-                        <th>Action</th>
+    <h5 class="card-header">Activities</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover" id="activityTable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Team</th>
+                    <th>Activity</th>
+                    <th>Assigned To</th>
+                    <th>First Due Date</th>
+                    <th>Second Due Date</th>
+                    <th>Manager</th>
+                    <th>Status</th>
+                    <th>Schedule On</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @foreach ($activities as $activity)
+                    <tr class=" @if($activity->status == 'completed') completed-task @endif ">
+                        <td>
+                            <input class="form-check-input mark_complete_activity" data-activity='{{ json_encode($activity)}}' type="checkbox" @checked($activity->status == 'completed')>
+                        </td>
+                        <td>
+                            {{ $activity->team->name }}
+                        </td>
+                        <td>{{ $activity->name }}</td>
+                        <td>
+                            @foreach ($activity->assignedUsers as $user)
+                                <span class="badge bg-primary">{{ $user->name }}</span>
+                            @endforeach
+                        </td>
+                        <td>{{ $activity->first_due_date }}</td>
+                        <td>{{ $activity->second_due_date }}</td>
+                        <td>{{ $activity->team->lead->name }}</td>
+                        <td>
+                            @if ($activity->status == 'pending')
+                                <span class="badge bg-danger">Pending</span>
+                            @elseif($activity->status == 'completed')
+                                <span class="badge bg-success">Completed</span>
+                            @endif
+                        </td>
+                        <td> <small> {{ $activity->cron_string }}</small></td>
+                        <td> <button class="btn btn-primary btn-sm edit_task"><i class='bx bx-edit'></i></button>
+                            <form action="{{route('activity-destroy', $activity->id)}}" method="POST" class="d-inline delete_form">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash'></i></button>
+                            </form>
+                        </td>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -221,6 +250,17 @@
 
 <!-- Include Flatpickr JS from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+<script src="{{ asset('admin') }}/vendor-pro/libs/select2/select2.js"></script>
+<script src="{{ asset('admin') }}/vendor-pro/libs/tagify/tagify.js"></script>
+<script src="{{ asset('admin') }}/vendor-pro/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="{{ asset('admin') }}/vendor-pro/libs/typeahead-js/typeahead.js"></script>
+<script src="{{ asset('admin') }}/vendor-pro/libs/bloodhound/bloodhound.js"></script>
+<script src="{{ asset('admin') }}/js/pro/forms-selects.js"></script>
+<script src="{{ asset('admin') }}/js/pro/forms-tagify.js"></script>
+<script src="{{ asset('admin') }}/js/pro/forms-typeahead.js"></script>
+
 {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 <script>
     let flatDate = flatpickr('#due_date', {
@@ -266,6 +306,12 @@
             $('#cron_string').val(cron_output);
        }
 
+
+       $('#team').select2({
+            placeholder: "Team",
+            allowClear: true
+        });
+
         $('#assign_to').select2({
             placeholder: "Assign To",
             allowClear: true
@@ -290,34 +336,6 @@
 
     // Initialize the day dropdown based on the current month
     generateDayOptions();
-
-    $('.mark_complete_activity').change(function () {
-
-       
-           
-            var activityData = ($(this).data('activity'));
-            let activity_status = activityData.status;
-            console.log(activity_status);
-            $.ajax({
-                type: 'POST',
-                url: '/activity/activity-statusupdate/' + activityData.id,
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    taskId: activityData.id,
-                    status: activity_status
-                },
-                success: function (response) {
-                    location.reload();
-                    console.log(response);
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
-
-
-
 
 
         $(document).on('click', '.add-more', function() {
@@ -359,6 +377,34 @@
             });
 
         });
+
+
+        
+        
+    $('.mark_complete_activity').change(function () {
+
+                
+        var activityData = ($(this).data('activity'));
+        console.log(activityData);
+        let activity_status = activityData.status;
+        console.log(activity_status);
+        $.ajax({
+            type: 'POST',
+            url: '/activities/status_update/' + activityData.id,
+            data: {
+                "_token": "{{ csrf_token() }}",
+                activityId: activityData.id,
+                status: activity_status
+            },
+            success: function (response) {
+                location.reload();
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+});
        
 
 </script>

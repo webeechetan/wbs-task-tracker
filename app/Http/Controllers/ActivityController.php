@@ -139,7 +139,10 @@ class ActivityController extends Controller
     public function statusupdate(Request $request, Activity $activity)
     {
 
-        dd("Hello");
+        echo "Hello";
+        dd('Hello');
+        
+       
         if($request->status=='pending'){
             $activity->status = 'completed';
         }
