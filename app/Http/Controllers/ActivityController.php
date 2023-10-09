@@ -16,7 +16,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        $activities = Activity::all();
+        $activities = Activity::orderBy('status')->get();
         $teams = Team::all();
         $users = User::all();
         return view('admin.activity.index',compact('activities','teams','users'));
@@ -42,13 +42,14 @@ class ActivityController extends Controller
     {
 
        
-        // $request = new Request();
+
         $request->validate([
                 'team' => 'required|int',
                 'activity' => 'required',
                 'first_due_date' => 'required|date',
                 'second_due_date' => 'required|date',
             ]);
+
         $activity = new Activity();
         $activity->team_id = $request->team;
         $activity->name = $request->activity;
@@ -134,23 +135,16 @@ class ActivityController extends Controller
         }
     }
 
-    
 
     public function statusupdate(Request $request, Activity $activity)
     {
-
-        echo "Hello";
-        dd('Hello');
         
-       
-        if($request->status=='pending'){
-            $activity->status = 'completed';
-        }
-        if($request->status=='completed'){
-            $activity->status = 'pending';
-        }
-        $task->save();
+        $activity->status = ($activity->status == 'pending') ? 'completed' : 'pending';
+        
+        $activity->save();
 
         return response()->json(['message' => 'Activity status updated successfully'], 200);
     }
-}
+
+
+ }

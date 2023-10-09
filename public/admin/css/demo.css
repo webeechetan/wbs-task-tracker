@@ -177,3 +177,9 @@ ul#select2-cron_day-results > li {
   cursor: pointer;
 }
 
+.btn-primary {
+  color: #fff!important; 
+  background-color: var(--primary)!important;
+  border-color: var(--primary);
+}
+

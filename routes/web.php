@@ -88,9 +88,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/activities', [ActivityController:: class, 'index'])->name('activity-index')->middleware('auth');
     Route::post('/activities/store', [ActivityController::class, 'store'])->name('activity-store')->middleware('auth');
 
+    Route::post('/activities/update', [ActivityController::class, 'update'])->name('activity-update')->middleware('auth');
+
     Route::post('/activities/status_update/{activity}', [ActivityController::class, 'statusupdate'])->name('activity-statusupdate')->middleware('auth');
-
-
     Route::delete('/activities/destroy/{activity}', [ActivityController::class, 'destroy'])->name('activity-destroy')->middleware('auth');
     
 

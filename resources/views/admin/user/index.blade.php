@@ -26,6 +26,7 @@
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @foreach($users as $user)
+
                     <tr>
                         <td>{{$user->name}} 
                             {{ count($user->activities) }} 

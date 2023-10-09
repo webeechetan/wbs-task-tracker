@@ -37,4 +37,6 @@ class Activity extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+ 
 }
