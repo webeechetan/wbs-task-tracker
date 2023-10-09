@@ -11,10 +11,17 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">Teams</h5> <small class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewTeamModal">Create New</small>
+               <div class="custom_search_filter">
+                    <form action="#" method="GET">
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
+                            <div class="custom_search_filter_inputMask"><i class="bx bx-search"></i></div>
+                    </form>
+                 </div>
+                 <h5 class="mb-0">Teams</h5> 
+                <small class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewTeamModal">Create New</small>
             </div>
             <div class="card-body">
-                <table class="table table-hover mb-0" id="teamsTable">
+                <table class="table table-hover mb-3" id="teamsTable">
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
@@ -121,6 +128,8 @@
 
         let table = $('#teamsTable').DataTable({
             responsive: true,
+         dom: '<"top"f>rt<"bottom"lip><"clear">'
+
         });
 
         // create team
