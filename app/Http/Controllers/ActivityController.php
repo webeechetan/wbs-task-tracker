@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Team;
 USE App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Reminder;
 
 class ActivityController extends Controller
 {
@@ -16,7 +17,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        $activities = Activity::orderBy('status')->get();
+        $activities = Activity::with(['team','assignedUsers','reminders'])->get();
         $teams = Team::all();
         $users = User::all();
         return view('admin.activity.index',compact('activities','teams','users'));
@@ -40,41 +41,38 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-
-       
-
         $request->validate([
                 'team' => 'required|int',
                 'activity' => 'required',
                 'first_due_date' => 'required|date',
-                'second_due_date' => 'required|date',
             ]);
 
         $activity = new Activity();
         $activity->team_id = $request->team;
         $activity->name = $request->activity;
         $activity->first_due_date = $request->first_due_date;
-        $activity->second_due_date = $request->second_due_date;
         $activity->created_by = auth()->user()->id;
         if($request->has('cron_day') && $request->has('cron_month') && $request->cron_month){
 
             $day = implode(',',$request->cron_day);
             $month = implode(',',$request->cron_month);
             $cron_expression = '30 10 '.$day.' '.$month.' *';
-            // $cron_expression = '30 10 '.$request->cron_day.' '.$month.' *';
             $activity->cron_expression = $cron_expression;
             $activity->cron_string = $request->cron_string;
         }
         try {
-            try{
+            $activity->save();
+            $activity->assignedUsers()->attach($request->assign_to);
 
-                $activity->save();
-                $activity->assignedUsers()->attach($request->assign_to);
-            }catch(\Throwable $th){
-                $msg = $th->getMessage();
-                $this->alert('Error',$msg,'danger');
-                return redirect()->back();
+            if($request->has('reminder_date')){
+                foreach ($request->reminder_date as $key => $value) {
+                    $reminder = new Reminder();
+                    $reminder->activity_id = $activity->id;
+                    $reminder->reminder_date = $value;
+                    $reminder->save();
+                }
             }
+
             $this->alert('Success','Activity created successfully','success');
             return redirect()->back();
         } catch (\Throwable $th) {
@@ -113,9 +111,48 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Activity $activity)
+    public function update(Request $request)
     {
-        dd("Helo update");
+        $request->validate([
+                'team' => 'required|int',
+                'activity' => 'required',
+                'first_due_date' => 'required|date',
+            ]);
+
+        $activity = Activity::find($request->activityId);
+        $activity->team_id = $request->team;
+        $activity->name = $request->activity;
+        $activity->first_due_date = $request->first_due_date;
+        $activity->created_by = auth()->user()->id;
+        if($request->has('cron_day') && $request->has('cron_month') && $request->cron_month){
+
+            $day = implode(',',$request->cron_day);
+            $month = implode(',',$request->cron_month);
+            $cron_expression = '30 10 '.$day.' '.$month.' *';
+            $activity->cron_expression = $cron_expression;
+            $activity->cron_string = $request->cron_string;
+        }
+        try {
+            $activity->save();
+            $activity->assignedUsers()->sync($request->assign_to);
+
+            if($request->has('reminder_date')){
+                $activity->reminders()->delete();
+                foreach ($request->reminder_date as $key => $value) {
+                    $reminder = new Reminder();
+                    $reminder->activity_id = $activity->id;
+                    $reminder->reminder_date = $value;
+                    $reminder->save();
+                }
+            }
+
+            $this->alert('Success','Activity updated successfully','success');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            $msg = $th->getMessage();
+            $this->alert('Error',$msg,'danger');
+            return redirect()->back();
+        }
     }
 
     /**

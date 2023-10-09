@@ -15,9 +15,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-
-        // $tasks = Task::all();
-        $tasks = Task::orderBy('status')->get();
+        $tasks = Task::where('user_id', auth()->user()->id)->orderBy('status')->get();
         $clients = Task::select('client')->distinct()->get();
         return view('admin.tasks.index', compact('tasks','clients'));
     }

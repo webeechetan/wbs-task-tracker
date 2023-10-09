@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Team;
 use Carbon\Carbon;
 use Cron\CronExpression;
+use App\Models\User;
+use App\Models\Reminder;
 
 class Activity extends Model
 {
@@ -36,6 +38,11 @@ class Activity extends Model
     public function assignedUsers()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function reminders()
+    {
+        return $this->hasMany(Reminder::class);
     }
 
  
