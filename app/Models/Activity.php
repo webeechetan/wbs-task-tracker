@@ -9,10 +9,17 @@ use Carbon\Carbon;
 use Cron\CronExpression;
 use App\Models\User;
 use App\Models\Reminder;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 
 class Activity extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
+
+    public function routeNotificationForSlack($notification)
+    {
+        return env('SLACK_NOTIFICATION_WEBHOOK_URL');
+    }
 
     public function team()
     {

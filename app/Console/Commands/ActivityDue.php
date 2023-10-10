@@ -28,11 +28,10 @@ class ActivityDue extends Command
      */
     public function handle()
     {
-        // pickup last month activities and create new activities for this month
-        $activities = Activity::where('first_due_date', '<=', now()->subMonth())
-                        ->groupBy('name')
-                        ->orderBy('id', 'desc')
-                        ->get();
+        
+        // pickup last month activities
+
+        $activities = Activity::where('first_due_date',now()->subMonth()->format('Y-m-d'))->get();
 
         foreach ($activities as $activity) {
             $activity->due();
