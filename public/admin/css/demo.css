@@ -256,9 +256,9 @@ table.dataTable tbody tr.even {
   background-color: #f5f5f5;
 }
 
-.dataTables_filter{
+/* .dataTables_filter{
   display: none !important;
-}
+} */
 /*--- Buttons---*/
 .btn-primary{
   box-shadow: none !important;

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Activity;
+use Illuminate\Http\Request;
 
 class ActivityDue extends Command
 {
@@ -28,13 +29,12 @@ class ActivityDue extends Command
      */
     public function handle()
     {
-        
-        // pickup last month activities
-
-        $activities = Activity::where('first_due_date',now()->subMonth()->format('Y-m-d'))->get();
+        $activities = Activity::where('first_due_date', now()->format('Y-m-d'))->get();
 
         foreach ($activities as $activity) {
             $activity->due();
         }
+
     }
+
 }

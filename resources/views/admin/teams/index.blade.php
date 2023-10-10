@@ -11,12 +11,12 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header d-flex align-items-center justify-content-between">
-               <div class="custom_search_filter">
+               {{-- <div class="custom_search_filter">
                     <form action="#" method="GET">
                             <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
                             <div class="custom_search_filter_inputMask"><i class="bx bx-search"></i></div>
                     </form>
-                 </div>
+                 </div> --}}
                  <h5 class="mb-0">Teams</h5> 
                 <small class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewTeamModal">Create New</small>
             </div>

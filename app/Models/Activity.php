@@ -28,12 +28,19 @@ class Activity extends Model
 
     public function due()
     {
+        $old_activity = $this->replicate();
         $new_activity = $this->replicate();
         $first_due_date = Carbon::parse($this->first_due_date)->addMonth();
-        $second_due_date = Carbon::parse($this->second_due_date)->addMonth();
         $new_activity->first_due_date = $first_due_date;
-        $new_activity->second_due_date = $second_due_date;
         $new_activity->save();
+        $new_activity->assignedUsers()->attach($this->assignedUsers);
+        foreach($this->reminders as $key => $val){
+            $reminder = new Reminder();
+            $reminder->activity_id = $new_activity->id;
+            $reminder->reminder_date = Carbon::parse($val->reminder_date)->addMonth();
+            $reminder->save();
+        }
+
     }
 
     public function isDue()
