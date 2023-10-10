@@ -15,7 +15,7 @@ Route::get('/', function () {
 
 /*--------------------------------- Auth Routes ---------------------------------*/
 
-Route::get('/login', [AuthController::class, 'index'])->name('login.view')->middleware('guest');
+Route::get('/', [AuthController::class, 'index'])->name('login.view')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 
 

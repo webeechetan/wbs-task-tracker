@@ -247,6 +247,7 @@ div table.dataTable tbody td {
     border: none;
     padding: 15px 10px;
     vertical-align: middle;
+    font-size: 12px;
 }
 .dataTables_wrapper tbody tr:hover, .dataTables_wrapper tbody tr.clicked {
   background-color: var(--primary-light)!important;
@@ -261,6 +262,9 @@ table.dataTable tbody tr.even {
 /*--- Buttons---*/
 .btn-primary{
   box-shadow: none !important;
+  background-color: var(--primary) !important;
+  color: #fff !important;
+  border: 1px solid var(--primary) !important;
 }
 .btn-primary:hover{
   transform: none !important;

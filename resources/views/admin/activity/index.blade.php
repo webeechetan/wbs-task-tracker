@@ -28,17 +28,20 @@ $userType = $user->type;
 
 <!-- Add Product -->
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-    <div class="d-flex flex-column justify-content-center">
+    {{-- <div class="d-flex flex-column justify-content-center"> --}}
         <h4 class="d-flex align-items-center">
-            <div class="avatar me-2">
+            {{-- <div class="avatar me-2">
                 <span class="avatar-initial rounded bg-label-primary"><i class='bx bx-task'></i></span>
-            </div>
+            </div> --}}
             All Activity
         </h4>
-    </div>
+    {{-- </div> --}}
     <div class="d-flex align-content-center flex-wrap gap-3">
+
+        @if($userType == 1 || $userType ==2)
         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth"
             aria-controls="offcanvasBoth"><i class='bx bx-plus'></i> Add Activity</button>
+            @endif
         <!-- Offcanvas -->
 
         <div class="offcanvas offcanvas-end " data-bs-scroll="true" tabindex="-1" id="offcanvasBoth"
@@ -148,82 +151,82 @@ $userType = $user->type;
     </div>
 
 </div>
-</div>
 
 
 <div class="card">
     <h5 class="card-header">Activities</h5>
-    <div class="table-responsive text-nowrap">
-        <table class="table table-hover" id="activityTable">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Team</th>
-                    <th>Activity</th>
-                    <th>Assigned To</th>
-                    <th>Due Date</th>
-                    <th>Reminders</th>
-                    <th>Manager</th>
-                    <th>Status</th>
-                    <th>Schedule On</th>
-
-                    @if($userType === 1|| $userType === 2)
-                    <th>Action</th>
-                    @endif
-                </tr>
-            </thead>
-            <tbody class="table-border-bottom-0">
-                @foreach ($activities as $activity)
-                <tr class=" @if($activity->status == 'completed') completed-task @endif ">
-                    <td>
-                        <input class="form-check-input mark_complete_activity"
-                            data-activity='{{ json_encode($activity)}}' type="checkbox" @checked($activity->status ==
-                        'completed')>
-                    </td>
-                    <td>
-                        {{ $activity->team->name }}
-                    </td>
-                    <td>{{ $activity->name }}</td>
-                    <td>
-                        @foreach ($activity->assignedUsers as $user)
-                        <span class="badge bg-primary">{{ $user->name }}</span>
-                        @endforeach
-                    </td>
-                    <td>{{ $activity->first_due_date }}</td>
-                    <td>
-                        @foreach ($activity->reminders as $reminder)
-                        <span class="badge bg-primary">{{ $reminder->reminder_date }}</span>
-                        @endforeach
-                    </td>
-                    <td>{{ $activity->team->lead->name }}</td>
-                    <td>
-                        @if ($activity->status == 'pending')
-                        <span class="badge bg-danger">Pending</span>
-                        @elseif($activity->status == 'completed')
-                        <span class="badge bg-success">Completed</span>
+    <div class="card-body">
+        <div class="table-responsive text-nowrap">
+            <table class="table mb-3 table-hover" id="activityTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Team</th>
+                        <th>Activity</th>
+                        <th>Assigned To</th>
+                        <th>Due Date</th>
+                        <th>Reminders</th>
+                        {{-- <th>Manager</th> --}}
+                        <th>Status</th>
+                        <th>Schedule On</th>
+    
+                        @if($userType === 1|| $userType === 2)
+                        <th>Action</th>
                         @endif
-                    </td>
-                    <td> <small> {{ $activity->cron_string }}</small></td>
-
-                    @if($userType === 1|| $userType === 2)
-                    <td>
-                        <button class="btn btn-primary btn-sm edit_activity"
-                            data-activity='{{ json_encode($activity)}}'><i class='bx bx-edit'></i></button>
-                        <form action="{{route('activity-destroy', $activity->id)}}" method="POST"
-                            class="d-inline delete_form">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash'></i></button>
-                        </form>
-                    </td>
-                    @endif
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach ($activities as $activity)
+                    <tr class=" @if($activity->status == 'completed') completed-task @endif ">
+                        <td>
+                            <input class="form-check-input mark_complete_activity"
+                                data-activity='{{ json_encode($activity)}}' type="checkbox" @checked($activity->status ==
+                            'completed')>
+                        </td>
+                        <td>
+                            {{ $activity->team->name }}
+                        </td>
+                        <td>{{ $activity->name }}</td>
+                        <td>
+                            @foreach ($activity->assignedUsers as $user)
+                            <span class="badge bg-primary">{{ $user->name }}</span>
+                            @endforeach
+                        </td>
+                        <td>{{ $activity->first_due_date }}</td>
+                        <td>
+                            @foreach ($activity->reminders as $reminder)
+                            <span class="badge bg-primary">{{ $reminder->reminder_date }}</span>
+                            @endforeach
+                        </td>
+                        {{-- <td>{{ $activity->team->lead->name }}</td> --}}
+                        <td>
+                            @if ($activity->status == 'pending')
+                            <span class="badge bg-danger">Pending</span>
+                            @elseif($activity->status == 'completed')
+                            <span class="badge bg-success">Completed</span>
+                            @endif
+                        </td>
+                        <td> <small> {{ $activity->cron_string }}</small></td>
+    
+                        @if($userType === 1|| $userType === 2)
+                        <td>
+                            <button class="btn btn-primary btn-sm edit_activity"
+                                data-activity='{{ json_encode($activity)}}'><i class='bx bx-edit'></i></button>
+                            <form action="{{route('activity-destroy', $activity->id)}}" method="POST"
+                                class="d-inline delete_form">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash'></i></button>
+                            </form>
+                        </td>
+                        @endif
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-
 
 @endsection
 

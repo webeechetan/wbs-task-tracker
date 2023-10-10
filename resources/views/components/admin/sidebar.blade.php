@@ -1,7 +1,7 @@
-@php
-$user = auth()->user();
-$userType = $user->type;
 
+@php
+    $user = auth()->user();
+    $userType = $user->type;
 @endphp
 
 
@@ -29,6 +29,7 @@ $userType = $user->type;
           <div data-i18n="Analytics">Dashboard</div>
         </a>
       </li>
+
 
       @if($userType === 1|| $userType === 2)
   

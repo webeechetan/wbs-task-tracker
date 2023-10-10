@@ -18,21 +18,17 @@ class ActivityController extends Controller
      */
     public function index()
     {
-
         $user = Auth::user();
-
-      
-
        
         $activities = Activity::with(['team','assignedUsers','reminders'])->get();
 
-         //dd($activities);
-    //     $activities = Activity::with(['team', 'assignedUsers', 'reminders'])->where('team_id', $user->team_id)->get(); 
+        foreach ($activities as $activity) {
 
-    // $activities = Activity::with(['team', 'assignedUsers', 'reminders'])
-    // ->whereIn('team_id', $user->assignedUsers->pluck('id'))
-    // ->orderBy('status')
-    // ->get();
+            $teamId = $activity->team->id; 
+        
+         $activities = Activity::with(['team', 'assignedUsers', 'reminders'])->where('team_id', $teamId)->get(); 
+        }
+
 
         $teams = Team::all();
         $users = User::all();
