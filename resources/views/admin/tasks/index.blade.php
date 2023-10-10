@@ -20,13 +20,7 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header d-flex task-group align-items-center">
-        <div class="custom_search_filter">
-            <form action="#" method="GET">
-                    <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
-                    <div class="custom_search_filter_inputMask search-filter-form"><i class="bx bx-search"></i></div>
-            </form>
-        </div>
+    <div class="card-header">
         <form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form">
             @csrf
             <input type="hidden" name="taskId" id="taskId">
@@ -35,6 +29,7 @@
                 <div class="form-group">
                     <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date"
                         required value="<?php echo date('Y-m-d'); ?>">
+                        
                 </div>
 
                 <div class="form-group">

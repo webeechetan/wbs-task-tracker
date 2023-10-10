@@ -85,38 +85,40 @@ $userType = $user->type;
                         @enderror
                     </div>
 
-                    <div class="mt-3">
-                        <label for="activity">Schedule On</label>
-                        <div class="input-group">
-                            <select class="form-control" name="cron_day[]" id="cron_day" multiple>
-                                @php
-                                $currentDate = now();
-                                $lastDay = $currentDate->daysInMonth;
-                                @endphp
-                                @for ($day = 1; $day <= $lastDay; $day++) <option value="{{ $day }}">{{ $day }}</option>
-                                    @endfor
-                            </select>
+                   <div class="d-flex column-gap-2 justify-content-between">
+                        <div class="mt-3">
+                                <label for="activity">Schedule On</label>
+                                <div class="input-group schedule">
+                                    <select class="form-control" name="cron_day[]" id="cron_day" multiple>
+                                        @php
+                                        $currentDate = now();
+                                        $lastDay = $currentDate->daysInMonth;
+                                        @endphp
+                                        @for ($day = 1; $day <= $lastDay; $day++) <option value="{{ $day }}">{{ $day }}</option>
+                                            @endfor
+                                    </select>
 
-                        </div>
-                    </div>
+                                </div>
+                            </div>
 
-                    @php
-                    $months = ['All' => '*', 'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6,
-                    'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12];
-                    @endphp
+                            @php
+                            $months = ['All' => '*', 'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6,
+                            'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12];
+                            @endphp
 
-                    <div class="mt-3">
-                        <label for="month">Month</label>
-                        <div class="input-group">
-                            <select class="form-control mt-3" name="cron_month[]" id="cron_month" multiple>
-                                <option value="">Month</option>
-                                @foreach ($months as $key => $month)
-                                <option value="{{$month}}">{{$key}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="mt-3">
+                                <label for="month">Month</label>
+                                <div class="input-group month">
+                                    <select class="form-control mt-3" name="cron_month[]" id="cron_month" multiple>
+                                        <option value="">Month</option>
+                                        @foreach ($months as $key => $month)
+                                        <option value="{{$month}}">{{$key}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                    </div>
+                            </div>
+                   </div>
                     <b><span class="text-success cron_output"></span></b>
                     @error('cron_command')
                     <span class="text-danger">{{ $message }}</span>
@@ -132,13 +134,13 @@ $userType = $user->type;
                         </select>
                     </div>
                     <div class="reminders">
-                        <div class="mt-3 text-center">
-                            <label for="activity">Reminder Date</label>
+                        <div class="mt-3">
+                            <label for="activity" class="col-form-label">Reminder Date</label>
                             <input type="date" class="form-control" id="reminder" name="reminder_date[]">
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary add-more-reminder mt-2">+</button>
+                    <button type="button" class="btn btn-primary btn-sm add-more-reminder mt-2">Add More Reminder</button>
 
 
                     <!-- Additional form fields go here -->
