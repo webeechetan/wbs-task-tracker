@@ -19,7 +19,7 @@ class ActivityController extends Controller
     public function index()
     {
         $user = Auth::user();
-       
+    
         $activities = Activity::with(['team','assignedUsers','reminders'])->get();
 
         foreach ($activities as $activity) {

@@ -30,13 +30,15 @@ $userType = $user->type;
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
     {{-- <div class="d-flex flex-column justify-content-center"> --}}
         <h4 class="d-flex align-items-center">
-            {{-- <div class="avatar me-2">
-                <span class="avatar-initial rounded bg-label-primary"><i class='bx bx-task'></i></span>
-            </div> --}}
             All Activity
         </h4>
     {{-- </div> --}}
     <div class="d-flex align-content-center flex-wrap gap-3">
+
+        <a class="btn btn-primary" href="#">All</a>
+        <a class="btn btn-primary" href="">Pending</a>
+        <a class="btn btn-primary" href="">Completed</a>
+   
 
         @if($userType == 1 || $userType ==2)
         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth"
