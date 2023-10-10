@@ -1,3 +1,9 @@
+@php 
+$user = auth()->user();
+$userType = $user->type;
+
+@endphp 
+
 @extends('admin.layouts.app')
 @section('title', 'Activities List')
 
@@ -160,7 +166,10 @@
                     <th>Manager</th>
                     <th>Status</th>
                     <th>Schedule On</th>
+
+                    @if($userType === 1|| $userType === 2)
                     <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -195,6 +204,8 @@
                         @endif
                     </td>
                     <td> <small> {{ $activity->cron_string }}</small></td>
+
+                    @if($userType === 1|| $userType === 2)
                     <td>
                         <button class="btn btn-primary btn-sm edit_activity"
                             data-activity='{{ json_encode($activity)}}'><i class='bx bx-edit'></i></button>
@@ -205,6 +216,7 @@
                             <button type="submit" class="btn btn-danger btn-sm"><i class='bx bxs-trash'></i></button>
                         </form>
                     </td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>

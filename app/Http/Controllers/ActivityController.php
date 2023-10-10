@@ -7,6 +7,7 @@ use App\Models\Team;
 USE App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Reminder;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
@@ -17,7 +18,22 @@ class ActivityController extends Controller
      */
     public function index()
     {
+
+        $user = Auth::user();
+
+      
+
+       
         $activities = Activity::with(['team','assignedUsers','reminders'])->get();
+
+         //dd($activities);
+    //     $activities = Activity::with(['team', 'assignedUsers', 'reminders'])->where('team_id', $user->team_id)->get(); 
+
+    // $activities = Activity::with(['team', 'assignedUsers', 'reminders'])
+    // ->whereIn('team_id', $user->assignedUsers->pluck('id'))
+    // ->orderBy('status')
+    // ->get();
+
         $teams = Team::all();
         $users = User::all();
         return view('admin.activity.index',compact('activities','teams','users'));

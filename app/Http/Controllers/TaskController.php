@@ -6,6 +6,8 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Auth;
+
 class TaskController extends Controller
 {
     /**
@@ -16,6 +18,7 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::where('user_id', auth()->user()->id)->orderBy('status')->get();
+       
         $clients = Task::select('client')->distinct()->get();
         return view('admin.tasks.index', compact('tasks','clients'));
     }
@@ -38,8 +41,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+
         $task = new Task();
-        $task->user_id = 1;
+        $task->user_id = $user->id;
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
         $task->client = $request->client;

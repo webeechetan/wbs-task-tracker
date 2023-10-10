@@ -34,7 +34,7 @@
                         @foreach($users as $user)
                         <tr>
                             <td>{{$user->name}} 
-                                {{ count($user->activities) }} 
+                                {{-- {{ count($user->activities) }}  --}}
                             </td>
                             <td>{{$user->email}}</td>
                             <td> 

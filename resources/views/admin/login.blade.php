@@ -81,7 +81,7 @@
                     name="email"
                     placeholder="Enter your email or username"
                     autofocus
-                    value="admin@gmail.com"
+                    value=""
                   />
                   @error('email')    
                     <span class="text-danger">{{ $message }}</span>
