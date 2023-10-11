@@ -20,8 +20,8 @@ class Kernel extends ConsoleKernel
         // get flags from command 
         Log::info('Queue worker is running');
         // kill after 5 minutes
-        $schedule->command('activity:due')->daily()->at('16:30')->withoutOverlapping();
-        $schedule->command('activity:reminder')->daily()->at('16:40')->withoutOverlapping();
+        $schedule->command('activity:due')->daily()->at('16:35');
+        $schedule->command('activity:reminder')->daily()->at('16:40');
     }
 
     /**

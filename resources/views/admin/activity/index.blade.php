@@ -362,8 +362,6 @@ $userType = $user->type;
             $('.action_btn').text('Update');
             $('#activity_add_form').attr('action', '{{ route("activity-update") }}');
 
-
-
         });
 
     function generateDayOptions() {
@@ -448,9 +446,6 @@ $userType = $user->type;
     });
 
 });
-
-    
-
 
 </script>
 
