@@ -11,10 +11,11 @@ use App\Models\User;
 use App\Models\Reminder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Activity extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     public function routeNotificationForSlack($notification)
     {
@@ -40,6 +41,7 @@ class Activity extends Model
             $reminder->reminder_date = Carbon::parse($val->reminder_date)->addMonth();
             $reminder->save();
         }
+        $this->delete();
 
     }
 

@@ -5,6 +5,10 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use App\Models\Reminder;
+use App\Models\User;
+use App\Models\Team;
+use App\Notifications\NewActivityAssigned;
 
 class ActivityDue extends Command
 {
@@ -29,10 +33,26 @@ class ActivityDue extends Command
      */
     public function handle()
     {
-        $activities = Activity::where('first_due_date', now()->format('Y-m-d'))->get();
+        $activities = Activity::all();
 
         foreach ($activities as $activity) {
-            $activity->due();
+            $cron_expression = $activity->cron_expression;
+            $cron_days = explode(' ',$cron_expression)[2];
+            $cron_days = explode(',',$cron_days);
+            $today = date('d');
+            $cron_months = explode(' ',$cron_expression)[3];
+            if($cron_months != '*'){
+                $cron_months = explode(',',$cron_months);
+            }else{
+                $cron_months = range(1,12);
+            }
+
+            $current_month = date('m');
+
+            if(in_array($today,$cron_days) && in_array($current_month,$cron_months)){
+                $activity->due();
+                $activity->notify(new NewActivityAssigned($activity));
+            }
         }
 
     }
