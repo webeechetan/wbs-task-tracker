@@ -8,6 +8,7 @@ USE App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Reminder;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\NewActivityAssigned;
 
 class ActivityController extends Controller
 {
@@ -19,17 +20,12 @@ class ActivityController extends Controller
     public function index()
     {
         $user = Auth::user();
-    
-        $activities = Activity::with(['team','assignedUsers','reminders'])->get();
-
-        foreach ($activities as $activity) {
-
-            $teamId = $activity->team->id; 
-        
-         $activities = Activity::with(['team', 'assignedUsers', 'reminders'])->where('team_id', $teamId)->get(); 
+        if($user->type == '1' ){
+            $activities = Activity::with(['team','assignedUsers','reminders'])->get();
+        }else{
+            $assigned_teams = $user->teams()->pluck('team_id')->toArray();
+            $activities = Activity::with(['team','assignedUsers','reminders'])->whereIn('team_id',$assigned_teams)->get();
         }
-
-
         $teams = Team::all();
         $users = User::all();
         return view('admin.activity.index',compact('activities','teams','users'));
@@ -84,6 +80,8 @@ class ActivityController extends Controller
                     $reminder->save();
                 }
             }
+
+            $activity->notify(new NewActivityAssigned($activity));
 
             $this->alert('Success','Activity created successfully','success');
             return redirect()->back();
@@ -193,6 +191,18 @@ class ActivityController extends Controller
         $activity->save();
 
         return response()->json(['message' => 'Activity status updated successfully'], 200);
+    }
+
+    public function pending(Request $request)
+    {
+        $activities = Activity::where('status', 'pending')->get();
+        return view('admin.activity.index',compact('activities'));
+    }
+
+    public function completed(Request $request)
+    {
+        $activities = Activity::where('status', 'completed')->get();
+        return view('admin.activity.index',compact('activities'));
     }
 
 

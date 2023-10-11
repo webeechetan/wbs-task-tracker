@@ -4,6 +4,11 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Activity;
+use Illuminate\Http\Request;
+use App\Models\Reminder;
+use App\Models\User;
+use App\Models\Team;
+use App\Notifications\NewActivityAssigned;
 
 class ActivityDue extends Command
 {
@@ -28,49 +33,30 @@ class ActivityDue extends Command
      */
     public function handle()
     {
-
-        // $activities = Activity::All();
-
-        $activities = Activity::whereDate('first_due_date', '=', now()->toDateString())
-        ->groupB('id', 'desc')
-        ->limit(1)
-        ->first();
-    
-        $cron_date = ($activities->cron_expression);
-
-        $cron_date_array = explode(' ', $cron_date);
-
-        $cron_day = $cron_date_array[2];
-        $cron_month = $cron_date_array[3];
-
-        dd($cron_date_array);
-         
-
-        // pickup last month activities and create new activities for this month
-        $activities = Activity::where('first_due_date', '<=', now()->subMonth())
-                        ->groupBy('name')
-                        ->orderBy('id', 'desc')
-                        ->get();
-
-       
-
+        $activities = Activity::all();
 
         foreach ($activities as $activity) {
-            $activity->due();
+            $cron_expression = $activity->cron_expression;
+            $cron_days = explode(' ',$cron_expression)[2];
+            $cron_days = explode(',',$cron_days);
+            $today = date('d');
+            $cron_months = explode(' ',$cron_expression)[3];
+            if($cron_months != '*'){
+                $cron_months = explode(',',$cron_months);
+            }else{
+                $cron_months = range(1,12);
+            }
+
+            $current_month = date('m');
+
+            if(in_array($today,$cron_days) && in_array($current_month,$cron_months)){
+                $activity->due();
+                $activity->notify(new NewActivityAssigned($activity));
+            }
         }
+        
+        die();
+
     }
 
-    
-
-        public function scheduleAction(Request $request) 
-        {
-
-            $activity = new Activity();
-            $activity->team_id = $team;
-            $activity->name = $request->activity;
-            $activity->first_due_date = $request->first_due_date;
-            $activity->created_by = auth()->user()->id;
-            
-
-        }
 }

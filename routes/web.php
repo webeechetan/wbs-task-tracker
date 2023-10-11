@@ -9,13 +9,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
 
 
-Route::get('/', function () {
-    return view('admin.layouts.app');
-});
-
 /*--------------------------------- Auth Routes ---------------------------------*/
 
 Route::get('/', [AuthController::class, 'index'])->name('login.view')->middleware('guest');
+Route::get('/login', [AuthController::class, 'index'])->name('login.home')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 
 
@@ -92,6 +89,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/activities/status_update/{activity}', [ActivityController::class, 'statusupdate'])->name('activity-statusupdate')->middleware('auth');
     Route::delete('/activities/destroy/{activity}', [ActivityController::class, 'destroy'])->name('activity-destroy')->middleware('auth');
+
+    Route::post('/activities/pending', [ActivityController::class, 'pending'])->name('activity-pending')->middleware('auth');
+    Route::post('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middlerware('auth');
     
 
 });

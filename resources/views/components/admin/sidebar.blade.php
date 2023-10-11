@@ -31,7 +31,7 @@
       </li>
 
 
-      @if($userType === 1|| $userType === 2)
+      @if($userType == 1 )
   
       {{-- Employee--}}
       <li class="menu-item @if(request()->routeIs('user-index') || request()->routeIs('user-create') || request()->routeIs('user-edit')) active @endif">

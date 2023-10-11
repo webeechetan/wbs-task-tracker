@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->nullable();
             $table->string('cron_expression')->nullable();
             $table->longText('cron_string')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
