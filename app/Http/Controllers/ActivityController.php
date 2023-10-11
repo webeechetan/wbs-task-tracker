@@ -196,13 +196,21 @@ class ActivityController extends Controller
     public function pending(Request $request)
     {
         $activities = Activity::where('status', 'pending')->get();
-        return view('admin.activity.index',compact('activities'));
+
+        $teams = Team::all();
+        $users = User::all();
+        return view('admin.activity.index',compact('activities','teams','users'));
+      
     }
 
     public function completed(Request $request)
     {
         $activities = Activity::where('status', 'completed')->get();
-        return view('admin.activity.index',compact('activities'));
+
+        $teams = Team::all();
+        $users = User::all();
+        return view('admin.activity.index',compact('activities','teams','users'));
+       
     }
 
 

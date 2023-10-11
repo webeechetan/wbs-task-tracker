@@ -90,8 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/activities/status_update/{activity}', [ActivityController::class, 'statusupdate'])->name('activity-statusupdate')->middleware('auth');
     Route::delete('/activities/destroy/{activity}', [ActivityController::class, 'destroy'])->name('activity-destroy')->middleware('auth');
 
-    Route::post('/activities/pending', [ActivityController::class, 'pending'])->name('activity-pending')->middleware('auth');
-    Route::post('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middlerware('auth');
+    Route::get('/activities/pending', [ActivityController::class, 'pending'])->name('activity-pending')->middleware('auth');
+    Route::get('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middleware('auth');
     
 
 });
