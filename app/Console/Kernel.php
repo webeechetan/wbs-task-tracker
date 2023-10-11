@@ -17,9 +17,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {  
+        // get flags from command 
         Log::info('Queue worker is running');
-        $schedule->command('activity:due')->daily()->at('16:09')->withoutOverlapping();
-        $schedule->command('activity:reminder')->daily()->at('16:10')->withoutOverlapping();
+        // kill after 5 minutes
+        $schedule->command('activity:due')->daily()->at('16:30')->withoutOverlapping();
+        $schedule->command('activity:reminder')->daily()->at('16:40')->withoutOverlapping();
     }
 
     /**

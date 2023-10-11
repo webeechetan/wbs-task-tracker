@@ -54,6 +54,8 @@ class ActivityDue extends Command
                 $activity->notify(new NewActivityAssigned($activity));
             }
         }
+        
+        die();
 
     }
 

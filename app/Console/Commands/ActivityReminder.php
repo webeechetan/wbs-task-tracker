@@ -44,5 +44,9 @@ class ActivityReminder extends Command
                 }
             }
         }
+
+        die();
+
     }
+
 }
