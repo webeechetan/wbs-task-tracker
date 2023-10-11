@@ -35,9 +35,9 @@ $userType = $user->type;
     {{-- </div> --}}
     <div class="d-flex align-content-center flex-wrap gap-3">
 
-        <a class="btn btn-primary" href="#">All</a>
-        <a class="btn btn-primary" href="">Pending</a>
-        <a class="btn btn-primary" href="">Completed</a>
+        <a class="btn btn-primary" href="{{route('activity-index')}}">All</a>
+        <a class="btn btn-primary" href="{{route('activity-pending')}}">Pending</a>
+        <a class="btn btn-primary" href="{{route('activity-completed')}}">Completed</a>
    
 
         @if($userType == 1 || $userType ==2)
@@ -79,8 +79,20 @@ $userType = $user->type;
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="mt-3">
-                        <label for="activity">First Due Date</label>
+                        <label for="assign_to" class="col-form-label">Assign to</label>
+                        <select class="form-control" id="assign_to" name="assign_to[]" multiple>
+                            <option value="">Assign to</option>
+                            @foreach ($users as $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
+                    <div class="mt-3">
+                        <label for="activity">Due Date</label>
                         <input type="date" class="form-control" id="first_due_date" name="first_due_date">
                         @error('first_due_date')
                         <span class="text-danger">{{ $message }}</span>
@@ -124,15 +136,7 @@ $userType = $user->type;
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
 
-                    <div class="mt-3">
-                        <label for="assign_to" class="col-form-label">Assign to</label>
-                        <select class="form-control" id="assign_to" name="assign_to[]" multiple>
-                            <option value="">Assign to</option>
-                            @foreach ($users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    
                     <div class="reminders">
                         <div class="mt-3 text-center">
                             <label for="activity">Reminder Date</label>

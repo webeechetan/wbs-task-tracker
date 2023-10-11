@@ -193,5 +193,17 @@ class ActivityController extends Controller
         return response()->json(['message' => 'Activity status updated successfully'], 200);
     }
 
+    public function pending(Request $request)
+    {
+        $activities = Activity::where('status', 'pending')->get();
+        return view('admin.activity.index',compact('activities'));
+    }
+
+    public function completed(Request $request)
+    {
+        $activities = Activity::where('status', 'completed')->get();
+        return view('admin.activity.index',compact('activities'));
+    }
+
 
  }
