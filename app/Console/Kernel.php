@@ -18,10 +18,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {  
         Log::info('Queue worker is running');
-        $activities = Activity::where('cron_expression','!=',null)->get();
-        foreach ($activities as $activity) {
-            $schedule->command('activity:due')->cron($activity->cron_expression)->withoutOverlapping();
-        }
+        $schedule->command('activity:due')->daily()->at('16:03');
+        $schedule->command('activity:reminder')->daily()->at('16:04');
     }
 
     /**
