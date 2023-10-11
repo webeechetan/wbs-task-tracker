@@ -91,7 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/activities/destroy/{activity}', [ActivityController::class, 'destroy'])->name('activity-destroy')->middleware('auth');
 
     Route::post('/activities/pending', [ActivityController::class, 'pending'])->name('activity-pending')->middleware('auth');
-    Route::post('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middlerware('auth');
+    Route::post('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middleware('auth');
     
 
 });
