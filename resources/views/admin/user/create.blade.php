@@ -40,7 +40,7 @@
 
                     <div class="form-group">
                         <label for="department" class="col-form-label">Team</label>
-                        <select class="form-control" id="team" name="team[]" required multiple>
+                        <select class="form-control" id="team" name="team[]" multiple>
                             <option value="">Select Team</option>
                             @foreach ($teams as $team)
                                 <option value="{{$team->id}}">{{$team->name}}</option>

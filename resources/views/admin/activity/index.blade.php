@@ -176,7 +176,7 @@ $userType = $user->type;
                         <th>Status</th>
                         <th>Schedule On</th>
     
-                        @if($userType === 1|| $userType === 2)
+                        @if($userType == 1 || $userType == 2)
                         <th>Action</th>
                         @endif
                     </tr>
@@ -214,7 +214,7 @@ $userType = $user->type;
                         </td>
                         <td> <small> {{ $activity->cron_string }}</small></td>
     
-                        @if($userType === 1|| $userType === 2)
+                        @if($userType == 1 || $userType == 2)
                         <td>
                             <button class="btn btn-primary btn-sm edit_activity"
                                 data-activity='{{ json_encode($activity)}}'><i class='bx bx-edit'></i></button>
@@ -366,8 +366,6 @@ $userType = $user->type;
             $('.action_btn').text('Update');
             $('#activity_add_form').attr('action', '{{ route("activity-update") }}');
 
-
-
         });
 
     function generateDayOptions() {
@@ -452,9 +450,6 @@ $userType = $user->type;
     });
 
 });
-
-    
-
 
 </script>
 

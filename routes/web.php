@@ -9,13 +9,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
 
 
-Route::get('/', function () {
-    return view('admin.layouts.app');
-});
-
 /*--------------------------------- Auth Routes ---------------------------------*/
 
 Route::get('/', [AuthController::class, 'index'])->name('login.view')->middleware('guest');
+Route::get('/login', [AuthController::class, 'index'])->name('login.home')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 
 
