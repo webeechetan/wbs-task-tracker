@@ -8,12 +8,12 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-           <div class="custom_search_filter">
+           {{-- <div class="custom_search_filter">
                 <form action="#" method="GET">
                         <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
                         <div class="custom_search_filter_inputMask"><i class="bx bx-search"></i></div>
                 </form>
-           </div>
+           </div> --}}
         <h5 class="mb-0">Users List</h5>
         <a href="{{ route('user-create')}}" class="btn btn-primary btn-sm">Add User</a>
     </div>

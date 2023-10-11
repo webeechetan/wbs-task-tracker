@@ -21,35 +21,47 @@
 
 <div class="card">
     <div class="card-header">
+        {{-- <div class="custom_search_filter">
+            <form action="#" method="GET">
+                    <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
+                    <div class="custom_search_filter_inputMask search-filter-form"><i class="bx bx-search"></i></div>
+            </form>
+        </div> --}}
         <form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form">
             @csrf
             <input type="hidden" name="taskId" id="taskId">
-            <div class="d-flex justify-content-between align-items-center task-form" id="parent">
+            {{-- <div class="d-flex justify-content-between align-items-center task-form" id="parent"> --}}
 
-                <div class="form-group">
-                    <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date"
-                        required value="<?php echo date('Y-m-d'); ?>">
-                        
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date"
+                                required value="<?php echo date('Y-m-d'); ?>">
+                        </div>
+                    </div>  
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name"
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <select class="form-control select-control" id="client" name="client">
+                                <option value="">Select Client</option>
+                                @foreach ($clients as $client)
+                                <option value="{{$client->client}}">{{$client->client}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name"
-                        required>
-                </div>
-
-                <div class="form-group select-group" >
-                    <select class="form-control select-control" id="client" name="client">
-                        <option value="">Select Client</option>
-                        @foreach ($clients as $client)
-                        <option value="{{$client->client}}">{{$client->client}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
-                </div>
-            </div>
+            {{-- </div> --}}
 
         </form>
     </div>
