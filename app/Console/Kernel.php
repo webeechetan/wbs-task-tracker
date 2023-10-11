@@ -18,8 +18,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {  
         Log::info('Queue worker is running');
-        $schedule->command('activity:due')->daily()->at('16:03');
-        $schedule->command('activity:reminder')->daily()->at('16:04');
+        $schedule->command('activity:due')->daily()->at('16:09')->withoutOverlapping();
+        $schedule->command('activity:reminder')->daily()->at('16:10')->withoutOverlapping();
     }
 
     /**
