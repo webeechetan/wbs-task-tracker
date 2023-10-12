@@ -21,7 +21,7 @@ class ActivityController extends Controller
     {
         $user = Auth::user();
         if($user->type == '1' ){
-            $activities = Activity::with(['team','assignedUsers','reminders'])->get();
+            $activities = Activity::with(['team','assignedUsers','reminders'])->orderBy('status')->get();
         }else{
             $assigned_teams = $user->teams()->pluck('team_id')->toArray();
             $activities = Activity::with(['team','assignedUsers','reminders'])->whereIn('team_id',$assigned_teams)->get();

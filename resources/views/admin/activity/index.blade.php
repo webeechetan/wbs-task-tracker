@@ -58,17 +58,19 @@ $userType = $user->type;
                     @csrf
                     <input type="hidden" name="activityId" id="activityId">
                     <input type="hidden" name="cron_string" id="cron_string">
+
                     <div>
                         <label for="activity" class="form-label">Activity Name</label>
-                        <input type="text" class="form-control" id="activity" name="activity" placeholder="Activity">
+                        <input type="text" class="form-control" id="activity" name="activity" placeholder="Activity" required>
                         @error('activity')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="mt-3">
                         <label for="team" class="form-label">Team</label>
 
-                        <select class="form-control" id="team" name="team">
+                        <select class="form-control" id="team" name="team" required>
                             <option value="">Select Team</option>
                             @foreach ($teams as $team)
 
@@ -79,10 +81,10 @@ $userType = $user->type;
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
+                  
                     <div class="mt-3">
                         <label for="assign_to" class="col-form-label">Assign to</label>
-                        <select class="form-control" id="assign_to" name="assign_to[]" multiple>
+                        <select class="form-control" id="assign_to" name="assign_to[]" multiple required>
                             <option value="">Assign to</option>
                             @foreach ($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
@@ -93,7 +95,7 @@ $userType = $user->type;
 
                     <div class="mt-3">
                         <label for="activity">Due Date</label>
-                        <input type="date" class="form-control" id="first_due_date" name="first_due_date">
+                        <input type="date" class="form-control" id="first_due_date" name="first_due_date" required>
                         @error('first_due_date')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -103,7 +105,7 @@ $userType = $user->type;
                         <div class="mt-3">
                                 <label for="activity">Schedule On</label>
                                 <div class="input-group schedule">
-                                    <select class="form-control" name="cron_day[]" id="cron_day" multiple>
+                                    <select class="form-control" name="cron_day[]" id="cron_day" multiple required>
                                         @php
                                         $currentDate = now();
                                         $lastDay = $currentDate->daysInMonth;
@@ -169,8 +171,9 @@ $userType = $user->type;
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Team</th>
+                       
                         <th>Activity</th>
+                        <th>Team</th>
                         <th>Assigned To</th>
                         <th>Due Date</th>
                         <th>Reminders</th>
@@ -191,10 +194,11 @@ $userType = $user->type;
                                 data-activity='{{ json_encode($activity)}}' type="checkbox" @checked($activity->status ==
                             'completed')>
                         </td>
+                       
+                        <td>{{ $activity->name }}</td>
                         <td>
                             {{ $activity->team->name }}
                         </td>
-                        <td>{{ $activity->name }}</td>
                         <td>
                             @foreach ($activity->assignedUsers as $user)
                             <span class="badge bg-primary">{{ $user->name }}</span>
@@ -366,6 +370,7 @@ $userType = $user->type;
             $('#cron_month').val(cron_months_array).trigger('change');
 
             $('.action_btn').text('Update');
+            $('#offcanvasBothLabel').text('Update Activity');
             $('#activity_add_form').attr('action', '{{ route("activity-update") }}');
 
         });
@@ -389,7 +394,6 @@ $userType = $user->type;
 
     $('.add-more-reminder').on('click', function () {
         let reminder = `<div class="mt-3 text-center">
-                            <label for="activity">Reminder Date</label>
                             <input type="date" class="form-control" name="reminder_date[]">
                             <i class="btn btn-danger btn-sm mt-2 delete_reminder bx bx-trash"></i>
                         </div>`;

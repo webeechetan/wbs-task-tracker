@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -135,6 +136,13 @@ class TaskController extends Controller
         $task->save();
 
         return response()->json(['message' => 'Task status updated successfully'], 200);
+    }
+
+    
+    public function teammates(Team $team)
+    {
+        dd($teammates);
+        return view('admin.tasks.teammates', compact('teammates'));
     }
 
 }

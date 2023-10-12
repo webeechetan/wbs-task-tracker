@@ -77,9 +77,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/tasks/status_update/{task}', [TaskController::class, 'statusupdate'])->name('task-statusupdate')->middleware('auth');
 
-
     Route::delete('/tasks/destroy/{task}', [TaskController::class, 'destroy'])->name('task-destroy')->middleware('auth');
-    
+
+    Route::get('/tasks/teammates', [TaskController::class, 'teammates'])->name('team-members')->middleware('admin');
     /*--------------------------------- Activities ---------------------------------*/
 
     Route::get('/activities', [ActivityController:: class, 'index'])->name('activity-index')->middleware('auth');
@@ -93,5 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/activities/pending', [ActivityController::class, 'pending'])->name('activity-pending')->middleware('auth');
     Route::get('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middleware('auth');
     
+
+
 
 });

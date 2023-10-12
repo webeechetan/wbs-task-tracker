@@ -22,13 +22,38 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-      <!-- Dashboard -->
-      <li class="menu-item @if(request()->routeIs('dashboard')) active @endif">
-        <a href="" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-home-circle"></i>
-          <div data-i18n="Analytics">Dashboard</div>
+     
+
+       {{---To-do's---}}
+
+
+       {{-- <li class="menu-item @if(request()->routeIs('task-index') || request()->routeIs('task-create') || request()->routeIs('task-edit')) active @endif">
+        <a href="{{ route('task-index')}}" class="menu-link ">
+          <i class="menu-icon bx bx-grid "></i>
+          <div data-i18n="Layouts">To-do's</div>
         </a>
+      </li> --}}
+
+
+      <li class="menu-item @if(request()->routeIs('task-index') || request()->routeIs('task-create') || request()->routeIs('task-edit')) active @endif">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-home-circle"></i>
+          <div class="text-truncate" data-i18n="Dashboards">To-do's</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item active">
+            <a href="{{ route('task-index')}}" class="menu-link">
+              <div class="text-truncate" data-i18n="Analytics">My To-do's</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="{{ route('team-members')}}" class="menu-link">
+              <div class="text-truncate" data-i18n="CRM">Team To-do's</div>
+            </a>
+          </li>
+        </ul>
       </li>
+      
 
 
       @if($userType == 1 )
@@ -63,15 +88,6 @@
       </li> 
 
 
-      {{---To-do's---}}
-
-
-      <li class="menu-item @if(request()->routeIs('task-index') || request()->routeIs('task-create') || request()->routeIs('task-edit')) active @endif">
-        <a href="{{ route('task-index')}}" class="menu-link ">
-          <i class="menu-icon bx bx-grid "></i>
-          <div data-i18n="Layouts">To-do's</div>
-        </a>
-      </li>
-
+     
     </ul>
   </aside>
