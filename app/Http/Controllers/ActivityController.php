@@ -73,7 +73,9 @@ class ActivityController extends Controller
             $activity->assignedUsers()->attach($request->assign_to);
 
             if($request->has('reminder_date')){
-                foreach ($request->reminder_date as $key => $value) {
+                $reminder_dates = $request->reminder_date;
+                $reminder_dates = explode(',',$reminder_dates);
+                foreach ($reminder_dates as $key => $value) {
                     $reminder = new Reminder();
                     $reminder->activity_id = $activity->id;
                     $reminder->reminder_date = $value;
@@ -148,7 +150,9 @@ class ActivityController extends Controller
 
             if($request->has('reminder_date')){
                 $activity->reminders()->delete();
-                foreach ($request->reminder_date as $key => $value) {
+                $reminder_dates = $request->reminder_date;
+                $reminder_dates = explode(',',$reminder_dates);
+                foreach ($reminder_dates as $key => $value) {
                     $reminder = new Reminder();
                     $reminder->activity_id = $activity->id;
                     $reminder->reminder_date = $value;

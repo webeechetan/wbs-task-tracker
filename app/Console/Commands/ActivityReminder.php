@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Reminder;
 use App\Models\User;
 use App\Notifications\ActivityReminder as ActivityReminderNotification;
+use Carbon\Carbon;
 
 class ActivityReminder extends Command
 {
@@ -32,17 +33,32 @@ class ActivityReminder extends Command
      */
     public function handle()
     {
-        $activities = Activity::all();
+        $activities = Activity::where('status','=','pending')->get();
 
         foreach ($activities as $activity) {
-            $reminders = $activity->reminders;
+            $cron_expression = $activity->cron_expression;
+            $cron_days = explode(' ',$cron_expression)[2];
+            $cron_days = explode(',',$cron_days);
+            $today = date('d');
+            $cron_months = explode(' ',$cron_expression)[3];
+            if($cron_months != '*'){
+                $cron_months = explode(',',$cron_months);
+            }else{
+                $cron_months = range(1,12);
+            }
+            $current_month = date('m');
+            $reminders = Reminder::where('activity_id','=',$activity->id)
+                        ->whereDate('reminder_date','>=',date('Y-m-d'))
+                        ->get();
             foreach ($reminders as $reminder) {
-                $reminder_date = $reminder->reminder_date;
-                $today = date('Y-m-d');
-                if($reminder_date == $today){
+                $reminder_date = Carbon::parse($reminder->reminder_date);
+                $reminder_day = $reminder_date->format('d');
+                $reminder_month = $reminder_date->format('m');
+                if(in_array($reminder_month,$cron_months) && $today == $reminder_day){
                     $activity->notify(new ActivityReminderNotification($activity));
                 }
             }
+            
         }
 
         die();

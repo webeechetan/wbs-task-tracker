@@ -136,12 +136,9 @@ $userType = $user->type;
                     <div class="reminders">
                         <div class="mt-3 text-center">
                             <label for="activity">Reminder Date</label>
-                            <input type="date" class="form-control" id="reminder" name="reminder_date[]">
+                            <input type="date" class="form-control" id="reminder_dates" name="reminder_date">
                         </div>
                     </div>
-
-                    <button type="button" class="btn btn-primary add-more-reminder mt-2">+</button>
-
 
                     <!-- Additional form fields go here -->
                     <div class="mt-3">
@@ -197,7 +194,9 @@ $userType = $user->type;
                         <td>{{ $activity->first_due_date }}</td>
                         <td>
                             @foreach ($activity->reminders as $reminder)
-                            <span class="badge bg-primary">{{ $reminder->reminder_date }}</span>
+                                <span class="badge bg-primary">
+                                    {{ \Carbon\Carbon::parse($reminder->reminder_date)->format('d') }}
+                                </span>
                             @endforeach
                         </td>
                         {{-- <td>{{ $activity->team->lead->name }}</td> --}}
@@ -264,6 +263,13 @@ $userType = $user->type;
     });
 
     $(document).ready(function () {
+
+        let reminder_date = $("#reminder_dates").flatpickr({
+            dateFormat: 'Y-m-d',
+            mode: "multiple",
+            altInput: true,
+            altFormat: "j",
+        });
 
         $(".select2").select2();
 
@@ -337,15 +343,13 @@ $userType = $user->type;
             $('#assign_to').val(assignedUsersArray).trigger('change');
 
             let reminders = activityData.reminders;
-            $('.reminders').empty();
+            let remindersArray = [];
+
             reminders.forEach(reminder => {
-                let reminderHtml = `<div class="mt-3 text-center">
-                                <label for="activity">Reminder Date</label>
-                                <input type="date" class="form-control" name="reminder_date[]" value="${reminder.reminder_date}">
-                                <i class="btn btn-danger btn-sm mt-2 delete_reminder bx bx-trash"></i>
-                            </div>`;
-                $('.reminders').append(reminderHtml);
+                remindersArray.push(reminder.reminder_date);
             });
+
+            reminder_date.setDate(remindersArray);
 
             let cron_day = activityData.cron_expression;
             let cron_day_array = cron_day.split(' ');
@@ -378,18 +382,6 @@ $userType = $user->type;
             daySelect.append(new Option(day, day));
         }
     }
-
-    // create reminder on click
-
-    $('.add-more-reminder').on('click', function () {
-        let reminder = `<div class="mt-3 text-center">
-                            <label for="activity">Reminder Date</label>
-                            <input type="date" class="form-control" name="reminder_date[]">
-                            <i class="btn btn-danger btn-sm mt-2 delete_reminder bx bx-trash"></i>
-                        </div>`;
-        $('.reminders').append(reminder);
-        
-    });
 
     // delete reminder on click
 
@@ -446,6 +438,9 @@ $userType = $user->type;
     });
 
 });
+
+    
+
 
 </script>
 

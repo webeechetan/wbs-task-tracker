@@ -70,6 +70,12 @@ class NewActivityAssigned extends Notification
             $reminders_block .= 'Reminder: ' . $reminder->reminder_date . "\n";
         }
 
+        $users_mention = '';
+
+        foreach ($this->activity->assignedUsers as $user) {
+            $users_mention .= '<@' . $user->slack_id . '> ';
+        }
+
 
 
         return (new SlackMessage)
@@ -77,14 +83,13 @@ class NewActivityAssigned extends Notification
                     ->to('#tracker')
                     ->success()
                     ->content('A new activity has been assigned to you!')
-                    ->attachment(function ($attachment) {
-                        $attachment->title($this->activity->name, url('/activity/' . $this->activity->id))
+                    ->attachment(function ($attachment) use ($users_mention) {
+                        $attachment->title($this->activity->name, url('/activities/'))
                             ->fields([
                                 'Team' => $this->activity->team->name,
                                 'Due Date' => $this->activity->first_due_date,
-                                'Assigned To' => $this->activity->assignedUsers->pluck('name')->implode(', ')
+                                'Assigned To' => $users_mention,
                             ]);
-
 
                     })
                     ->attachment(function ($attachment) use ($reminders_block) {

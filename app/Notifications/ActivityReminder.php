@@ -44,9 +44,9 @@ class ActivityReminder extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -72,25 +72,37 @@ class ActivityReminder extends Notification
         $mention_users = implode(' ', $mention_users);
 
         $reminders = $activity->reminders;
-        $reminders_block = '';
-        foreach ($reminders as $reminder) {
-            if($reminder->reminder_date == date('Y-m-d')){
-                $reminders_block .= 'Today : ~' . $reminder->reminder_date . "~ \n";
-            }else{
-                $reminders_block .= 'Upcoming : ' .$reminder->reminder_date . " \n";
-            }
+        $reminders = $activity->reminders->toArray();
 
+        usort($reminders, function ($a, $b) {
+            return strcmp($a['reminder_date'], $b['reminder_date']);
+        });
+
+        $reminders_block = '';
+        $today = date('Y-m-d');
+
+        foreach ($reminders as $reminder) {
+            
+            if ($reminder['reminder_date'] == $today) {
+                $reminders_block .= 'Today: ~' . $reminder['reminder_date'] . "~ \n";
+            } else {
+                if($reminder['reminder_date'] > $today){
+                    $reminders_block .= 'Upcoming: ' . $reminder['reminder_date'] . " \n";
+                }else{
+                    $reminders_block .= 'Alerted: ~' . $reminder['reminder_date'] . "~ \n";
+                }
+            }
         }
 
         return (new SlackMessage)
             ->from('Activity Reminder', ':robot_face:')
             ->to('#tracker')
-            ->content(' :robot_face: Hey! '. $mention_users .' You have to complete the following activity before `' . $activity->first_due_date . '` :')
+            ->content(' :robot_face: Hey! ' . $mention_users . ' You have to complete the following activity before `' . $activity->first_due_date . '` :')
             ->attachment(function ($attachment) use ($activity, $mention_users, $reminders_block) {
-                $attachment->title($activity->name, url('/activities/' . $activity->id))
+                $attachment->title($activity->name, url('/activities/'))
                     ->fields([
                         'Activity Name' => $activity->name,
-                        'Activity Due Date' => '`'. $activity->first_due_date . '`',
+                        'Activity Due Date' => '`' . $activity->first_due_date . '`',
                         'Team' => $activity->team->name,
                         'Assigned Users' => $mention_users,
                         'Reminders' => $reminders_block
