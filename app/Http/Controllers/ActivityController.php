@@ -21,7 +21,7 @@ class ActivityController extends Controller
     {
         $user = Auth::user();
         if($user->type == '1' ){
-            $activities = Activity::with(['team','assignedUsers','reminders'])->get();
+            $activities = Activity::with(['team','assignedUsers','reminders'])->orderBy('status')->get();
         }else{
             $assigned_teams = $user->teams()->pluck('team_id')->toArray();
             $activities = Activity::with(['team','assignedUsers','reminders'])->whereIn('team_id',$assigned_teams)->get();
@@ -195,6 +195,26 @@ class ActivityController extends Controller
         $activity->save();
 
         return response()->json(['message' => 'Activity status updated successfully'], 200);
+    }
+
+    public function pending(Request $request)
+    {
+        $activities = Activity::where('status', 'pending')->get();
+
+        $teams = Team::all();
+        $users = User::all();
+        return view('admin.activity.index',compact('activities','teams','users'));
+      
+    }
+
+    public function completed(Request $request)
+    {
+        $activities = Activity::where('status', 'completed')->get();
+
+        $teams = Team::all();
+        $users = User::all();
+        return view('admin.activity.index',compact('activities','teams','users'));
+       
     }
 
 

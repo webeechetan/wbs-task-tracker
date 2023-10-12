@@ -18,4 +18,10 @@ class Team extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public static function getTeam(){
+        $id = auth()->user()->id;
+        return Team::where('lead_id',$id)->get();
+    }
+
 }

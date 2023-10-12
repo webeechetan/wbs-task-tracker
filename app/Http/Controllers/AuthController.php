@@ -28,7 +28,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->route('dashboard');
+            return redirect()->route('task-index');
         }else{
             $this->alert('Login Failed','Invalid Email or Password','danger');
             return redirect()->route('login.view');
@@ -40,4 +40,7 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('login.view');
     }
+
+
+   
 }

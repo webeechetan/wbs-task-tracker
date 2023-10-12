@@ -131,6 +131,16 @@ label{
   align-items: flex-end;
   grid-gap: 15px;
 } */
+.light-style{
+  overflow: hidden;
+}
+input:focus-visible{
+  outline: none !important;
+  border: 1px solid #d9dee3 !important;
+}
+.select2-search__field:focus-visible{
+  border: none !important;
+}
 .activities_sch-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -142,6 +152,7 @@ ul#select2-cron_day-results {
   padding: 20px;
   grid-gap: 10px;
   min-width: 330px;
+  width: 100% !important;
   justify-content: center;
 }
 ul#select2-cron_day-results > li {
@@ -278,31 +289,89 @@ table.dataTable tbody tr.even {
 .btn-danger:hover{
   transform: none !important;
 }
+.date-icons{
+    position: absolute;
+    top: 35px;
+    left: 247px;
+}
 .edit_team{
   background-color: transparent !important;
-  color: var(--primary);
+  color: var(--primary) !important;
+  border: none !important;
+}
+.edit_activity{
+  background-color: transparent !important;
+  color: var(--primary) !important;
   border: none !important;
 }
 .edit_team:hover{
   transform: none !important;
   color: var(--primary);
 }
+.form-check-input:checked{
+  background-color:  var(--primary) !important;
+}
+.form-control[readonly]{
+  background-color: #fff !important;
+}
 .task-group{
   column-gap: 20px;
 }
+.select2-dropdown--above{
+  min-width: 330px !important;
+  width: 100%;
+}
+.add-more-reminder{
+  width: 100%;
+}
+.delete_reminder{
+  float: right;
+  background-color: #ff3e1d !important;
+  color: #fff !important;
+}
 .select2-dropdown--below{
   top: 10px !important;
-  max-width: 300px !important;
+  min-width: 300px !important;
+  width: 100% !important;
   padding: 10px 15px !important;
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.07);
 }
 .select2-dropdown--below .select2-search__field{
   min-height: 40px;
 }
+.month .select2-search__field, .schedule .select2-search__field{
+  min-width: 130px;
+  width: 100% !important;
+}
 .task-form{
   column-gap: 30px;
 }
-
+.task-form .form-group:not(:last-child){
+  width: 25%;
+}
+.task-form .select2-container .select2-selection--single{
+   min-height: 39px !important;
+   border: 1px solid #d9dee3 !important;
+   line-height: 35px;
+}
+.task-form .select2-selection--single .select2-selection__rendered{
+  line-height: 35px !important;
+}
+.task-form .select2-selection__arrow{
+  top: 6px !important;
+}
+.select2-dropdown.select2-dropdown--below{
+  width: 325px !important;
+}
+.select2-dropdown .select2-search__field{
+  border-radius: 0.375rem !important;
+  border: 1px solid #d9dee3 !important;
+}
+.select2-dropdown .select2-search__field:focus-visible{
+  outline: none !important;
+  border: 1px solid var(--primary) !important;
+  
+}
 .completed-task {
   color: black;
   text-decoration: line-through;

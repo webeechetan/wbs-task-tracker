@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -135,6 +137,18 @@ class TaskController extends Controller
         $task->save();
 
         return response()->json(['message' => 'Task status updated successfully'], 200);
+    }
+
+    
+    public function teammates()
+    {
+        // if(auth()->user()->role != '2'){
+        //     $this->alert('error','You are not authorized to access this page','danger');
+        //    return redirect()->route('dashboard');
+        // }
+        $team = Team::getTeam();
+        return $team->load('members');
+        // return $teammates->load('members');
     }
 
 }
