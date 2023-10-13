@@ -17,11 +17,16 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request  $request)
     {
         $user = Auth::user();
+
         if($user->type == '1' ){
-            $activities = Activity::with(['team','assignedUsers','reminders'])->orderBy('status')->get();
+            $activities = Activity::with(['team','assignedUsers','reminders']);
+            if($request->has('team') && $request->team){
+                $activities->whereIn('team_id',$request->team);
+            }
+            $activities = $activities->get();
         }else{
             $assigned_teams = $user->teams()->pluck('team_id')->toArray();
             $activities = Activity::with(['team','assignedUsers','reminders'])->whereIn('team_id',$assigned_teams)->get();

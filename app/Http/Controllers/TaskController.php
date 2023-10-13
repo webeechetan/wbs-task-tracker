@@ -126,7 +126,7 @@ class TaskController extends Controller
     }
 
 
-    public function statusupdate(Request $request, Task $task)
+    public function statuspdate(Request $request, Task $task)
     {
         if($request->status=='pending'){
             $task->status = 'completed';
@@ -147,8 +147,8 @@ class TaskController extends Controller
         //    return redirect()->route('dashboard');
         // }
         $team = Team::getTeam();
-        return $team->load('members');
-        // return $teammates->load('members');
+        $teams = $team->load('members');
+        return view('admin.tasks.teammates',compact('teams'));
     }
 
 }

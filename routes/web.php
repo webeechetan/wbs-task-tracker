@@ -82,7 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tasks/teammates', [TaskController::class, 'teammates'])->name('team-members')->middleware('admin');
     /*--------------------------------- Activities ---------------------------------*/
 
-    Route::get('/activities', [ActivityController:: class, 'index'])->name('activity-index')->middleware('auth');
+    Route::get('/activities/{filter?}', [ActivityController:: class, 'index'])->name('activity-index')->middleware('auth');
     Route::post('/activities/store', [ActivityController::class, 'store'])->name('activity-store')->middleware('auth');
 
     Route::post('/activities/update', [ActivityController::class, 'update'])->name('activity-update')->middleware('auth');

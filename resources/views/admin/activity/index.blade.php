@@ -32,6 +32,7 @@ $userType = $user->type;
         <h4 class="d-flex align-items-center">
             All Activity
         </h4>
+        
     {{-- </div> --}}
     <div class="d-flex align-content-center flex-wrap gap-3">
 
@@ -163,6 +164,17 @@ $userType = $user->type;
 <div class="card">
     <h5 class="card-header">Activities</h5>
     <div class="card-body">
+        <div class="filter-form">
+            <form action="" method="GET">
+                <div class="input-group">
+                    @foreach($teams as $team)
+                        <label for="">{{ $team->name }}</label>
+                        <input class="form-check-input" type="checkbox" name="team[]" value="{{ $team->id }}" @if(isset($_GET['team']) && in_array($team->id, $_GET['team'])) checked @endif>
+                    @endforeach
+                    <button class="btn btn-primary" type="submit">Filter</button>
+                </div>
+            </form>
+        </div>
         <div class="table-responsive text-nowrap">
             <table class="table mb-3 table-hover" id="activityTable">
                 <thead>
