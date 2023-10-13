@@ -20,8 +20,19 @@ class ActivityController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if($user->type == '1' ){
-            $activities = Activity::with(['team','assignedUsers','reminders'])->orderBy('status')->get();
+        // if($user->type == '1' ){
+            if($user->type == '1' || $user->type == '2' || $user->type == '3'){
+            //$activities = Activity::with(['team','assignedUsers','reminders'])->orderBy('status')->get();
+        
+            $activities = Activity::with(['team', 'assignedUsers', 'reminders'])
+            ->orderByRaw("CASE 
+                WHEN status = 'pending' THEN 0 
+                WHEN status = 'in_progress' THEN 1
+                ELSE 2 
+                END")
+            ->get();
+        
+
         }else{
             $assigned_teams = $user->teams()->pluck('team_id')->toArray();
             $activities = Activity::with(['team','assignedUsers','reminders'])->whereIn('team_id',$assigned_teams)->get();
@@ -49,6 +60,8 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
+
+        
         $request->validate([
                 'team' => 'required|int',
                 'activity' => 'required',
@@ -56,6 +69,9 @@ class ActivityController extends Controller
             ]);
 
         $activity = new Activity();
+
+       
+
         $activity->team_id = $request->team;
         $activity->name = $request->activity;
         $activity->first_due_date = $request->first_due_date;
@@ -73,9 +89,15 @@ class ActivityController extends Controller
             $activity->assignedUsers()->attach($request->assign_to);
 
             if($request->has('reminder_date')){
+
+               
                 $reminder_dates = $request->reminder_date;
                 $reminder_dates = explode(',',$reminder_dates);
+                
+               // dd($reminder_dates);
                 foreach ($reminder_dates as $key => $value) {
+
+                  
                     $reminder = new Reminder();
                     $reminder->activity_id = $activity->id;
                     $reminder->reminder_date = $value;
@@ -86,6 +108,7 @@ class ActivityController extends Controller
             $activity->notify(new NewActivityAssigned($activity));
 
             $this->alert('Success','Activity created successfully','success');
+            
             return redirect()->back();
         } catch (\Throwable $th) {
             $msg = $th->getMessage();

@@ -11,35 +11,41 @@
 @endsection
 
 @section('content')
-<div class="container">
+
     @php
         $currentDay = $currentDate->day;
     @endphp
  
+ <h3>Calender View</h3>
 
+<div class="row">
 
- <div class="container">
     @for ($day = 1; $day <= $currentDate->format('d'); $day++)
+
         @php
             $date = date('Y-m-d', strtotime("{$currentDate->year}-{$currentDate->month}-$day"));
             $dayName = date('l', strtotime($date));
         @endphp
         @if ($dayName !== 'Saturday' && $dayName !== 'Sunday')
-        
-        <a href="{{route('member_tasks', ['id' => $id, 'date' => $date])}}">    
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-text">
-                        {{ $dayName }}
-                        {{ $date }}
-                    </h3>
-                </div>
+            <div class="col-md-2">
+                <a href="{{route('member_tasks', ['id' => $id, 'date' => $date])}}">    
+                    <div class="card mt-2">
+                        <div class="card-body">
+                            <h3 class="card-text">
+                                {{ $dayName }}
+                                {{ $date }}
+                            </h3>
+                        </div>
+                    </div>
+                </a>
             </div>
-        </a>
-            <br>
-        @endif
+            @endif
+                
     @endfor
+           
 </div>
+  
+    
 
 
 

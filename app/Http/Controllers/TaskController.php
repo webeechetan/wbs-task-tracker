@@ -142,8 +142,8 @@ class TaskController extends Controller
     
     public function teammates()
     {
-        // if(auth()->user()->role != '2'){
-        //     $this->alert('error','You are not authorized to access this page','danger');
+        // if(auth()->user()->role != 2 ){
+        //     $this->alert('error','You are not authorized to access this ppage','danger');
         //    return redirect()->route('dashboard');
         // }
         $team = Team::getTeam();

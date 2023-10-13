@@ -16,23 +16,28 @@
 
 <h4 class="py-3 mb-4"><span class="text-muted fw-light">Webee Social /</span> {{ $team->name}}</h4>
 <!-- Cards with few info -->
-    @foreach ($team->members as $member)
+   
         <div class="row">
-            <a href="{{ route('member-calander',['id'=>$member->id])}}">
+            @foreach ($team->members as $member)
                 <div class="col-lg-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <div class="card-info">
-                                    <h3 class="card-text">{{$member->name}}</h3>
+                    <a href="{{ route('member-calander',['id'=>$member->id])}}">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="card-info">
+                                        <h3 class="card-text">{{$member->name}}</h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-            </a>
+            @endforeach
+            
         </div>
-    @endforeach
+   
 @endforeach
 
 @endsection
+
+

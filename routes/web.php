@@ -81,17 +81,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/tasks/teammates', [TaskController::class, 'teammates'])->name('team-members')->middleware('auth');
 
-    // Route::get('/tasks/member-calander', function () {
-    //     $currentDate = now();
-    
-    //     return view('admin.tasks.calander', compact('currentDate'));
-    // })->name('member-calander');
-
     Route::get('/tasks/member-calander/{id}', function ($id) {
         $currentDate = now();
         return view('admin.tasks.calander', compact('currentDate', 'id'));
     })->name('member-calander');
-    
     
 
     Route::get('/tasks/calender/member_tasks/{id}/{date}', [TaskController::class, 'member_task'])->name('member_tasks')->middleware('auth');

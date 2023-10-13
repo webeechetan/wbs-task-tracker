@@ -58,6 +58,12 @@
               <span class="align-middle">My Profile</span>
             </a>
           </li>
+          <li>
+            <a target="_blank" class="dropdown-item" href="https://tracker.webeesocial.tech/login.php">
+              <i class="menu-icon bx bxl-microsoft-teams"></i>
+              <span class="align-middle">Timesheet</span>
+            </a>
+          </li>
           <!-- <li>
             <a class="dropdown-item" href="#">
               <i class="bx bx-cog me-2"></i>

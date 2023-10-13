@@ -35,9 +35,9 @@ $userType = $user->type;
     {{-- </div> --}}
     <div class="d-flex align-content-center flex-wrap gap-3">
 
-        <a class="btn btn-primary" href="#">All</a>
-        <a class="btn btn-primary" href="">Pending</a>
-        <a class="btn btn-primary" href="">Completed</a>
+        <a class="btn btn-primary" href="{{route('activity-index')}}">All</a>
+        <a class="btn btn-primary" href="{{route('activity-pending')}}">Pending</a>
+        <a class="btn btn-primary" href="{{route('activity-completed')}}">Completed</a>
    
 
         @if($userType == 1 || $userType ==2)
@@ -58,17 +58,19 @@ $userType = $user->type;
                     @csrf
                     <input type="hidden" name="activityId" id="activityId">
                     <input type="hidden" name="cron_string" id="cron_string">
+
                     <div>
                         <label for="activity" class="form-label">Activity Name</label>
-                        <input type="text" class="form-control" id="activity" name="activity" placeholder="Activity">
+                        <input type="text" class="form-control" id="activity" name="activity" placeholder="Activity" required>
                         @error('activity')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="mt-3">
                         <label for="team" class="form-label">Team</label>
 
-                        <select class="form-control" id="team" name="team">
+                        <select class="form-control" id="team" name="team" required>
                             <option value="">Select Team</option>
                             @foreach ($teams as $team)
 
@@ -79,69 +81,72 @@ $userType = $user->type;
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mt-3">
-                        <label for="activity">Due Date</label>
-                        <input type="date" class="form-control" id="first_due_date" name="first_due_date">
-                        @error('first_due_date')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mt-3">
-                        <label for="activity">Schedule On</label>
-                        <div class="input-group">
-                            <select class="form-control" name="cron_day[]" id="cron_day" multiple>
-                                @php
-                                $currentDate = now();
-                                $lastDay = $currentDate->daysInMonth;
-                                @endphp
-                                @for ($day = 1; $day <= $lastDay; $day++) <option value="{{ $day }}">{{ $day }}</option>
-                                    @endfor
-                            </select>
-
-                        </div>
-                    </div>
-
-                    @php
-                    $months = ['All' => '*', 'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6,
-                    'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12];
-                    @endphp
-
-                    <div class="mt-3">
-                        <label for="month">Month</label>
-                        <div class="input-group">
-                            <select class="form-control mt-3" name="cron_month[]" id="cron_month" multiple>
-                                <option value="">Month</option>
-                                @foreach ($months as $key => $month)
-                                <option value="{{$month}}">{{$key}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                    </div>
-                    <b><span class="text-success cron_output"></span></b>
-                    @error('cron_command')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-
+                  
                     <div class="mt-3">
                         <label for="assign_to" class="col-form-label">Assign to</label>
-                        <select class="form-control" id="assign_to" name="assign_to[]" multiple>
+                        <select class="form-control" id="assign_to" name="assign_to[]" multiple required>
                             <option value="">Assign to</option>
                             @foreach ($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
                         </select>
                     </div>
+
+
+                    <div class="mt-3">
+                        <label for="activity">Due Date</label>
+                        <input type="date" class="form-control" id="first_due_date" name="first_due_date" required>
+                        @error('first_due_date')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                   <div class="d-flex column-gap-2 justify-content-between">
+                        <div class="mt-3">
+                                <label for="activity">Recurring On</label>
+                                <div class="input-group schedule">
+                                    <select class="form-control" name="cron_day[]" id="cron_day" multiple required>
+                                        @php
+                                        $currentDate = now();
+                                        $lastDay = $currentDate->daysInMonth;
+                                        @endphp
+                                        @for ($day = 1; $day <= $lastDay; $day++) <option value="{{ $day }}">{{ $day }}</option>
+                                            @endfor
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            @php
+                            $months = ['All' => '*', 'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6,
+                            'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12];
+                            @endphp
+
+                            <div class="mt-3">
+                                <label for="month">Month</label>
+                                <div class="input-group month">
+                                    <select class="form-control mt-3" name="cron_month[]" id="cron_month" multiple>
+                                        <option value="">Month</option>
+                                        @foreach ($months as $key => $month)
+                                        <option value="{{$month}}">{{$key}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                   </div>
+                    <b><span class="text-success cron_output"></span></b>
+                    @error('cron_command')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+
+                    
                     <div class="reminders">
                         <div class="mt-3 text-center">
                             <label for="activity">Reminder Date</label>
-                            <input type="date" class="form-control" id="reminder" name="reminder_date[]">
+                            <input type="date" class="form-control" id="reminder_dates" name="reminder_date">
                         </div>
                     </div>
-
-                    <button type="button" class="btn btn-primary add-more-reminder mt-2">+</button>
-
 
                     <!-- Additional form fields go here -->
                     <div class="mt-3">
@@ -163,8 +168,9 @@ $userType = $user->type;
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Team</th>
+                       
                         <th>Activity</th>
+                        <th>Team</th>
                         <th>Assigned To</th>
                         <th>Due Date</th>
                         <th>Reminders</th>
@@ -172,7 +178,7 @@ $userType = $user->type;
                         <th>Status</th>
                         <th>Schedule On</th>
     
-                        @if($userType === 1|| $userType === 2)
+                        @if($userType == 1 || $userType == 2)
                         <th>Action</th>
                         @endif
                     </tr>
@@ -185,10 +191,11 @@ $userType = $user->type;
                                 data-activity='{{ json_encode($activity)}}' type="checkbox" @checked($activity->status ==
                             'completed')>
                         </td>
+                       
+                        <td>{{ $activity->name }}</td>
                         <td>
                             {{ $activity->team->name }}
                         </td>
-                        <td>{{ $activity->name }}</td>
                         <td>
                             @foreach ($activity->assignedUsers as $user)
                             <span class="badge bg-primary">{{ $user->name }}</span>
@@ -197,7 +204,9 @@ $userType = $user->type;
                         <td>{{ $activity->first_due_date }}</td>
                         <td>
                             @foreach ($activity->reminders as $reminder)
-                            <span class="badge bg-primary">{{ $reminder->reminder_date }}</span>
+                                <span class="badge bg-primary">
+                                    {{ \Carbon\Carbon::parse($reminder->reminder_date)->format('d') }}
+                                </span>
                             @endforeach
                         </td>
                         {{-- <td>{{ $activity->team->lead->name }}</td> --}}
@@ -210,7 +219,7 @@ $userType = $user->type;
                         </td>
                         <td> <small> {{ $activity->cron_string }}</small></td>
     
-                        @if($userType === 1|| $userType === 2)
+                        @if($userType == 1 || $userType == 2)
                         <td>
                             <button class="btn btn-primary btn-sm edit_activity"
                                 data-activity='{{ json_encode($activity)}}'><i class='bx bx-edit'></i></button>
@@ -264,6 +273,13 @@ $userType = $user->type;
     });
 
     $(document).ready(function () {
+
+        let reminder_date = $("#reminder_dates").flatpickr({
+            dateFormat: 'Y-m-d',
+            mode: "multiple",
+            altInput: true,
+            altFormat: "j",
+        });
 
         $(".select2").select2();
 
@@ -337,15 +353,13 @@ $userType = $user->type;
             $('#assign_to').val(assignedUsersArray).trigger('change');
 
             let reminders = activityData.reminders;
-            $('.reminders').empty();
+            let remindersArray = [];
+
             reminders.forEach(reminder => {
-                let reminderHtml = `<div class="mt-3 text-center">
-                                <label for="activity">Reminder Date</label>
-                                <input type="date" class="form-control" name="reminder_date[]" value="${reminder.reminder_date}">
-                                <i class="btn btn-danger btn-sm mt-2 delete_reminder bx bx-trash"></i>
-                            </div>`;
-                $('.reminders').append(reminderHtml);
+                remindersArray.push(reminder.reminder_date);
             });
+
+            reminder_date.setDate(remindersArray);
 
             let cron_day = activityData.cron_expression;
             let cron_day_array = cron_day.split(' ');
@@ -360,9 +374,8 @@ $userType = $user->type;
             $('#cron_month').val(cron_months_array).trigger('change');
 
             $('.action_btn').text('Update');
+            $('#offcanvasBothLabel').text('Update Activity');
             $('#activity_add_form').attr('action', '{{ route("activity-update") }}');
-
-
 
         });
 
@@ -380,18 +393,6 @@ $userType = $user->type;
             daySelect.append(new Option(day, day));
         }
     }
-
-    // create reminder on click
-
-    $('.add-more-reminder').on('click', function () {
-        let reminder = `<div class="mt-3 text-center">
-                            <label for="activity">Reminder Date</label>
-                            <input type="date" class="form-control" name="reminder_date[]">
-                            <i class="btn btn-danger btn-sm mt-2 delete_reminder bx bx-trash"></i>
-                        </div>`;
-        $('.reminders').append(reminder);
-        
-    });
 
     // delete reminder on click
 

@@ -103,7 +103,7 @@ $userType = $user->type;
 
                    <div class="d-flex column-gap-2 justify-content-between">
                         <div class="mt-3">
-                                <label for="activity">Schedule On</label>
+                                <label for="activity">Recurring On</label>
                                 <div class="input-group schedule">
                                     <select class="form-control" name="cron_day[]" id="cron_day" multiple required>
                                         @php
