@@ -46,11 +46,14 @@
               <div class="text-truncate" data-i18n="Analytics">My To-do's</div>
             </a>
           </li>
+
+          @if($userType == 2 || $userType == 1 )
           <li class="menu-item">
             <a href="{{ route('team-members')}}" class="menu-link">
               <div class="text-truncate" data-i18n="CRM">Team To-do's</div>
             </a>
           </li>
+          @endif
         </ul>
       </li>
       

@@ -147,8 +147,22 @@ class TaskController extends Controller
         //    return redirect()->route('dashboard');
         // }
         $team = Team::getTeam();
-        return $team->load('members');
-        // return $teammates->load('members');
+        $teammates= $team->load('members');
+        
+        return view('admin.tasks.teammates', compact('teammates'));
+        
     }
+
+    public function member_task($id, $date)
+    {
+
+        $tasks = Task::where('user_id', $id)
+        ->where('created_at', 'LIKE', $date . '%')->get();
+        return view('admin.tasks.member_tasks', compact('tasks'));
+        
+
+    }
+
+
 
 }

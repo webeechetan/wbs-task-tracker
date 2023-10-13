@@ -8,7 +8,6 @@
 
 
 @endsection
-
 <style>
     .completed-task {
         color: black;
@@ -21,6 +20,7 @@
 
 <div class="card">
     <div class="card-header">
+        <h3>To-do's</h3>
         {{-- <div class="custom_search_filter">
             <form action="#" method="GET">
                     <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
