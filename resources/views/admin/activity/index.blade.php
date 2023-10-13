@@ -141,10 +141,26 @@ $userType = $user->type;
                     @enderror
 
                     
-                    <div class="reminders">
+                    {{-- <div class="reminders">
                         <div class="mt-3 text-center">
                             <label for="activity">Reminder Date</label>
                             <input type="date" class="form-control" id="reminder_dates" name="reminder_date">
+                        </div>
+                    </div> --}}
+
+                    <div class="reminders">
+                        <div class="mt-3 text-center">
+                            <label for="activity">Reminder Date</label>
+                            
+                            <select class="form-control" name="reminder_date[]" id="reminder_dates" multiple required>
+                                @php
+                                $currentDate = now();
+                                $lastDay = $currentDate->daysInMonth;
+                                @endphp
+                                @for ($day = 1; $day <= $lastDay; $day++) <option value="{{ $day }}">{{ $day }}</option>
+                                    @endfor
+                            </select>
+
                         </div>
                     </div>
 
@@ -299,6 +315,13 @@ $userType = $user->type;
             tokenSeparators: [',', ' ']
         });
 
+        $("#reminder_dates").select2({
+            placeholder: "Select Day",
+            tags: true,
+            tokenSeparators: [',', ' ']
+        });
+        reminder_dates
+
         $('#cron_month').change(function () {
             generateCronStringFromCommand();
         });
@@ -338,6 +361,10 @@ $userType = $user->type;
         $(".edit_activity").on('click', function (e) {
             e.preventDefault();
             let activityData = $(this).data('activity');
+
+           
+
+
             $('#offcanvasBoth').offcanvas('show');
             $('#activityId').val(activityData.id);
             $('#cron_string').val(activityData.cron_string);
@@ -355,11 +382,21 @@ $userType = $user->type;
             let reminders = activityData.reminders;
             let remindersArray = [];
 
+
             reminders.forEach(reminder => {
                 remindersArray.push(reminder.reminder_date);
             });
 
-            reminder_date.setDate(remindersArray);
+            //  let remindersArraynew = remindersArray.map(reminder => reminder.split(',')[2]); // Assuming
+
+            //         remindersArraynew.forEach(date => {
+            // let reminder_date = new Date(); // You might need to modify this according to your needs
+            // let [year, month, day] = date.split('-');
+            // reminder_date.setFullYear(year, month - 1, day); 
+
+           // reminder_date.setDate(reminder_date);
+
+             reminder_date.setDate(remindersArray);
 
             let cron_day = activityData.cron_expression;
             let cron_day_array = cron_day.split(' ');
@@ -384,6 +421,23 @@ $userType = $user->type;
         const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-based
         const daysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
         const daySelect = $('#cron_day');
+
+        // Clear existing options
+        daySelect.empty();
+
+        // Populate with day options
+        for (let day = 1; day <= daysInMonth; day++) {
+            daySelect.append(new Option(day, day));
+        }
+    }
+
+
+
+    function generateDayOptions() {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-based
+        const daysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        const daySelect = $('#reminder_dates');
 
         // Clear existing options
         daySelect.empty();

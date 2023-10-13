@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Reminder;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\NewActivityAssigned;
+use Carbon\Carbon;
 
 class ActivityController extends Controller
 {
@@ -61,6 +62,8 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
 
+        // return $request->all();
+
         
         $request->validate([
                 'team' => 'required|int',
@@ -91,16 +94,24 @@ class ActivityController extends Controller
             if($request->has('reminder_date')){
 
                
+               
                 $reminder_dates = $request->reminder_date;
-                $reminder_dates = explode(',',$reminder_dates);
+                // $reminder_dates = implode(',',$reminder_dates);
+
+                $currentMonth = Carbon::now()->format('m');
+                $currentYear = Carbon::now()->format('Y');
+
+              
+               
                 
-               // dd($reminder_dates);
                 foreach ($reminder_dates as $key => $value) {
 
+                    
+                $reminder_date = $currentYear . '-' . $currentMonth . '-' . $value;
                   
                     $reminder = new Reminder();
                     $reminder->activity_id = $activity->id;
-                    $reminder->reminder_date = $value;
+                    $reminder->reminder_date = $reminder_date;
                     $reminder->save();
                 }
             }
