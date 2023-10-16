@@ -18,9 +18,10 @@
 
 @section('content')
 
+<h3 class="mt-5">To-do's</h3>
 <div class="card">
     <div class="card-header">
-        <h3>To-do's</h3>
+       
         {{-- <div class="custom_search_filter">
             <form action="#" method="GET">
                     <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
@@ -32,20 +33,20 @@
             <input type="hidden" name="taskId" id="taskId">
             {{-- <div class="d-flex justify-content-between align-items-center task-form" id="parent"> --}}
 
-                <div class="row">
-                    <div class="col-md-3">
+                <div class="d-flex justify-content-between align-items-center task-form">
+                    <div class="mb-3 mb-md-0 task-group">
                         <div class="form-group">
                             <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date"
                                 required value="<?php echo date('Y-m-d'); ?>">
                         </div>
                     </div>  
-                    <div class="col-md-3">
+                    <div class="mb-3 mb-md-0 task-group">
                         <div class="form-group">
                             <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name"
                                 required>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="mb-3 mb-md-0 task-group">
                         <div class="form-group" >
                             <select class="form-control select-control" id="client" name="client">
                                 <option value="">Select Client</option>
@@ -55,7 +56,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="task-group">
                         <div class="form-group">
                             <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
                         </div>

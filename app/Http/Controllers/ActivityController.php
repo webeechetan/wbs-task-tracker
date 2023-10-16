@@ -95,6 +95,8 @@ class ActivityController extends Controller
                
                
                 $reminder_dates = $request->reminder_date;
+
+               
                 // $reminder_dates = implode(',',$reminder_dates);
 
                 $currentMonth = Carbon::now()->format('m');
@@ -184,11 +186,23 @@ class ActivityController extends Controller
             if($request->has('reminder_date')){
                 $activity->reminders()->delete();
                 $reminder_dates = $request->reminder_date;
-                $reminder_dates = explode(',',$reminder_dates);
+
+
+                    $currentMonth = Carbon::now()->format('m');
+                    $currentYear = Carbon::now()->format('Y');
+
+
+              // removing short  $reminder_dates = explode(',',$reminder_dates);
+                
                 foreach ($reminder_dates as $key => $value) {
+
+                    $reminder_date = $currentYear . '-' . $currentMonth . '-' . $value;
+
                     $reminder = new Reminder();
                     $reminder->activity_id = $activity->id;
-                    $reminder->reminder_date = $value;
+
+                    $reminder->reminder_date = $reminder_date;
+                    // removing for short time $reminder->reminder_date = $value;
                     $reminder->save();
                 }
             }

@@ -25,6 +25,7 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
 
+           
                         @foreach ($tasks as $task)
                             <tr class=" @if($task->status == 'completed') completed-task @endif ">
                                 

@@ -156,6 +156,7 @@ class TaskController extends Controller
     public function member_task($id, $date)
     {
 
+        
         $tasks = Task::where('user_id', $id)
         ->where('created_at', 'LIKE', $date . '%')->get();
         return view('admin.tasks.member_tasks', compact('tasks'));
