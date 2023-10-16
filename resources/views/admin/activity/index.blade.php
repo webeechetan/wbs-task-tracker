@@ -36,9 +36,9 @@ $userType = $user->type;
     {{-- </div> --}}
     <div class="d-flex align-content-center flex-wrap gap-3">
 
-        <a class="btn btn-primary" href="{{route('activity-index')}}">All</a>
-        <a class="btn btn-primary" href="{{route('activity-pending')}}">Pending</a>
-        <a class="btn btn-primary" href="{{route('activity-completed')}}">Completed</a>
+        <a class="btn btn-primary btn-sm" href="{{route('activity-index')}}">All</a>
+        <a class="btn btn-primary btn-sm" href="{{route('activity-pending')}}">Pending</a>
+        <a class="btn btn-primary btn-sm" href="{{route('activity-completed')}}">Completed</a>
    
 
         @if($userType == 1 || $userType ==2)

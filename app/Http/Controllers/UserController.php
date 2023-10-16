@@ -119,6 +119,6 @@ class UserController extends Controller
 
     public function member_calander(User $user){
         $currentDate = now();
-        return view('admin.tasks.calanderph',compact('user','currentDate'));
+        return view('admin.tasks.calander',compact('user','currentDate'));
     }
 }

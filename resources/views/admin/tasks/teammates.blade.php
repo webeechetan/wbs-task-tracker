@@ -14,7 +14,7 @@
 
 @foreach ($teammates as $team)
 
-<h4 class="py-3 mb-4"><span class="text-muted fw-light">Webee Social /</span> {{ $team->name}}</h4>
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Team To-do's</span> </h4>
 <!-- Cards with few info -->
         <div class="row">
             @foreach ($team->members as $member)
@@ -22,10 +22,22 @@
                     <a href="{{ route('member-calander', $member->id)}}">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-flex justify-content-between">
+                                {{-- <div class="d-flex justify-content-between">
                                     <div class="card-info">
                                         <h3 class="card-text">{{$member->name}}</h3>
                                     </div>
+                                </div> --}}
+
+                                <div class="team-details">
+                                    <div class="team-icons"><span class='bx bx-user'></span></div>
+                                   <div class="d-block">
+                                       <div class="card-info team-info">
+                                            <h5 class="card-text team-employee-name">{{$member->name}}</h5>
+                                        </div>
+                                        <div class="team-name mt-2">
+                                            <span class="badge bg-primary"> {{ $team->name}}</span>
+                                        </div>
+                                   </div>
                                 </div>
                             </div>
                         </div>
