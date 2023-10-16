@@ -15,6 +15,12 @@ Route::get('/', [AuthController::class, 'index'])->name('login.view')->middlewar
 Route::get('/login', [AuthController::class, 'index'])->name('login.home')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 
+/*--------------------------------- Auth Google Routes ---------------------------------*/
+
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('google.login');
+
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
+
 
 Route::group(['middleware' => 'auth'], function () {
 

@@ -109,6 +109,17 @@
                 </div>
                 
               </form>
+
+              <div>
+                <div class="text-center mt-4">
+                  <a href="{{ route('google.login') }}">
+                    <button class="btn btn-danger">
+                      <i class="bx bxl-google me-2"></i>
+                      Sign in with Google
+                    </button>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
           <!-- /Register -->
