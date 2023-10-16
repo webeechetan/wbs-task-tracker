@@ -19,7 +19,7 @@ class AuthController extends Controller
         session()->put('googleUser',$user);
         if($findUser){
             Auth::loginUsingId($findUser->id);
-            return redirect()->route('dashboard');
+            return redirect()->route('task-index');
         }else{
             $this->alert('Login Failed','Not registered with us!','danger');
             return redirect()->route('login.view');

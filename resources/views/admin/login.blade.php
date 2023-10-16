@@ -68,9 +68,9 @@
               </div>
               <!-- /Logo -->
               <h4 class="mb-2">Welcome to Webeesocial 👋</h4>
-              <p class="mb-4">Please sign-in to your account and start the adventure</p>
+              {{-- <p class="mb-4">Please sign-in to your account and start the adventure</p> --}}
 
-              <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
+              {{-- <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                   <label for="email" class="form-label">Email or Username</label>
@@ -108,7 +108,7 @@
                   <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                 </div>
                 
-              </form>
+              </form> --}}
 
               <div>
                 <div class="text-center mt-4">
