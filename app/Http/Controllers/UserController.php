@@ -116,4 +116,9 @@ class UserController extends Controller
             return redirect()->back();
         }
     }
+
+    public function member_calander(User $user){
+        $currentDate = now();
+        return view('admin.tasks.calanderph',compact('user','currentDate'));
+    }
 }

@@ -104,7 +104,7 @@ $userType = $user->type;
 
                    <div class="d-flex column-gap-2 justify-content-between">
                         <div class="mt-3">
-                                <label for="activity">Schedule On</label>
+                                <label for="activity">Recurring On</label>
                                 <div class="input-group schedule">
                                     <select class="form-control" name="cron_day[]" id="cron_day" multiple required>
                                         @php
@@ -142,10 +142,27 @@ $userType = $user->type;
                     @enderror
 
                     
-                    <div class="reminders">
+                    {{-- <div class="reminders">
                         <div class="mt-3 text-center">
                             <label for="activity">Reminder Date</label>
                             <input type="date" class="form-control" id="reminder_dates" name="reminder_date">
+                        </div>
+                    </div> --}}
+
+                    <div class="reminders">
+                        <div class="mt-3 text-center">
+                            <label for="activity">Reminder Date</label>
+                            
+                            <select class="form-control" name="reminder_date[]" id="reminder_dates" multiple required>
+                                @php
+                                    $currentDate = now();
+                                    $lastDay = $currentDate->daysInMonth;
+                                @endphp
+                                @for ($day = 1; $day <= $lastDay; $day++) 
+                                    <option value="{{ $day }}">{{ $day }}</option>
+                                @endfor
+                            </select>
+
                         </div>
                     </div>
 
@@ -164,7 +181,7 @@ $userType = $user->type;
 <div class="card">
     <h5 class="card-header">Activities</h5>
     <div class="card-body">
-        <div class="filter-form">
+        {{-- <div class="filter-form">
             <form action="" method="GET">
                 <div class="input-group">
                     @foreach($teams as $team)
@@ -174,7 +191,7 @@ $userType = $user->type;
                     <button class="btn btn-primary" type="submit">Filter</button>
                 </div>
             </form>
-        </div>
+        </div> --}}
         <div class="table-responsive text-nowrap">
             <table class="table mb-3 table-hover" id="activityTable">
                 <thead>
@@ -276,6 +293,7 @@ $userType = $user->type;
 
 <!-- Include Flatpickr JS from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://momentjs.com/downloads/moment.js" ></script>
 
 {{--
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
@@ -285,13 +303,6 @@ $userType = $user->type;
     });
 
     $(document).ready(function () {
-
-        let reminder_date = $("#reminder_dates").flatpickr({
-            dateFormat: 'Y-m-d',
-            mode: "multiple",
-            altInput: true,
-            altFormat: "j",
-        });
 
         $(".select2").select2();
 
@@ -310,6 +321,13 @@ $userType = $user->type;
             tags: true,
             tokenSeparators: [',', ' ']
         });
+
+        let reminder_dates = $("#reminder_dates").select2({
+            placeholder: "Select Day",
+            tags: true,
+            tokenSeparators: [',', ' ']
+        });
+        
 
         $('#cron_month').change(function () {
             generateCronStringFromCommand();
@@ -350,6 +368,7 @@ $userType = $user->type;
         $(".edit_activity").on('click', function (e) {
             e.preventDefault();
             let activityData = $(this).data('activity');
+
             $('#offcanvasBoth').offcanvas('show');
             $('#activityId').val(activityData.id);
             $('#cron_string').val(activityData.cron_string);
@@ -365,13 +384,14 @@ $userType = $user->type;
             $('#assign_to').val(assignedUsersArray).trigger('change');
 
             let reminders = activityData.reminders;
-            let remindersArray = [];
+            let reminders_dates_array = [];
 
             reminders.forEach(reminder => {
-                remindersArray.push(reminder.reminder_date);
+                let reminder_date = moment(reminder.reminder_date).format('D');
+                reminders_dates_array.push(reminder_date);
             });
 
-            reminder_date.setDate(remindersArray);
+            $('#reminder_dates').val(reminders_dates_array).trigger('change');
 
             let cron_day = activityData.cron_expression;
             let cron_day_array = cron_day.split(' ');
@@ -389,6 +409,8 @@ $userType = $user->type;
             $('#offcanvasBothLabel').text('Update Activity');
             $('#activity_add_form').attr('action', '{{ route("activity-update") }}');
 
+
+
         });
 
     function generateDayOptions() {
@@ -396,6 +418,23 @@ $userType = $user->type;
         const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-based
         const daysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
         const daySelect = $('#cron_day');
+
+        // Clear existing options
+        daySelect.empty();
+
+        // Populate with day options
+        for (let day = 1; day <= daysInMonth; day++) {
+            daySelect.append(new Option(day, day));
+        }
+    }
+
+
+
+    function generateDayOptions() {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-based
+        const daysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        const daySelect = $('#reminder_dates');
 
         // Clear existing options
         daySelect.empty();

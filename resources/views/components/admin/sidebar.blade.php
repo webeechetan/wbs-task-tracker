@@ -1,7 +1,7 @@
 
 @php
     $user = auth()->user();
-    $userType = $user->type;
+    $userRole = $user->type;
 @endphp
 
 
@@ -46,17 +46,21 @@
               <div class="text-truncate" data-i18n="Analytics">My To-do's</div>
             </a>
           </li>
+
+
+          @if($userRole == 2 || $userRole == 1)       
           <li class="menu-item">
             <a href="{{ route('team-members')}}" class="menu-link">
               <div class="text-truncate" data-i18n="CRM">Team To-do's</div>
             </a>
           </li>
+          @endif
         </ul>
       </li>
       
 
 
-      @if($userType == 1 )
+      @if($userRole == 1 )
   
       {{-- Employee--}}
       <li class="menu-item @if(request()->routeIs('user-index') || request()->routeIs('user-create') || request()->routeIs('user-edit')) active @endif">

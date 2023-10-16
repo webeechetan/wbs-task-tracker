@@ -381,3 +381,23 @@ table.dataTable tbody tr.even {
 .light-style span.select2-dropdown {
   z-index: 99999;
 }
+
+.select2-selection--single{
+
+  min-height: 38px !important;
+  border: 1px solid #d9dee3 !important;
+  border-radius: 0.375rem !important;
+}
+.select2-selection__rendered{
+  line-height: 38px !important;
+}
+
+.selection__arrow {
+  top:6px;
+}
+
+#select2-reminder_dates-results{
+  display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}

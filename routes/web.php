@@ -27,20 +27,20 @@ Route::group(['middleware' => 'auth'], function () {
 
     /*--------------------------------- Team Routes ---------------------------------*/
 
-    Route::get('/teams',[TeamController::class,'index'])
-            ->name('teams-index')
-            ->middleware('admin'); 
-    Route::post('/teams',[TeamController::class,'store'])
-            ->name('teams-store')
-            ->middleware('admin');
-    Route::post('/teams/update',[TeamController::class,'update'])
-            ->name('teams-update')
-            ->middleware('admin');
-    Route::get('/teams/delete/{team}',[TeamController::class,'destroy'])
-            ->name('teams-destroy')
-            ->middleware('admin');
+    Route::get('/teams', [TeamController::class, 'index'])
+        ->name('teams-index')
+        ->middleware('admin');
+    Route::post('/teams', [TeamController::class, 'store'])
+        ->name('teams-store')
+        ->middleware('admin');
+    Route::post('/teams/update', [TeamController::class, 'update'])
+        ->name('teams-update')
+        ->middleware('admin');
+    Route::get('/teams/delete/{team}', [TeamController::class, 'destroy'])
+        ->name('teams-destroy')
+        ->middleware('admin');
 
-    
+
     /*--------------------------------- User Routes ---------------------------------*/
 
     Route::get('/user/create', [UserController::class, 'create'])->name('user-create')
@@ -63,15 +63,15 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware('admin');
 
 
-        
+
     /*--------------------------------- To do's ---------------------------------*/
 
 
-    Route::get('/tasks', [TaskController:: class, 'index'])->name('task-index')->middleware('auth');
+    Route::get('/tasks', [TaskController::class, 'index'])->name('task-index')->middleware('auth');
 
     Route::post('/tasks/store', [TaskController::class, 'store'])->name('task-store')->middleware('auth');
 
-    Route::get('/tasks/edit/{task}', [TaskController:: class,'edit'])->name('task-edit')->middleware('auth');
+    Route::get('/tasks/edit/{task}', [TaskController::class, 'edit'])->name('task-edit')->middleware('auth');
 
     Route::post('/tasks/update', [TaskController::class, 'update'])->name('task-update')->middleware('auth');
 
@@ -79,10 +79,20 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::delete('/tasks/destroy/{task}', [TaskController::class, 'destroy'])->name('task-destroy')->middleware('auth');
 
-    Route::get('/tasks/teammates', [TaskController::class, 'teammates'])->name('team-members')->middleware('admin');
+    Route::get('/tasks/teammates', [TaskController::class, 'teammates'])->name('team-members')->middleware('auth');
+
+    Route::get('/tasks/member-calander/{user}', [UserController::class, 'member_calander'])->name('member-calander');
+
+
+    Route::get('/tasks/calender/member_tasks/{id}/{date}', [TaskController::class, 'member_task'])->name('member_tasks')->middleware('auth');
+
+
+
+
+
     /*--------------------------------- Activities ---------------------------------*/
 
-    Route::get('/activities/{filter?}', [ActivityController:: class, 'index'])->name('activity-index')->middleware('auth');
+    Route::get('/activities/{filter?}', [ActivityController::class, 'index'])->name('activity-index')->middleware('auth');
     Route::post('/activities/store', [ActivityController::class, 'store'])->name('activity-store')->middleware('auth');
 
     Route::post('/activities/update', [ActivityController::class, 'update'])->name('activity-update')->middleware('auth');
@@ -92,8 +102,4 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/activities/pending', [ActivityController::class, 'pending'])->name('activity-pending')->middleware('auth');
     Route::get('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middleware('auth');
-    
-
-
-
 });

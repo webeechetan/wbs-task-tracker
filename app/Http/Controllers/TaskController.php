@@ -126,7 +126,7 @@ class TaskController extends Controller
     }
 
 
-    public function statuspdate(Request $request, Task $task)
+    public function statusupdate(Request $request, Task $task)
     {
         if($request->status=='pending'){
             $task->status = 'completed';
@@ -142,13 +142,27 @@ class TaskController extends Controller
     
     public function teammates()
     {
-        // if(auth()->user()->role != '2'){
-        //     $this->alert('error','You are not authorized to access this page','danger');
+        // if(auth()->user()->role != 2 ){
+        //     $this->alert('error','You are not authorized to access this ppage','danger');
         //    return redirect()->route('dashboard');
         // }
         $team = Team::getTeam();
-        $teams = $team->load('members');
-        return view('admin.tasks.teammates',compact('teams'));
+        $teammates= $team->load('members');
+        
+        return view('admin.tasks.teammates', compact('teammates'));
+        
     }
+
+    public function member_task($id, $date)
+    {
+
+        $tasks = Task::where('user_id', $id)
+        ->where('created_at', 'LIKE', $date . '%')->get();
+        return view('admin.tasks.member_tasks', compact('tasks'));
+        
+
+    }
+
+
 
 }
