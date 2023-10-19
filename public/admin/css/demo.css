@@ -131,9 +131,7 @@ label{
   align-items: flex-end;
   grid-gap: 15px;
 } */
-.light-style{
-  overflow: hidden;
-}
+
 input:focus-visible{
   outline: none !important;
   border: 1px solid #d9dee3 !important;
@@ -331,7 +329,7 @@ table.dataTable tbody tr.even {
 }
 .select2-dropdown--below{
   top: 10px !important;
-  min-width: 300px !important;
+  min-width: 200px !important;
   width: 100% !important;
   padding: 10px 15px !important;
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.07);
@@ -346,23 +344,23 @@ table.dataTable tbody tr.even {
 .task-form{
   column-gap: 30px;
 }
-.task-form .task-group:not(:last-child){
+/* .task-form .task-group:not(:last-child){
   width: 25%;
-}
+} */
 .task-form .select2-container .select2-selection--single{
    min-height: 39px !important;
    border: 1px solid #d9dee3 !important;
    line-height: 35px;
 }
 .task-form .select2-selection--single .select2-selection__rendered{
-  line-height: 35px !important;
+  line-height: 20px !important;
 }
 .task-form .select2-selection__arrow{
-  top: 6px !important;
+  top: -3px !important;
 }
-.select2-dropdown.select2-dropdown--below{
-  width: 325px !important;
-}
+/* .select2-dropdown.select2-dropdown--below{
+  width: 300px !important;
+} */
 .select2-dropdown .select2-search__field{
   border-radius: 0.375rem !important;
   border: 1px solid #d9dee3 !important;
@@ -455,4 +453,159 @@ table.dataTable tbody tr.even {
 }
 .calendar-box:hover{
   color: var(--primary);
+}
+/*----- New Css ----*/
+.avatar img {
+  border-radius: 50%;
+}
+.dropdown-menu::before{
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 16px;
+  height: 10px;
+  width: 10px;
+  transform: rotate(45deg);
+  background-color: #fff;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+}
+.dropdown-item .avatar-online{
+  background-color: var(--primary);
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  
+}
+.dropdown-item .avatar-online h5{
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+}
+/*---- Todo ---*/
+.title{
+  color: #000;
+}
+.todo-header{
+  display:  flex;
+  justify-content:  space-between;
+  margin-bottom: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.todo-task{
+  background-color:  var(--primary);
+  border-radius: .375rem;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+}
+.todo-form{
+  margin-bottom: 0 !important;
+}
+.task-detail{
+  background-color: transparent;
+  border-bottom: 1px solid #fff ;
+  border: none;
+  border-radius: 0px;
+  color: #fff !important;
+}
+
+.task-detail::placeholder {
+  color: #fff !important;
+}
+.task-detail:focus,.task-detail:focus-visible{
+  background-color: transparent !important;
+  border: none !important;
+}
+.task-form .select2-container .select2-selection--single {
+  background: transparent ; 
+  border-bottom: 1px solid #fff !important;
+  border: none !important;
+  border-radius: 0px;
+  color: #fff !important;
+}
+
+.task-form .select2-container--default .select2-selection--single .select2-selection__placeholder{
+  color: #fff;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-color: #fff transparent transparent transparent !important;
+}
+.action_btn{
+  background:  transparent;
+  border: none !important;
+  color: #fff;
+}
+.task-group-1{
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 2px solid #eee;
+  border-right: 2px solid #eee;
+  height: 22px;
+}
+.card-badge{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.calendar-card .card{
+  padding: 8px 12px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.calendar-card{
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ grid-gap: 10px;
+}
+.card-badge .badge{
+  width: fit-content;
+  text-transform: capitalize;
+}
+.team-group .select2-container--default .select2-selection--multiple{
+  padding-bottom: 0 !important;
+  border: 1px solid #d9dee3;
+}
+.team-group .select2-container .select2-search--inline .select2-search__field{
+height: auto !important;
+margin-top: 0 !important;
+
+}
+.btn-outline-secondary:hover{
+  box-shadow: none !important;
+  background-color: #F7D600 !important;
+  border: 1px solid #F7D600 !important;
+}
+.select2-selection__choice{
+  background-color: var(--primary) !important;
+  border: 1px solid var(--primary) !important;
+  color: #fff !important;
+  padding-right: 10px !important;
+}
+.select2-selection__choice__remove{
+  color: #fff !important;
+}
+.btn-primary:hover{
+  background-color: #F7D600 !important;
+  border: 1px solid #F7D600 !important;
+  color: #000 !important;
+}
+.form-control:focus, .form-control:focus-visible{
+  border: 1px solid var(--primary) !important;
+}
+.todo .dataTables_wrapper > .bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.col-form-label, .form-label{
+  text-transform: capitalize;
+}
+@media(max-width:767px){
+  .todo-task{
+    margin-top: 10px;
+  }
 }

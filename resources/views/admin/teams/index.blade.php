@@ -59,7 +59,7 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <label for="nameSmall" class="form-label">Name</label>
                             <input type="text" required id="name" name="name" class="form-control" placeholder="Enter Name">
                         </div>
