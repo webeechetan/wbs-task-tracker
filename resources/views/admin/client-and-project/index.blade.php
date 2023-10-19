@@ -10,10 +10,12 @@
 <div class="row">
     <div class="col-12">
         <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                 <h5 class="mb-0">Clients & Projects</h5> 
-                <small class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewClientModal">Create Client</small>
-                <small class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewProjectModal">Create Project</small>
+            <div class="card-header client-project-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">Clients & Projects</h5> 
+                <div class="d-flex align-items-center justify-content-between multiple-btn">
+                    <button class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewClientModal">Create Client</button>
+                    <button class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewProjectModal">Create Project</button>
+                </div>
             </div>
         </div>
     </div>
@@ -54,7 +56,7 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <label for="nameSmall" class="form-label">Name</label>
                             <input type="text" required id="client_name" name="name" class="form-control" placeholder="Enter Client Name">
                         </div>
@@ -112,7 +114,7 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <label for="nameSmall" class="form-label">Client</label>
                             <select class="form-control" name="client_id" id="client_id_for_project" required>
                                 <option value="">Select Client</option>
@@ -121,7 +123,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <label for="nameSmall" class="form-label">Name</label>
                             <input type="text" required id="project_name" name="name" class="form-control" placeholder="Enter Project Name">
                         </div>
@@ -150,7 +152,7 @@
                 <input type="hidden" id="edit_project_id">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <label for="nameSmall" class="form-label">Client</label>
                             <select class="form-control" name="client_id" id="edit_client_id_for_project" required>
                                 <option value="">Select Client</option>
@@ -159,7 +161,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <label for="nameSmall" class="form-label">Name</label>
                             <input type="text" required id="edit_project_name" name="name" class="form-control" placeholder="Enter Project Name">
                         </div>

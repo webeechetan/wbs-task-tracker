@@ -14,12 +14,10 @@ class Task extends Model
 
    
     public function client() {
-
         return $this->belongsTo(Client::class);
     }
 
     public function project() {
-
         return $this->belongsTo(Project::class);
     }
 

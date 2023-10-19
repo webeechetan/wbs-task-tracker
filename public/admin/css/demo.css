@@ -463,3 +463,12 @@ table.dataTable tbody tr.even {
 
   color: var(--primary);
 }
+
+.multiple-btn{
+  column-gap: 10px;
+}
+
+.client-project-header{
+  padding: 10px 1.5rem !important;
+
+}
