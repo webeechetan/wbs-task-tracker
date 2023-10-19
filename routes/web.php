@@ -7,6 +7,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ClientAndProjectController;
 
 
 /*--------------------------------- Auth Routes ---------------------------------*/
@@ -108,4 +109,18 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/activities/pending', [ActivityController::class, 'pending'])->name('activity-pending')->middleware('auth');
     Route::get('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middleware('auth');
+
+    /*-------------------------- Clients & Projects Routes -----------------------*/
+
+    Route::get('/clients-and-projects',[ClientAndProjectController::class,'index'])->name('clients-and-projects-index')->middleware('auth');
+
+    Route::post('/client/store',[ClientAndProjectController::class,'storeClient'])->name('client.store')->middleware('auth');
+    Route::post('/client/update',[ClientAndProjectController::class,'updateClient'])->name('client.update')->middleware('auth');
+    Route::get('/client/destroy/{client?}',[ClientAndProjectController::class,'destroyClient'])->name('client.destroy')->middleware('auth');
+
+    Route::post('/project/store',[ClientAndProjectController::class,'storeProject'])->name('project.store')->middleware('auth');
+    Route::post('/project/update',[ClientAndProjectController::class,'updateProject'])->name('project.update')->middleware('auth');
+    Route::get('/project/destroy/{project?}',[ClientAndProjectController::class,'destroyProject'])->name('project.destroy')->middleware('auth');
+
+
 });
