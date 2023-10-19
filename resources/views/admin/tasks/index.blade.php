@@ -201,9 +201,13 @@
 
                     @foreach ($tasks as $task)
                     <tr class=" @if($task->status == 'completed') completed-task @endif ">
-                        <td>
+                        {{-- <td>
                             <input class="form-check-input mark_complete_task" data-task='{{ json_encode($task) }}'
-                                type="checkbox" @checked($task->status == 'completed')>
+                                type="checkbox" @checked($task->status == 'completed')>                               
+                        </td> --}}
+
+                        <td>
+                            <i class='toggle-icon bx bxs-checkbox mark_complete_task' onclick="changeIcon(this)"></i>            
                         </td>
                         <td>{{$task->name}}</td>
                         <td>{{$task->client->name}}</td>
@@ -240,6 +244,21 @@
     });
 
 
+   
+
+    function changeIcon(icon) {
+            if (icon.classList.contains('bx bxs-checkbox')) {
+                icon.classList.remove('bx bxs-checkbox');
+                icon.classList.add('bx bxs-checkbox-checked');
+            } else {
+                icon.classList.remove('bx bxs-checkbox-checked');
+                icon.classList.add('bx bxs-checkbox');
+            }
+        }
+
+
+
+
     $(document).ready(function () {
 
         $('.card').click(function () {
@@ -247,6 +266,9 @@
         });
 
 
+        $('#iconCell').click(function () {
+    $('#myIcon').toggleClass('fa-star fa-check');
+});
         let table = $('#tasksTable').DataTable({
             responsive: true,
             dom: '<"top"f>rt<"bottom"lip><"clear">'

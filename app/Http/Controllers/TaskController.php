@@ -54,7 +54,13 @@ class TaskController extends Controller
                 ->orderBy('status')
                 ->get();
         }else{
-            $tasks = Task::where('user_id', auth()->user()->id)->orderBy('status')->get();
+            // $tasks = Task::where('user_id', auth()->user()->id)->orderBy('status')->get();
+
+            $tasks = Task::where('user_id', auth()->user()->id)
+            ->whereDate('created_at', today()) // Assuming you want to filter by the 'created_at' column
+            ->orderBy('status')
+            ->get();
+
         }
         $projects = Project::all();
         // return view('admin.tasks.index', compact('tasks','projects'));
