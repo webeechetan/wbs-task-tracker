@@ -82,7 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/tasks/update', [TaskController::class, 'update'])->name('task-update')->middleware('auth');
 
-    Route::post('/tasks/status_update/{task}', [TaskController::class, 'statusupdate'])->name('task-statusupdate')->middleware('auth');
+    Route::post('/tasks/status_update/{task?}', [TaskController::class, 'statusupdate'])->name('task-statusupdate')->middleware('auth');
 
     Route::delete('/tasks/destroy/{task}', [TaskController::class, 'destroy'])->name('task-destroy')->middleware('auth');
 

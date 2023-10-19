@@ -96,14 +96,13 @@
                 <tbody class="table-border-bottom-0">
 
                     @foreach ($tasks as $task)
-                    <tr class=" @if($task->status == 'completed') completed-task @endif ">
-                        {{-- <td>
-                            <input class="form-check-input mark_complete_task" data-task='{{ json_encode($task) }}'
-                                type="checkbox" @checked($task->status == 'completed')>                               
-                        </td> --}}
-
+                    <tr class=" @if($task->status == 'completed') completed-task @endif   task-id-{{ $task->id }}">
                         <td>
-                            <i class='toggle-icon bx bxs-checkbox mark_complete_task' onclick="changeIcon(this)"></i>            
+                            @if($task->status == 'completed')
+                                <i class='toggle-icon bx bxs-checkbox-checked icon-id-{{ $task->id }}' onclick="changeStatus({{$task->id}})"></i>  
+                            @else
+                                <i class='toggle-icon bx bxs-checkbox icon-id-{{ $task->id }}' onclick="changeStatus({{$task->id}})"></i>  
+                            @endif          
                         </td>
                         <td>{{$task->name}}</td>
                         <td>{{$task->client->name}}</td>
@@ -140,19 +139,38 @@
     });
 
 
-   
+   function changeStatus(id){
+        $(".task-id-"+id).addClass('blur-table-row');
 
-    function changeIcon(icon) {
-            if (icon.classList.contains('bx bxs-checkbox')) {
-                icon.classList.remove('bx bxs-checkbox');
-                icon.classList.add('bx bxs-checkbox-checked');
-            } else {
-                icon.classList.remove('bx bxs-checkbox-checked');
-                icon.classList.add('bx bxs-checkbox');
+        $.ajax({
+            type: 'POST',
+            url: '{{ route("task-statusupdate") }}/'+id,
+            data: {
+                "_token": "{{ csrf_token() }}",
+                id: id,
+            },
+            success: function (response) {
+                if(response.success){
+
+                    if(response.data.status == 'completed'){
+                        $(".task-id-"+id).addClass('completed-task');
+                        $(".icon-id-"+id).removeClass('bxs-checkbox');
+                        $(".icon-id-"+id).addClass('bxs-checkbox-checked');
+
+                    }else{
+                        $(".task-id-"+id).removeClass('completed-task');
+                        $(".icon-id-"+id).removeClass('bxs-checkbox-checked');
+                        $(".icon-id-"+id).addClass('bxs-checkbox');
+                    }
+
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
             }
-        }
-
-
+        });
+        $(".task-id-"+id).removeClass('blur-table-row');
+   }
 
 
     $(document).ready(function () {
@@ -161,10 +179,9 @@
             $(this).find('.card-body').toggleClass('active');
         });
 
-
         $('#iconCell').click(function () {
-    $('#myIcon').toggleClass('fa-star fa-check');
-});
+        $('#myIcon').toggleClass('fa-star fa-check');
+    });
         let table = $('#tasksTable').DataTable({
             responsive: true,
             dom: '<"top"f>rt<"bottom"lip><"clear">'

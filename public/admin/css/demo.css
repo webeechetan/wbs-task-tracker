@@ -476,3 +476,17 @@ table.dataTable tbody tr.even {
 .toggle-icon {
   cursor: pointer;
 }
+
+.bxs-checkbox-checked{
+  color: var(--primary);
+  font-size: 30px;
+}
+
+.bxs-checkbox{
+  color: var(--primary);
+  font-size: 30px;
+}
+
+.blur-table-row {
+  background-color: #f40a0a !important;
+}
