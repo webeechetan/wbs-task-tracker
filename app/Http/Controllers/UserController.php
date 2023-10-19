@@ -43,7 +43,7 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->emp_name;
         $user->email = $request->emp_email;
-        $user->password = Hash::make($request->password);
+        //$user->password = Hash::make($request->password);
         $user->type = $request->type;
         $user->slack_id = $request->emp_slack_id;
         if ($user->save()) {

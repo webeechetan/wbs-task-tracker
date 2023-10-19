@@ -27,6 +27,7 @@
   text-transform: lowercase;
 }
 
+
 /* ! For .layout-navbar-fixed added fix padding top tpo .layout-page */
 /* Detached navbar */
 .layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
@@ -454,5 +455,11 @@ table.dataTable tbody tr.even {
   color: #000;
 }
 .calendar-box:hover{
+  color: var(--primary);
+}
+
+
+.card-body.active{
+
   color: var(--primary);
 }

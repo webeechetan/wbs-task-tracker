@@ -14,8 +14,8 @@
                         <div class="custom_search_filter_inputMask"><i class="bx bx-search"></i></div>
                 </form>
            </div> --}}
-        <h5 class="mb-0">Users List</h5>
-        <a href="{{ route('user-create')}}" class="btn btn-primary btn-sm">Add User</a>
+        <h5 class="mb-0">Employees List</h5>
+        <a href="{{ route('user-create')}}" class="btn btn-primary btn-sm">Add Employee</a>
     </div>
     <div class="card-body">
         <div class="table-responsive text-nowrap">

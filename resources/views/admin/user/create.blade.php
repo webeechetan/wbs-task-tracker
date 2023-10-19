@@ -8,9 +8,9 @@
     <div class="col-xl">
         <div class="card ">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">New User</h5>
+                <h5 class="mb-0">New Employee</h5>
                 <small class="text-muted float-end">
-                    <a href="{{ route('user-index')}}"><button class="btn btn-primary btn-sm">All Users</button></a>
+                    <a href="{{ route('user-index')}}"><button class="btn btn-primary btn-sm">All Employees</button></a>
                 </small>
             </div>
             <div class="card-body">
@@ -24,10 +24,10 @@
                         <label for="email" class="col-form-label">Email</label>
                         <input type="email" class="form-control" id="emp_email" name="emp_email" required>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="password" class="col-form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div> --}}
                     <div class="form-group">
                         <label for="department" class="col-form-label">Type</label>
                         <select class="form-control" id="type" name="type" required>
