@@ -173,15 +173,20 @@ class TaskController extends Controller
 
     public function statusupdate(Request $request, Task $task)
     {
-        if($request->status=='pending'){
-            $task->status = 'completed';
+        $status = '';
+        if($task->status == 'pending'){
+            $status = 'completed';
+        }else{
+            $status = 'pending';
         }
-        if($request->status=='completed'){
-            $task->status = 'pending';
+        try{
+            $task->status = $status;
+            $task->save();
+            return response()->json(['success' => true, 'message' => 'Task status updated successfully', 'data' => $task], 200);
+        }catch(\Exception $e){
+            return response()->json(['success' => false,'message' => 'Something went wrong'], 500);
         }
-        $task->save();
 
-        return response()->json(['message' => 'Task status updated successfully'], 200);
     }
 
     
