@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\Team;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
@@ -20,7 +21,6 @@ class TaskController extends Controller
     public function index( Request $request)
     {
 
-
         $selectedDate = $request->input('date');
 
     if ($selectedDate) {
@@ -31,11 +31,13 @@ class TaskController extends Controller
     }else{
         
 
+        
         $tasks = Task::where('user_id', auth()->user()->id)->orderBy('status')->get();
        
     }
-        $clients = Task::select('client')->distinct()->get();
-        return view('admin.tasks.index', compact('tasks','clients'));
+
+        $projects = Project::all();
+        return view('admin.tasks.index', compact('tasks','projects'));
     }
 
     /**
@@ -63,9 +65,13 @@ class TaskController extends Controller
         $task->user_id = $user->id;
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
-        $task->client = $request->client;
+
 
         $task->project_id = $request->project_name;
+
+        $project = Project::where('client_id', $request->project_name)->first();
+        $clientId = $project->client_id;
+        $task->client_id = $clientId;
 
         if ($task->save()) {
             $this->alert('success', 'Task Added successfully', 'success');

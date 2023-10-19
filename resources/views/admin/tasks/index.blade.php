@@ -83,7 +83,7 @@ $currentDay = $currentDate->day;
                     </div>
 
 
-                    <div class="mb-3 mb-md-0 task-group">
+                    {{-- <div class="mb-3 mb-md-0 task-group">
                         <div class="form-group" >
                             <select class="form-control select-control" id="client" name="client">
                                 <option value="">Select Client</option>
@@ -92,11 +92,16 @@ $currentDay = $currentDate->day;
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3 mb-md-0 task-group">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="project_name" name="project_name" placeholder="Project">
+                            <select class="form-control select-control" id="project_name" name="project_name">
+                                <option value="">Select Project</option>
+                                @foreach ($projects as $project)
+                                <option value="{{$project->id}}">{{$project->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
@@ -121,8 +126,6 @@ $currentDay = $currentDate->day;
                             <th>Task</th>
                             <th>Client</th>
                             <th>Project</th>
-                            
-                           
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -134,20 +137,8 @@ $currentDay = $currentDate->day;
                                     <input class="form-check-input mark_complete_task" data-task='{{ json_encode($task) }}' type="checkbox" @checked($task->status == 'completed')>
                                 </td>
                                 <td>{{$task->name}}</td>
-                                <td>{{$task->client}}</td>
-                                {{-- <td>
-                                    @php
-                                    $date = Carbon\Carbon::parse($task->due_date);
-                                    @endphp
-                                    @if($date->isPast())
-                                    <span class="text-danger">{{ $date->format('d-m-Y') }}</span>
-                                    @else
-                                    <span class="text-success">{{ $date->format('d-m-Y') }}</span>
-                                    @endif
-                                </td> --}}
-                                <td>{{$task->project_id}}</td>
-                               
-
+                                <td>{{$task->client->name}}</td>
+                                <td>{{$task->project->name}}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm edit_task edit_team" data-task='{{ json_encode($task) }}'><i
                                             class='bx bx-edit'></i></button>
@@ -183,12 +174,9 @@ $currentDay = $currentDate->day;
 
     $(document).ready(function () {
 
-   
-
-     
         $('.card').click(function () {
-    $(this).find('.card-body').toggleClass('active');
-});
+            $(this).find('.card-body').toggleClass('active');
+        });
 
     
         let table = $('#tasksTable').DataTable({
