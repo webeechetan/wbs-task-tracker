@@ -82,13 +82,17 @@
       </li>
       @endif
 
+      @if($userRole == 1  || $userRole == 2)
+
       <li class="menu-item @if(request()->routeIs('clients-and-projects-index') || request()->routeIs('clients-and-projects-index') || request()->routeIs('clients-and-projects-index')) active @endif">
         <a href="{{ route('clients-and-projects-index') }}" class="menu-link ">
-          <i class='menu-icon bx bxl-microsoft-teams'></i>
+          <i class='menu-icon bx bx-user'></i>
           
           <div data-i18n="Layouts">Client & Projects</div>
         </a>
       </li>
+
+      @endif
 
       {{-- Activities --}}
 

@@ -101,10 +101,13 @@
                         <tbody class="table-border-bottom-0">
 
                             @foreach ($tasks as $task)
-                            <tr class=" @if($task->status == 'completed') completed-task @endif ">
+                            <tr class=" @if($task->status == 'completed') completed-task @endif   task-id-{{ $task->id }}">
                                 <td>
-                                    <input class="form-check-input mark_complete_task" data-task='{{ json_encode($task) }}'
-                                        type="checkbox" @checked($task->status == 'completed')>
+                                    @if($task->status == 'completed')
+                                        <i class='toggle-icon bx bxs-checkbox-checked icon-id-{{ $task->id }}' onclick="changeStatus({{$task->id}})"></i>  
+                                    @else
+                                        <i class='toggle-icon bx bxs-checkbox icon-id-{{ $task->id }}' onclick="changeStatus({{$task->id}})"></i>  
+                                    @endif          
                                 </td>
                                 <td>{{$task->name}}</td>
                                 <td>{{$task->client->name}}</td>
@@ -260,7 +263,6 @@
                         $(".task-id-"+id).addClass('completed-task');
                         $(".icon-id-"+id).removeClass('bxs-checkbox');
                         $(".icon-id-"+id).addClass('bxs-checkbox-checked');
-
                     }else{
                         $(".task-id-"+id).removeClass('completed-task');
                         $(".icon-id-"+id).removeClass('bxs-checkbox-checked');
