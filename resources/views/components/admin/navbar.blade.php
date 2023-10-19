@@ -41,7 +41,7 @@
                 <div class="flex-shrink-0 me-3">
                   <div class="avatar avatar-online">
                     {{-- <img src="{{ asset('admin') }}/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" /> --}}
-                    <h5>{{$user}}</h5>
+                    <h5 class="mb-0">{{$user}}</h5>
                   </div>
                 </div>
                 <div class="flex-grow-1">

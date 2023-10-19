@@ -42,7 +42,7 @@ $userType = $user->type;
    
 
         @if($userType == 1 || $userType ==2)
-        <button class="btn btn-primary add_activity" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth"
+        <button class="btn btn-primary add_activity btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth"
             aria-controls="offcanvasBoth"><i class='bx bx-plus'></i> Add Activity</button>
             @endif
         <!-- Offcanvas -->
@@ -143,14 +143,14 @@ $userType = $user->type;
 
                     
                     {{-- <div class="reminders">
-                        <div class="mt-3 text-center">
+                        <div class="mt-3">
                             <label for="activity">Reminder Date</label>
                             <input type="date" class="form-control" id="reminder_dates" name="reminder_date">
                         </div>
                     </div> --}}
 
                     <div class="reminders">
-                        <div class="mt-3 text-center">
+                        <div class="mt-3">
                             <label for="activity">Reminder Date</label>
                             
                             <select class="form-control" name="reminder_date[]" id="reminder_dates" multiple required>

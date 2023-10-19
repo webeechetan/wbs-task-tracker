@@ -63,8 +63,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary submit_btn">Create Client</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary submit_btn btn-sm">Create Client</button>
                 </div>
             </form>
         </div>
@@ -91,8 +91,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary update_client">Update Client</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary update_client btn-sm">Update Client</button>
                 </div>
             </form>
         </div>
@@ -130,8 +130,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary submit_btn">Create Project</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary submit_btn btn-sm">Create Project</button>
                 </div>
             </form>
         </div>
@@ -169,10 +169,10 @@
                 </div>
                 <div class="modal-footer">
                     <a href="" class="delete_project_btn">
-                        <button type="button" class="btn btn-outline-danger" >Delete</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" >Delete</button>
                     </a>
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary submit_btn">Update Project</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary submit_btn btn-sm">Update Project</button>
                 </div>
             </form>
         </div>

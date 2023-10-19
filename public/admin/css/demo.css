@@ -132,9 +132,7 @@ label{
   align-items: flex-end;
   grid-gap: 15px;
 } */
-.light-style{
-  overflow: hidden;
-}
+
 input:focus-visible{
   outline: none !important;
   border: 1px solid #d9dee3 !important;
@@ -150,7 +148,7 @@ input:focus-visible{
 ul#select2-cron_day-results {
   display: flex;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 20px 5px;
   grid-gap: 10px;
   min-width: 330px;
   width: 100% !important;
@@ -242,6 +240,14 @@ ul#select2-cron_day-results > li {
   display: grid;
   grid-template-columns: 240px 1fr 240px;
 }
+.task-table .dataTables_wrapper > .bottom{
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+.dataTables_filter{
+  margin-bottom: 15px;
+}
 .dataTables_wrapper  > .bottom .dataTables_info{
   text-align: center;
 }
@@ -332,7 +338,7 @@ table.dataTable tbody tr.even {
 }
 .select2-dropdown--below{
   top: 10px !important;
-  min-width: 300px !important;
+  min-width: 200px !important;
   width: 100% !important;
   padding: 10px 15px !important;
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.07);
@@ -348,7 +354,7 @@ table.dataTable tbody tr.even {
   column-gap: 30px;
 }
 .task-form .task-group:not(:last-child){
-  width: 25%;
+  width: 37%;
 }
 .task-form .select2-container .select2-selection--single{
    min-height: 39px !important;
@@ -356,14 +362,14 @@ table.dataTable tbody tr.even {
    line-height: 35px;
 }
 .task-form .select2-selection--single .select2-selection__rendered{
-  line-height: 35px !important;
+  line-height: 20px !important;
 }
 .task-form .select2-selection__arrow{
-  top: 6px !important;
+  top: -3px !important;
 }
-.select2-dropdown.select2-dropdown--below{
-  width: 325px !important;
-}
+/* .select2-dropdown.select2-dropdown--below{
+  width: 300px !important;
+} */
 .select2-dropdown .select2-search__field{
   border-radius: 0.375rem !important;
   border: 1px solid #d9dee3 !important;
@@ -397,6 +403,12 @@ table.dataTable tbody tr.even {
   top:6px;
 }
 
+.navbar-detached{
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.07) !important;
+}
+.multiple-btn{
+  column-gap: 10px;
+}
 #select2-reminder_dates-results{
   display: flex;
     flex-wrap: wrap;
@@ -436,7 +448,7 @@ table.dataTable tbody tr.even {
  font-size: 20px;
 }
 .team-details .team-employee-name{
- font-size: 20px;
+ font-size: 15px;
  color: #000;
 }
 .company-name{
@@ -457,6 +469,176 @@ table.dataTable tbody tr.even {
 .calendar-box:hover{
   color: var(--primary);
 }
+/*----- New Css ----*/
+.avatar img {
+  border-radius: 50%;
+}
+.dropdown-menu::before{
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 16px;
+  height: 10px;
+  width: 10px;
+  transform: rotate(45deg);
+  background-color: #fff;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+}
+.dropdown-item .avatar-online{
+  background-color: var(--primary);
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  
+}
+.dropdown-item .avatar-online h5{
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+}
+/*---- Todo ---*/
+.title{
+  color: #000;
+}
+.todo-header{
+  display:  flex;
+  justify-content:  space-between;
+  margin-bottom: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.todo-task{
+  background-color:  var(--primary);
+  border-radius: .375rem;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+}
+.todo-form{
+  margin-bottom: 0 !important;
+}
+.task-detail{
+  background-color: transparent;
+  border-bottom: 1px solid #fff ;
+  border: none;
+  border-radius: 0px;
+  color: #fff !important;
+}
+
+.task-detail::placeholder {
+  color: #fff !important;
+}
+.task-detail:focus,.task-detail:focus-visible{
+  background-color: transparent !important;
+  border: none !important;
+}
+.task-form .select2-container .select2-selection--single {
+  background: transparent ; 
+  border-bottom: 1px solid #fff !important;
+  border: none !important;
+  border-radius: 0px;
+  color: #fff !important;
+}
+
+.task-form .select2-container--default .select2-selection--single .select2-selection__placeholder{
+  color: #fff;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-color: #fff transparent transparent transparent !important;
+}
+.action_btn{
+  background:  transparent;
+  border: none !important;
+  color: #fff;
+}
+.task-group-1{
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 2px solid #eee;
+  border-right: 2px solid #eee;
+  height: 22px;
+}
+.card-badge{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.calendar-card{
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.team-group .select2-container--default .select2-selection--multiple{
+  padding-bottom: 0 !important;
+  border: 1px solid #d9dee3;
+}
+.team-group .select2-container .select2-search--inline .select2-search__field{
+height: auto !important;
+margin-top: 0 !important;
+
+}
+.btn-outline-secondary:hover{
+  box-shadow: none !important;
+  background-color: #F7D600 !important;
+  border: 1px solid #F7D600 !important;
+}
+.select2-selection__choice{
+  background-color: var(--primary) !important;
+  border: 1px solid var(--primary) !important;
+  color: #fff !important;
+  padding-right: 10px !important;
+}
+.select2-selection__choice__remove{
+  color: #fff !important;
+}
+.btn-primary:hover{
+  background-color: #F7D600 !important;
+  border: 1px solid #F7D600 !important;
+  color: #000 !important;
+}
+.form-control:focus, .form-control:focus-visible{
+  border: 1px solid var(--primary) !important;
+}
+.todo .dataTables_wrapper > .bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.col-form-label, .form-label{
+  text-transform: capitalize;
+}
+.client-project-header{
+  padding:  10px 1.5rem;
+}
+
+ .select2-container--default #select2-cron_day-results .select2-results__option,  .select2-container--default #select2-reminder_dates-results .select2-results__option{
+  height: 40px !important;
+  width: 40px !important;
+  line-height: 25px !important;
+  border-radius: 50% !important;
+  border: 1px solid #eee !important;
+  margin-bottom: 5px !important;
+}
+
+#select2-reminder_dates-results {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  column-gap: 10px;
+}
+form{
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+@media(max-width:767px){
+  .todo-task{
+    margin-top: 10px;
+  }
 
 
 .card-body.active{
@@ -476,7 +658,7 @@ table.dataTable tbody tr.even {
 .toggle-icon {
   cursor: pointer;
 }
-
+}
 .bxs-checkbox-checked{
   color: var(--primary);
   font-size: 30px;
