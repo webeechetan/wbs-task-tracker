@@ -472,3 +472,7 @@ table.dataTable tbody tr.even {
   padding: 10px 1.5rem !important;
 
 }
+
+.toggle-icon {
+  cursor: pointer;
+}
