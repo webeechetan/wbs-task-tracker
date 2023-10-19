@@ -17,10 +17,23 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request)
     {
+
+
+        $selectedDate = $request->input('date');
+
+    if ($selectedDate) {
+        $tasks = Task::where('user_id', auth()->user()->id)
+            ->whereDate('created_at', $selectedDate)
+            ->orderBy('status')
+            ->get();
+    }else{
+        
+
         $tasks = Task::where('user_id', auth()->user()->id)->orderBy('status')->get();
        
+    }
         $clients = Task::select('client')->distinct()->get();
         return view('admin.tasks.index', compact('tasks','clients'));
     }
@@ -51,6 +64,8 @@ class TaskController extends Controller
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
         $task->client = $request->client;
+
+        $task->project_id = $request->project_name;
 
         if ($task->save()) {
             $this->alert('success', 'Task Added successfully', 'success');
@@ -96,6 +111,8 @@ class TaskController extends Controller
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
         $task->client = $request->client;
+
+        $task->project_id = $request->project_name;
         try{
             $task->save();
             $this->alert('success','Task Updated successfully','success');

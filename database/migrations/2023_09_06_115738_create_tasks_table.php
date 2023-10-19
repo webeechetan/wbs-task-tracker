@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('client')->nullable();
+            $table->string('project_id')->nullable();
             $table->longText('name')->nullable();
             $table->date('due_date')->nullable();
             $table->enum('status', ['pending', 'completed'])->default('pending');

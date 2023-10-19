@@ -19,33 +19,70 @@
 @section('content')
 
 <h3 class="mt-5">To-do's</h3>
-<div class="card">
+
+
+{{-- ////////Calander view/////////// --}}
+
+@php
+$currentDate = now();
+$currentDay = $currentDate->day;
+@endphp
+
+<div class="row">
+
+    @for ($day = 1; $day <= $currentDate->format('d'); $day++)
+
+        @php
+            $date = date('Y-m-d', strtotime("{$currentDate->year}-{$currentDate->month}-$day"));
+            $dayName = date('l', strtotime($date));
+        @endphp
+        @if ($dayName !== 'Saturday' && $dayName !== 'Sunday')
+            <div class="col-md-3">
+
+               
+                <a href="{{route('task-index',['date'=> $date])}}" class="calendar-box">    
+                    <div class="card mt-2 text-center">
+                        <div class="card-body">
+                            <div class="calender-view">
+                                <div><span class='bx bx-calendar'></span></div>
+                                <div class="card-text calendar-info">
+                                   <div>{{ $dayName }}</div>
+                                   <div> {{ $date }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @endif
+                
+    @endfor
+           
+</div>
+  
+{{--Calander view//////////////// --}}
+
+
+
+
+<div class="card mt-5">
     <div class="card-header">
        
-        {{-- <div class="custom_search_filter">
-            <form action="#" method="GET">
-                    <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
-                    <div class="custom_search_filter_inputMask search-filter-form"><i class="bx bx-search"></i></div>
-            </form>
-        </div> --}}
         <form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form">
             @csrf
             <input type="hidden" name="taskId" id="taskId">
             {{-- <div class="d-flex justify-content-between align-items-center task-form" id="parent"> --}}
 
                 <div class="d-flex justify-content-between align-items-center task-form">
-                    <div class="mb-3 mb-md-0 task-group">
-                        <div class="form-group">
-                            <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date"
-                                required value="<?php echo date('Y-m-d'); ?>">
-                        </div>
-                    </div>  
+                   
                     <div class="mb-3 mb-md-0 task-group">
                         <div class="form-group">
                             <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name"
                                 required>
                         </div>
                     </div>
+
+
                     <div class="mb-3 mb-md-0 task-group">
                         <div class="form-group" >
                             <select class="form-control select-control" id="client" name="client">
@@ -56,6 +93,15 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="mb-3 mb-md-0 task-group">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="project_name" name="project_name" placeholder="Project">
+                        </div>
+                    </div>
+
+
+                    
                     <div class="task-group">
                         <div class="form-group">
                             <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
@@ -74,8 +120,9 @@
                             <th></th>
                             <th>Task</th>
                             <th>Client</th>
-                            <th>Due Date</th>
-                            <th>Status</th>
+                            <th>Project</th>
+                            
+                           
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -88,7 +135,7 @@
                                 </td>
                                 <td>{{$task->name}}</td>
                                 <td>{{$task->client}}</td>
-                                <td>
+                                {{-- <td>
                                     @php
                                     $date = Carbon\Carbon::parse($task->due_date);
                                     @endphp
@@ -97,8 +144,9 @@
                                     @else
                                     <span class="text-success">{{ $date->format('d-m-Y') }}</span>
                                     @endif
-                                </td>
-                                <td>{{ $task->status }}</td>
+                                </td> --}}
+                                <td>{{$task->project_id}}</td>
+                               
 
                                 <td>
                                     <button class="btn btn-primary btn-sm edit_task edit_team" data-task='{{ json_encode($task) }}'><i
@@ -134,6 +182,15 @@
 
 
     $(document).ready(function () {
+
+   
+
+     
+        $('.card').click(function () {
+    $(this).find('.card-body').toggleClass('active');
+});
+
+    
         let table = $('#tasksTable').DataTable({
             responsive: true,
             dom: '<"top"f>rt<"bottom"lip><"clear">'
@@ -152,9 +209,10 @@
             e.preventDefault();
             let task = $(this).data('task');
             console.log(task);
-            flatDate.setDate(task.due_date);
+           
             $('#task_name').val(task.name);
             $('#client').select2().val(task.client).trigger('change');
+            $('#project_name').val(task.project_id);
             $('#taskId').val(task.id);
             $('.action_btn').html('Update');
             let taskId = $('#taskId').val();
