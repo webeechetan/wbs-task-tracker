@@ -8,9 +8,9 @@
     <div class="col-xl">
         <div class="card ">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">New User</h5>
+                <h5 class="mb-0">New Employee</h5>
                 <small class="text-muted float-end">
-                    <a href="{{ route('user-index')}}"><button class="btn btn-primary btn-sm">All Users</button></a>
+                    <a href="{{ route('user-index')}}"><button class="btn btn-primary btn-sm">All Employees</button></a>
                 </small>
             </div>
             <div class="card-body">

@@ -42,7 +42,7 @@ $userType = $user->type;
    
 
         @if($userType == 1 || $userType ==2)
-        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth"
+        <button class="btn btn-primary add_activity btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth"
             aria-controls="offcanvasBoth"><i class='bx bx-plus'></i> Add Activity</button>
             @endif
         <!-- Offcanvas -->
@@ -304,6 +304,20 @@ $userType = $user->type;
 
     $(document).ready(function () {
 
+        $(".add_activity").click(function(){
+            let activity = $('#activity').val();
+            $('#offcanvasBothLabel').text('Add Activity');
+            if(activity.length >= 1){
+                $('#activity_add_form').trigger("reset");
+                $('#team').val([]).trigger('change');
+                $('#assign_to').val([]).trigger('change');
+                $('#cron_month').val([]).trigger('change');
+                $('#cron_day').val([]).trigger('change');
+                $('#reminder_dates').val('').trigger('change');
+            }
+
+        });
+
         $(".select2").select2();
 
         let table = $('#activityTable').DataTable({
@@ -340,10 +354,10 @@ $userType = $user->type;
         function generateCronStringFromCommand() {
             let cron_month = $('#cron_month').val();
             let cron_day = $('#cron_day').val();
-            if(cron_month.length == 0){
+            if(cron_month.length == 0 || cron_month == '' || cron_month == null ){
                 cron_month = '*';
             }
-            if(cron_day.length == 0){
+            if(cron_day.length == 0 || cron_day == '' || cron_day == null){
                 cron_day = '*';
             }
             let cron_command = `30 10 ${cron_day} ${cron_month} *`;

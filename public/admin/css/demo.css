@@ -27,6 +27,7 @@
   text-transform: lowercase;
 }
 
+
 /* ! For .layout-navbar-fixed added fix padding top tpo .layout-page */
 /* Detached navbar */
 .layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
@@ -147,7 +148,7 @@ input:focus-visible{
 ul#select2-cron_day-results {
   display: flex;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 20px 5px;
   grid-gap: 10px;
   min-width: 330px;
   width: 100% !important;
@@ -238,6 +239,14 @@ ul#select2-cron_day-results > li {
 .dataTables_wrapper > .bottom{
   display: grid;
   grid-template-columns: 240px 1fr 240px;
+}
+.task-table .dataTables_wrapper > .bottom{
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+.dataTables_filter{
+  margin-bottom: 15px;
 }
 .dataTables_wrapper  > .bottom .dataTables_info{
   text-align: center;
@@ -344,9 +353,9 @@ table.dataTable tbody tr.even {
 .task-form{
   column-gap: 30px;
 }
-/* .task-form .task-group:not(:last-child){
-  width: 25%;
-} */
+.task-form .task-group:not(:last-child){
+  width: 37%;
+}
 .task-form .select2-container .select2-selection--single{
    min-height: 39px !important;
    border: 1px solid #d9dee3 !important;
@@ -394,6 +403,12 @@ table.dataTable tbody tr.even {
   top:6px;
 }
 
+.navbar-detached{
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.07) !important;
+}
+.multiple-btn{
+  column-gap: 10px;
+}
 #select2-reminder_dates-results{
   display: flex;
     flex-wrap: wrap;
@@ -433,7 +448,7 @@ table.dataTable tbody tr.even {
  font-size: 20px;
 }
 .team-details .team-employee-name{
- font-size: 20px;
+ font-size: 15px;
  color: #000;
 }
 .company-name{
@@ -551,20 +566,11 @@ table.dataTable tbody tr.even {
   flex-wrap: wrap;
   align-items: center;
 }
-.calendar-card .card{
-  padding: 8px 12px;
-  text-align: center;
-  margin-bottom: 10px;
-}
 .calendar-card{
- display: grid;
- grid-template-columns: repeat(3, 1fr);
- grid-gap: 10px;
+  padding: 10px 12px;
+  text-align: center;
 }
-.card-badge .badge{
-  width: fit-content;
-  text-transform: capitalize;
-}
+
 .team-group .select2-container--default .select2-selection--multiple{
   padding-bottom: 0 !important;
   border: 1px solid #d9dee3;
@@ -604,8 +610,48 @@ margin-top: 0 !important;
 .col-form-label, .form-label{
   text-transform: capitalize;
 }
+.client-project-header{
+  padding:  10px 1.5rem;
+}
+
+ .select2-container--default #select2-cron_day-results .select2-results__option,  .select2-container--default #select2-reminder_dates-results .select2-results__option{
+  height: 40px !important;
+  width: 40px !important;
+  line-height: 25px !important;
+  border-radius: 50% !important;
+  border: 1px solid #eee !important;
+  margin-bottom: 5px !important;
+}
+
+#select2-reminder_dates-results {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  column-gap: 10px;
+}
+form{
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
 @media(max-width:767px){
   .todo-task{
     margin-top: 10px;
   }
+
+
+.card-body.active{
+
+  color: var(--primary);
+}
+
+.multiple-btn{
+  column-gap: 10px;
+}
+
+.client-project-header{
+  padding: 10px 1.5rem !important;
+
+}
 }

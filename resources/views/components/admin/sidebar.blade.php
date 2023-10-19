@@ -82,6 +82,14 @@
       </li>
       @endif
 
+      <li class="menu-item @if(request()->routeIs('clients-and-projects-index') || request()->routeIs('clients-and-projects-index') || request()->routeIs('clients-and-projects-index')) active @endif">
+        <a href="{{ route('clients-and-projects-index') }}" class="menu-link ">
+          <i class='menu-icon bx bxl-microsoft-teams'></i>
+          
+          <div data-i18n="Layouts">Client & Projects</div>
+        </a>
+      </li>
+
       {{-- Activities --}}
 
       <li class="menu-item @if(request()->routeIs('activity-index') || request()->routeIs('activity-create') || request()->routeIs('activity-edit')) active @endif">

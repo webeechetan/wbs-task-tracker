@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\Team;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
@@ -17,12 +18,47 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request)
     {
-        $tasks = Task::where('user_id', auth()->user()->id)->orderBy('status')->get();
-       
-        $clients = Task::select('client')->distinct()->get();
-        return view('admin.tasks.index', compact('tasks','clients'));
+        $startOfTheMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $endOfTheMonth = Carbon::now()->endOfMonth()->format('Y-m-d');
+
+        $dates = collect();
+
+        for ($date = $startOfTheMonth; $date <= $endOfTheMonth; $date = Carbon::parse($date)->addDay()->format('Y-m-d')) {
+            if(Carbon::parse($date)->isWeekend()){
+                continue;
+            }
+            if(Carbon::parse($date)->isFuture()){
+                continue;
+            }
+            $dates->push($date);
+        }
+
+        $calanderData = $dates->map(function($date){
+            $tasks = Task::where('user_id', auth()->user()->id)
+                ->whereDate('created_at', $date)
+                ->orderBy('status')
+                ->get();
+            return [
+                'date' => $date,
+                'tasks' => $tasks
+            ];
+        });
+
+
+        $selectedDate = $request->input('date');
+        if ($selectedDate) {
+            $tasks = Task::where('user_id', auth()->user()->id)
+                ->whereDate('created_at', $selectedDate)
+                ->orderBy('status')
+                ->get();
+        }else{
+            $tasks = Task::where('user_id', auth()->user()->id)->orderBy('status')->get();
+        }
+        $projects = Project::all();
+        // return view('admin.tasks.index', compact('tasks','projects'));
+        return view('admin.tasks.index', compact('tasks','projects','calanderData'));
     }
 
     /**
@@ -44,13 +80,14 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-
-
         $task = new Task();
         $task->user_id = $user->id;
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
-        $task->client = $request->client;
+        $task->project_id = $request->project_name;
+        $project = Project::where('id', $request->project_name)->first();
+        $clientId = $project->client_id;
+        $task->client_id = $clientId;
 
         if ($task->save()) {
             $this->alert('success', 'Task Added successfully', 'success');
@@ -96,6 +133,8 @@ class TaskController extends Controller
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
         $task->client = $request->client;
+
+        $task->project_id = $request->project_name;
         try{
             $task->save();
             $this->alert('success','Task Updated successfully','success');

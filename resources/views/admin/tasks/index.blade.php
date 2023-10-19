@@ -18,195 +18,213 @@
 
 @section('content')
 
-<div class="row todo">
-    <!--
-    <div class="col-md-5 mb-3">
-      <div class="calendar-view-todo">
-         <h3 class="title">calendar View</h3>
-         <div class="calendar-card">
-            <div class="card">
-                <div class="calendar-date mb-2">1 June 2023</div>
-               <div class="d-flex card-badge">
-                <div class="badge bg-primary mb-2">Total task: 10</div>
-                <div class="badge bg-primary"> Pend task: 10</div>
-               </div>
-            </div>
-            <div class="card">
-                <div class="calendar-date mb-2">1 June 2023</div>
-               <div class="card-badge">
-                <div class="badge bg-primary mb-2">Total task: 10</div>
-                <div class="badge bg-primary">Pend task: 10</div>
-               </div>
-            </div>
-            <div class="card">
-                <div class="calendar-date mb-2">1 June 2023</div>
-               <div class="card-badge">
-                <div class="badge bg-primary mb-2">Total task: 10</div>
-                <div class="badge bg-primary">P task: 10</div>
-               </div>
-            </div>
-            <div class="card">
-                <div class="calendar-date mb-2">1 June 2023</div>
-               <div class=" card-badge">
-                <div class="badge bg-primary mb-2">Total task: 10</div>
-                <div class="badge bg-primary">P task: 10</div>
-               </div>
-            </div>
-         </div>
-      </div>
-    </div>
--->
-    <div class="col-md-12">
-        <div class="todo-header">
-            <h3 class="mb-0 title">To-do's</h3>
-            <div class="todo-task">
-                
-                    {{-- <div class="custom_search_filter">
-                        <form action="#" method="GET">
-                                <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
-                                <div class="custom_search_filter_inputMask search-filter-form"><i class="bx bx-search"></i></div>
-                        </form>
-                    </div> --}}
-                    <form method="POST" action="{{ route('task-store') }}" class="todo-form" id="todo_task_add_form">
-                        @csrf
-                        <input type="hidden" name="taskId" id="taskId">
-                        {{-- <div class="d-flex justify-content-between align-items-center task-form" id="parent"> --}}
+<div class="d-flex main-title">
+    <h3 class="title">Todo's</h3>
+</div>
 
-                            <div class="d-flex justify-content-between align-items-center task-form">
-                                <!-- <div class="mb-3 mb-md-0 task-group">
-                                    <div class="form-group">
-                                        <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date"
-                                            required value="<?php echo date('Y-m-d'); ?>">
-                                    </div>
-                                </div>   -->
-                                <div class="task-group">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control task-detail" id="task_name" name="task_name" placeholder=" Add New  Task"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="task-group task-group-1">
-                                    <div class="form-group" >
-                                        <select class="form-control select-control task-detail" id="client" name="client">
-                                            <option value="">Project</option>
-                                            @foreach ($clients as $client)
-                                            <option value="{{$client->client}}">{{$client->client}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="task-group">
-                                    <div class="form-group">
-                                        <button type="submit" id="action_btn" class="action_btn"><i class='bx bx-plus'></i>Add Task</button>
-                                    </div>
-                                </div>
-                            </div>
-                        {{-- </div> --}}
 
-                    </form>
-            </div>
-        </div>
-        <div class="card">
-            <!-- <div class="card-header">
-            
-                {{-- <div class="custom_search_filter">
-                    <form action="#" method="GET">
-                            <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
-                            <div class="custom_search_filter_inputMask search-filter-form"><i class="bx bx-search"></i></div>
-                    </form>
-                </div> --}}
-                <form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form">
-                    @csrf
-                    <input type="hidden" name="taskId" id="taskId">
-                    {{-- <div class="d-flex justify-content-between align-items-center task-form" id="parent"> --}}
+{{-- ////////Calander view/////////// --}}
 
-                        <div class="d-flex justify-content-between align-items-center task-form">
-                            <div class="mb-3 mb-md-0 task-group">
-                                <div class="form-group">
-                                    <input type="date" class="form-control" id="due_date" placeholder="Due Date" name="due_date"
-                                        required value="<?php echo date('Y-m-d'); ?>">
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            @foreach($calanderData as $data)
+                <div class="col-md-6 MB-3">
+                    <a href="{{route('task-index',['date'=> $data['date']])}}" class="calendar-box">
+                        <div class="card mt-2 text-center">
+                            <div class="card-body calendar-card">
+                                <div class="calender-view">
+                                    <div><span class='bx bx-calendar'></span></div>
+                                    <div class="card-text calendar-info">
+                                        <div>{{ $data['date'] }}</div>
+                                      
+                                    </div>
                                 </div>
-                            </div>  
-                            <div class="mb-3 mb-md-0 task-group">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name"
-                                        required>
-                                </div>
-                            </div>
-                            <div class="mb-3 mb-md-0 task-group">
-                                <div class="form-group" >
-                                    <select class="form-control select-control" id="client" name="client">
-                                        <option value="">Select Client</option>
-                                        @foreach ($clients as $client)
-                                        <option value="{{$client->client}}">{{$client->client}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="task-group">
-                                <div class="form-group">
-                                    <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
-                                </div>
+                                <div class="badge bg-primary mt-2"> Total Task:{{ $data['tasks']->count() }}</div>
+                                <div class="badge bg-primary mt-2"> P Task:{{ $data['tasks']->count() }}</div>
                             </div>
                         </div>
-                    {{-- </div> --}}
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card mb-3">
+        <div class="card-header client-project-header">
+            <form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form">
+                @csrf
+                <input type="hidden" name="taskId" id="taskId">
+                <div class="d-flex justify-content-between align-items-center task-form">
 
-                </form>
-            </div> -->
-            <div class="card-body">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover mb-3" id="tasksTable">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Task</th>
-                                    <th>Client</th>
-                                    <th>Due Date</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
+                    <div class="mb-3 mb-md-0 task-group">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name"
+                                required>
+                        </div>
+                    </div>
 
-                                @foreach ($tasks as $task)
-                                    <tr class=" @if($task->status == 'completed') completed-task @endif ">
-                                        <td>
-                                            <input class="form-check-input mark_complete_task" data-task='{{ json_encode($task) }}' type="checkbox" @checked($task->status == 'completed')>
-                                        </td>
-                                        <td>{{$task->name}}</td>
-                                        <td>{{$task->client}}</td>
-                                        <td>
-                                            @php
-                                            $date = Carbon\Carbon::parse($task->due_date);
-                                            @endphp
-                                            @if($date->isPast())
-                                            <span class="text-danger">{{ $date->format('d-m-Y') }}</span>
-                                            @else
-                                            <span class="text-success">{{ $date->format('d-m-Y') }}</span>
-                                            @endif
-                                        </td>
-                                        <td>{{ $task->status }}</td>
-
-                                        <td>
-                                            <button class="btn btn-primary btn-sm edit_task edit_team" data-task='{{ json_encode($task) }}'><i
-                                                    class='bx bx-edit'></i></button>
-                                            <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i
-                                                        class='bx bxs-trash'></i></button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                    <div class="mb-3 mb-md-0 task-group">
+                        <div class="form-group">
+                            <select class="form-control select-control" id="project_name" name="project_name">
+                                <option value="">Select Project</option>
+                                @foreach ($projects as $project)
+                                <option value="{{$project->id}}">{{$project->name}}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                    </div>
 
-                            </tbody>
-                        </table>
+                    <div class="task-group">
+                        <div class="form-group">
+                            <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
+                        </div>
                     </div>
                 </div>
+            </form>
+        </div>
+        </div>
+        <div class="card task-table">
+            
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-hover mb-3" id="tasksTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Task</th>
+                                <th>Client</th>
+                                <th>Project</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+
+                            @foreach ($tasks as $task)
+                            <tr class=" @if($task->status == 'completed') completed-task @endif ">
+                                <td>
+                                    <input class="form-check-input mark_complete_task" data-task='{{ json_encode($task) }}'
+                                        type="checkbox" @checked($task->status == 'completed')>
+                                </td>
+                                <td>{{$task->name}}</td>
+                                <td>{{$task->client->name}}</td>
+                                <td>{{$task->project->name}}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm edit_task edit_team"
+                                        data-task='{{ json_encode($task) }}'><i class='bx bx-edit'></i></button>
+                                    <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                class='bx bxs-trash'></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<!-- <div class="row">
+    @foreach($calanderData as $data)
+        <div class="col-md-3">
+            <a href="{{route('task-index',['date'=> $data['date']])}}" class="calendar-box">
+                <div class="card mt-2 text-center">
+                    <div class="card-body">
+                        <div class="calender-view">
+                            <div><span class='bx bx-calendar'></span></div>
+                            <div class="card-text calendar-info">
+                                <div>{{ $data['date'] }}</div>
+                                <div>{{ $data['tasks']->count() }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    @endforeach
+
+</div> -->
+
+{{--Calander view//////////////// --}}
+
+<!-- <div class="card mt-5">
+    <div class="card-header">
+
+        <form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form">
+            @csrf
+            <input type="hidden" name="taskId" id="taskId">
+            <div class="d-flex justify-content-between align-items-center task-form">
+
+                <div class="mb-3 mb-md-0 task-group">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="task_name" name="task_name" placeholder="Task Name"
+                            required>
+                    </div>
+                </div>
+
+                <div class="mb-3 mb-md-0 task-group">
+                    <div class="form-group">
+                        <select class="form-control select-control" id="project_name" name="project_name">
+                            <option value="">Select Project</option>
+                            @foreach ($projects as $project)
+                            <option value="{{$project->id}}">{{$project->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="task-group">
+                    <div class="form-group">
+                        <button type="submit" id="action_btn" class="btn btn-primary action_btn">Add Task</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover mb-3" id="tasksTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Task</th>
+                        <th>Client</th>
+                        <th>Project</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+
+                    @foreach ($tasks as $task)
+                    <tr class=" @if($task->status == 'completed') completed-task @endif ">
+                        <td>
+                            <input class="form-check-input mark_complete_task" data-task='{{ json_encode($task) }}'
+                                type="checkbox" @checked($task->status == 'completed')>
+                        </td>
+                        <td>{{$task->name}}</td>
+                        <td>{{$task->client->name}}</td>
+                        <td>{{$task->project->name}}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm edit_task edit_team"
+                                data-task='{{ json_encode($task) }}'><i class='bx bx-edit'></i></button>
+                            <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"><i
+                                        class='bx bxs-trash'></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> -->
 @endsection
 
 @section('scripts')
@@ -223,6 +241,12 @@
 
 
     $(document).ready(function () {
+
+        $('.card').click(function () {
+            $(this).find('.card-body').toggleClass('active');
+        });
+
+
         let table = $('#tasksTable').DataTable({
             responsive: true,
             dom: '<"top"f>rt<"bottom"lip><"clear">'
@@ -241,9 +265,10 @@
             e.preventDefault();
             let task = $(this).data('task');
             console.log(task);
-            flatDate.setDate(task.due_date);
+
             $('#task_name').val(task.name);
             $('#client').select2().val(task.client).trigger('change');
+            $('#project_name').val(task.project_id);
             $('#taskId').val(task.id);
             $('.action_btn').html('Update');
             let taskId = $('#taskId').val();
