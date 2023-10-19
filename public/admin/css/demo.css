@@ -167,8 +167,15 @@ ul#select2-cron_day-results > li {
   width: inherit !important;
   border: none;
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  width: 330px !important;
 }
 /*--- Himanshu Css ---*/
+.offcanvas-body{
+  overflow: hidden !important;
+}
+.light-style{
+  overflow-x: hidden;
+}
 .column-gap-0{
   column-gap: 0 !important;
 }
@@ -354,7 +361,7 @@ table.dataTable tbody tr.even {
   column-gap: 30px;
 }
 .task-form .task-group:not(:last-child){
-  width: 37%;
+  width: 35%;
 }
 .task-form .select2-container .select2-selection--single{
    min-height: 39px !important;
