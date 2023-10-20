@@ -243,7 +243,7 @@ ul#select2-cron_day-results > li {
 }
 .dataTables_wrapper > .bottom{
   display: grid;
-  grid-template-columns: 240px 1fr 240px;
+  grid-template-columns: 240px 1fr 380px;
 }
 .task-table .dataTables_wrapper > .bottom{
   display: flex !important;
