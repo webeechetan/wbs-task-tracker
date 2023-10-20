@@ -135,12 +135,26 @@ class TaskController extends Controller
 
     public function update(Request $request)
     {
+        // $task = Task::find($request->taskId);
+        // $task->due_date = $request->due_date;
+        // $task->name = $request->task_name;
+        // $task->client = $request->client;
+        // $task->project_id = $request->project_name;
+
+
         $task = Task::find($request->taskId);
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
-        $task->client = $request->client;
 
         $task->project_id = $request->project_name;
+
+        $project = Project::where('id', $request->project_name)->first();
+        $clientId = $project->client_id;
+        $task->client_id = $clientId;
+
+
+        
+
         try{
             $task->save();
             $this->alert('success','Task Updated successfully','success');
@@ -192,10 +206,6 @@ class TaskController extends Controller
     
     public function teammates()
     {
-        // if(auth()->user()->role != 2 ){
-        //     $this->alert('error','You are not authorized to access this ppage','danger');
-        //    return redirect()->route('dashboard');
-        // }
         $team = Team::getTeam();
         $teammates= $team->load('members');
         

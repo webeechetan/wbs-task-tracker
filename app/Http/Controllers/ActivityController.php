@@ -20,26 +20,26 @@ class ActivityController extends Controller
      */
     public function index(Request  $request)
     {
+      
         $user = Auth::user();
-        // if($user->type == '1' ){
+
             if($user->type == '1' || $user->type == '2' || $user->type == '3'){
-            //$activities = Activity::with(['team','assignedUsers','reminders'])->orderBy('status')->get();
-        
-            $activities = Activity::with(['team', 'assignedUsers', 'reminders'])
-            ->orderByRaw("CASE 
-                WHEN status = 'pending' THEN 0 
-                WHEN status = 'in_progress' THEN 1
-                ELSE 2 
-                END")
-            ->get();
+             
+
+            $activities = Activity::with(['team','assignedUsers','reminders']);
+            if($request->has('team') && $request->team){
+                $activities->whereIn('team_id',$request->team);
+            }
+            $activities = $activities->get();
 
         }else{
+            
             $assigned_teams = $user->teams()->pluck('team_id')->toArray();
             $activities = Activity::with(['team','assignedUsers','reminders'])->whereIn('team_id',$assigned_teams)->get();
         }
         $teams = Team::all();
         $users = User::all();
-        return view('admin.activity.index',compact('activities','teams','users'));
+         return view('admin.activity.index',compact('activities','teams','users'));
     }
 
     /**
@@ -246,7 +246,13 @@ class ActivityController extends Controller
 
     public function pending(Request $request)
     {
+
+    
+
+        
         $activities = Activity::where('status', 'pending')->get();
+
+       
 
         $teams = Team::all();
         $users = User::all();
@@ -256,6 +262,7 @@ class ActivityController extends Controller
 
     public function completed(Request $request)
     {
+       
         $activities = Activity::where('status', 'completed')->get();
 
         $teams = Team::all();

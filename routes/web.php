@@ -95,21 +95,21 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-
-
     /*--------------------------------- Activities ---------------------------------*/
 
-    Route::get('/activities/{filter?}', [ActivityController::class, 'index'])->name('activity-index')->middleware('auth');
+    Route::get('/activities/filter/{filter?}', [ActivityController::class, 'index'])->name('activity-index')->middleware('auth');
+    
     Route::post('/activities/store', [ActivityController::class, 'store'])->name('activity-store')->middleware('auth');
-
+    
     Route::post('/activities/update', [ActivityController::class, 'update'])->name('activity-update')->middleware('auth');
-
+    
     Route::post('/activities/status_update/{activity}', [ActivityController::class, 'statusupdate'])->name('activity-statusupdate')->middleware('auth');
     Route::delete('/activities/destroy/{activity}', [ActivityController::class, 'destroy'])->name('activity-destroy')->middleware('auth');
-
+    
     Route::get('/activities/pending', [ActivityController::class, 'pending'])->name('activity-pending')->middleware('auth');
     Route::get('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middleware('auth');
-
+    
+    
     /*-------------------------- Clients & Projects Routes -----------------------*/
 
     Route::get('/clients-and-projects',[ClientAndProjectController::class,'index'])->name('clients-and-projects-index')->middleware('auth');

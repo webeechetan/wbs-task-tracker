@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Tasks List')
+@section('title', "Todo's List")
 
 @section('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -40,8 +40,8 @@
                                       
                                     </div>
                                 </div>
-                                <div class="badge bg-primary mt-2"> Total Task:{{ $data['tasks']->count() }}</div>
-                                <div class="badge bg-primary mt-2"> P Task:{{ $data['tasks']->count() }}</div>
+                                <div class="badge bg-primary mt-2"> Total Task:-{{ $data['tasks']->count() }}</div>
+                                {{-- <div class="badge bg-primary mt-2"> P Task:{{ $data['tasks']->count() }}</div> --}}
                             </div>
                         </div>
                     </a>

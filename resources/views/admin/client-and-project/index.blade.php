@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Teams')
+@section('title', 'Client & Projects')
 
 @section('styles')
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -9,9 +9,9 @@
 @section('content')
 <div class="row">
     <div class="col-12">
-        <div class="card mb-4">
-            <div class="card-header client-project-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">Clients & Projects</h5> 
+        <div class=" mb-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <h4 class="mb-0">Clients & Projects</h4> 
                 <div class="d-flex align-items-center justify-content-between multiple-btn">
                     <button class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewClientModal">Create Client</button>
                     <button class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewProjectModal">Create Project</button>

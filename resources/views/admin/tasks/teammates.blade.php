@@ -1,6 +1,6 @@
 
 @extends('admin.layouts.app')
-@section('title', 'Tasks List')
+@section('title', "Team's Todo")
 
 @section('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -14,7 +14,7 @@
 
 @foreach ($teammates as $team)
 
-<h4 class="py-3 mb-4"><span class="text-muted fw-light">Team To-do's</span> </h4>
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Team To-do's-  {{ $team->name}}</span> </h4>
 <!-- Cards with few info -->
         <div class="row">
             @foreach ($team->members as $member)
@@ -22,12 +22,6 @@
                     <a href="{{ route('member-calander', $member->id)}}">
                         <div class="card">
                             <div class="card-body">
-                                {{-- <div class="d-flex justify-content-between">
-                                    <div class="card-info">
-                                        <h3 class="card-text">{{$member->name}}</h3>
-                                    </div>
-                                </div> --}}
-
                                 <div class="team-details">
                                     <div class="team-icons"><span class='bx bx-user'></span></div>
                                    <div class="d-block">
