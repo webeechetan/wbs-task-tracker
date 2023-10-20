@@ -214,6 +214,42 @@ class TaskController extends Controller
 
     }
 
+    public function create_with_speech(Request $request){
+        $user = Auth::user();
+        $task = new Task();
+        $task->user_id = $user->id;
+        $task->due_date = '';
+        $task->name = $request->name;
+        $task->project_id = '2';
+        $task->client_id = '2';
+
+        if ($task->save()) {
+           return response()->json(['success' => true, 'message' => 'Task Added successfully', 'data' => $task], 200);
+        }
+        return response()->json(['success' => false, 'message' => 'Something went wrong'], 500);
+
+    }
+
+    public function mark_all_as_complete(){
+        $user = Auth::user();
+        $tasks = Task::where('user_id', $user->id)->where('status', 'pending')->get();
+        foreach($tasks as $task){
+            $task->status = 'completed';
+            $task->save();
+        }
+        return response()->json(['success' => true, 'message' => 'All tasks marked as completed successfully'], 200);
+    }
+
+    public function mark_all_as_pending(){
+        $user = Auth::user();
+        $tasks = Task::where('user_id', $user->id)->where('status', 'completed')->get();
+        foreach($tasks as $task){
+            $task->status = 'pending';
+            $task->save();
+        }
+        return response()->json(['success' => true, 'message' => 'All tasks marked as pending successfully'], 200);
+    }
+
 
 
 }

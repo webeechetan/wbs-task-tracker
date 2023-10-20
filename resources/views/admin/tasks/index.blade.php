@@ -239,6 +239,7 @@
 
 <!-- Include Flatpickr JS from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
 <script>
     // Initialize Flatpickr
     let flatDate = flatpickr('#due_date', {
@@ -280,6 +281,72 @@
 
 
     $(document).ready(function () {
+
+        if (annyang) {
+            const commands = {
+                'task *task': (task) => {
+                    console.log(task);
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route("create_with_speech") }}' ,
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            name: task
+                        },
+                        success: function (response) {
+                            location.reload();
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                },
+                'bhai check kar de': () => {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route("mark_all_as_complete") }}' ,
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        success: function (response) {
+                            location.reload();
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                },
+                'madarchod': () => {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route("mark_all_as_pending") }}' ,
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        success: function (response) {
+                            location.reload();
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                },
+            };
+
+            // Add our commands to annyang
+            annyang.addCommands(commands);
+
+            // Start listening.
+            annyang.start();
+
+            annyang.addCallback('result', function(phrases) {
+                console.log("I think the user said: ", phrases[0]);
+                console.log("But then again, it could be any of the following: ", phrases);
+            });
+        }
 
         $('.card').click(function () {
             $(this).find('.card-body').toggleClass('active');

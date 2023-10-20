@@ -93,6 +93,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/tasks/calender/member_tasks/{id}/{date}', [TaskController::class, 'member_task'])->name('member_tasks')->middleware('auth');
 
+    Route::post('/tasks/create_with_speech', [TaskController::class, 'create_with_speech'])->name('create_with_speech')->middleware('auth');
+    Route::post('/tasks/mark_all_as_complete', [TaskController::class, 'mark_all_as_complete'])->name('mark_all_as_complete')->middleware('auth');
+    Route::post('/tasks/mark_all_as_pending', [TaskController::class, 'mark_all_as_pending'])->name('mark_all_as_pending')->middleware('auth');
+
 
 
 
