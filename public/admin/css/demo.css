@@ -565,7 +565,6 @@ table.dataTable tbody tr.even {
   padding-right: 10px;
   border-left: 2px solid #eee;
   border-right: 2px solid #eee;
-  height: 22px;
 }
 .card-badge{
   display: flex;
@@ -691,4 +690,61 @@ form{
 
 .calender-view .badge{
 text-transform: capitalize;
+}
+
+
+.task-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .task-form {
+    grid-template-columns: 280px 1fr 110px;
+  }
+
+  .task-group-1{
+    border-right: 0;
+    border-left: 0;
+    padding: 0;
+  }
+
+}
+
+.task-group-1{
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 2px solid #eee;
+  border-right: 2px solid #eee;
+  height: 22px;
+}
+
+.task-group .form-group input, .task-group .form-group input:focus,.task-group .form-group input:focus-visible, .task-group .form-group select, .task-group .form-group select:focus,.task-group .form-group select:focus-visible{
+  border: none !important;
+  outline: none;
+  box-shadow: none;
+ }
+ 
+ .action_btn{
+  background:  transparent;
+  padding: 0.25rem 0.6875rem;
+  font-size: 0.75rem;
+  border-radius: 0.375rem;
+  border: none !important;
+  color: #000;
+}
+
+.main-title{
+  display: flex;
+  column-gap: 20px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.task-table .dataTables_wrapper > .bottom {
+  display: none !important;
+}
+.edit_task:hover{
+
+  background: transparent ! important;
+  border: none ! important;
 }

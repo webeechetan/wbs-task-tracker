@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
 
+
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -63,7 +65,6 @@ class TaskController extends Controller
 
         }
         $projects = Project::all();
-        // return view('admin.tasks.index', compact('tasks','projects'));
         return view('admin.tasks.index', compact('tasks','projects','calanderData'));
     }
 
@@ -153,15 +154,15 @@ class TaskController extends Controller
         $task->client_id = $clientId;
 
 
-        
-
         try{
             $task->save();
             $this->alert('success','Task Updated successfully','success');
-            return redirect()->route('task-index');
+            //return redirect()->route('task-mytodo');
+            return back();
         }
         catch(\Exception $e){
-            $this->alert('error','Something went wrong','danger');
+            Log::critical($e->getMessage());
+            $this->alert('error',$e->getMessage(),'danger');
             return redirect()->back();
         }
 
@@ -177,7 +178,9 @@ class TaskController extends Controller
     {
         if ($task->delete()) {
             $this->alert('success', 'Task Deleted successfully', 'success');
-            return redirect()->route('task-index');
+            // return redirect()->route('task-index');
+            return back();
+
         } else {
             $this->alert('error', 'Something went wrong', 'danger');
             return redirect()->back();
@@ -215,14 +218,55 @@ class TaskController extends Controller
 
     public function member_task($id, $date)
     {
-
-        
+   
         $tasks = Task::where('user_id', $id)
         ->where('created_at', 'LIKE', $date . '%')->get();
         return view('admin.tasks.member_tasks', compact('tasks'));
-        
+    
 
     }
+
+ 
+    public function mytodo(Request $request) {
+    
+        $startOfTheMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $endOfTheMonth = Carbon::now()->endOfMonth()->format('Y-m-d');
+
+        $dates = collect();
+
+        for ($date = $startOfTheMonth; $date <= $endOfTheMonth; $date = Carbon::parse($date)->addDay()->format('Y-m-d')) {
+            if(Carbon::parse($date)->isWeekend()){
+                continue;
+            }
+            if(Carbon::parse($date)->isFuture()){
+                continue;
+            }
+            $dates->push($date);
+        }
+
+        $calanderData = $dates->map(function($date){
+            $tasks = Task::where('user_id', auth()->user()->id)
+                ->whereDate('created_at', $date)
+                ->orderBy('status')
+                ->get();
+
+                $pendingCount = $tasks->where('status', 'pending')->count();
+                $completedCount = $tasks->where('status', 'completed')->count();
+            
+                
+        return [
+                'date' => $date,
+                'tasks' => $tasks,
+                'pendingCount' => $pendingCount,
+                'completedCount' => $completedCount
+            ];
+        });
+
+        return view('admin.tasks.mytodo' ,compact('calanderData'));
+    }
+
+
+   
 
 
 

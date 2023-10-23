@@ -42,7 +42,7 @@
         </a>
         <ul class="menu-sub">
           <li class="menu-item active">
-            <a href="{{ route('task-index')}}" class="menu-link">
+            <a href="{{ route('mytodo')}}" class="menu-link">
               <div class="text-truncate" data-i18n="Analytics">My To-do's</div>
             </a>
           </li>
@@ -102,8 +102,6 @@
           <div data-i18n="Layouts">Activities</div>
         </a>
       </li> 
-
-
      
     </ul>
   </aside>

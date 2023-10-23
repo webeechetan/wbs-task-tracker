@@ -19,7 +19,7 @@ class AuthController extends Controller
         session()->put('googleUser',$user);
         if($findUser){
             Auth::loginUsingId($findUser->id);
-            return redirect()->route('task-index');
+            return redirect()->route('mytodo');
         }else{
             $this->alert('Login Failed','Not registered with us!','danger');
             return redirect()->route('login.view');
@@ -47,7 +47,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->route('task-index');
+            return redirect()->route('mytodo');
         }else{
             $this->alert('Login Failed','Invalid Email or Password','danger');
             return redirect()->route('login.view');

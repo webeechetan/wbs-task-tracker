@@ -70,7 +70,10 @@
             toast('{{ $toastHead }}','{{ $toastBody }}','{{ $toastType }}');
           });
         </script>
+        
       @endif
       @yield('scripts')
+
+   
    </body>
 </html>

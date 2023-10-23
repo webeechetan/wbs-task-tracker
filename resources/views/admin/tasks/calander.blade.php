@@ -38,14 +38,15 @@
                             <div class="calender-view">
                                 <div><span class='bx bx-calendar'></span></div>
                                 <div class="card-text calendar-info">
-                                   <div>{{ $dayName }}</div>
-                                   <div> {{ $date }}</div>
+                                  
+                                   <h4><b><div>{{ date('D d M Y', strtotime($date)) }}</div></b></h4>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
+
             @endif
                 
     @endfor
