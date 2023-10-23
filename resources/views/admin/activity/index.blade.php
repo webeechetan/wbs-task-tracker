@@ -182,6 +182,11 @@ $userType = $user->type;
     <h5 class="card-header">Activities</h5>
     <div class="card-body">
         <div class="filter-form">
+
+
+            
+      @if($userType == 1 )
+  
             <form action="" method="GET">
                 <div class="input-group mb-3 input-group-filter">
                     @foreach($teams as $team)
@@ -191,6 +196,8 @@ $userType = $user->type;
                     <button class="btn btn-primary btn-sm" type="submit">Filter</button>
                 </div>
             </form>
+
+            @endif
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table mb-3 table-hover" id="activityTable">
