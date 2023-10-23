@@ -555,11 +555,7 @@ table.dataTable tbody tr.even {
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
   border-color: #fff transparent transparent transparent !important;
 }
-.action_btn{
-  background:  transparent;
-  border: none !important;
-  color: #fff;
-}
+
 .task-group-1{
   padding-left: 10px;
   padding-right: 10px;
