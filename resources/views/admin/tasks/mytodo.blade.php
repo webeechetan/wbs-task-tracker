@@ -24,7 +24,7 @@
 
 <div class="row">
     @foreach($calanderData as $data)
-    <div class="col-md-3 mt-2">
+    <div class="col-md-3 mb-2">
         <div class="card">
             <div class="card-body text-center">
                 <h5><b><div>{{ date('D d M Y', strtotime($data['date'])) }}</div></b></h5>

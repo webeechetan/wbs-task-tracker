@@ -35,7 +35,7 @@
       </li> --}}
 
 
-      <li class="menu-item @if(request()->routeIs('task-index') || request()->routeIs('task-create') || request()->routeIs('task-edit')) active @endif">
+       {{-- <li class="menu-item @if(request()->routeIs('task-index') || request()->routeIs('task-create') || request()->routeIs('task-edit')) active @endif">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div class="text-truncate" data-i18n="Dashboards">To-do's</div>
@@ -57,7 +57,36 @@
           @endif
         </ul>
       </li>
+      --}}
       
+
+      {{-- //Test///// --}}
+      
+         
+      <li class="menu-item @if(Route::is('task-index') || Route::is('task-create') || Route::is('task-edit') || request()->is('tasks/mytodo') || request()->is('tasks/teammates')) active open @endif">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div class="text-truncate" data-i18n="Dashboards">To-do's</div>
+        </a>
+        <ul class="menu-sub" style="display: @if(Route::is('task-index') || Route::is('task-create') || Route::is('task-edit') || request()->is('tasks/mytodo') || request()->is('tasks/teammates')) block @else none @endif">
+            <li class="menu-item @if(request()->is('tasks/mytodo')) active @endif">
+                <a href="{{ route('mytodo')}}" class="menu-link">
+                    <div class="text-truncate" data-i18n="Analytics">My To-do's</div>
+                </a>
+            </li>
+            @if($userRole == 2 || $userRole == 1)       
+            <li class="menu-item @if(request()->is('tasks/teammates')) active @endif">
+                <a href="{{ route('team-members')}}" class="menu-link">
+                    <div class="text-truncate" data-i18n="CRM">Team To-do's</div>
+                </a>
+            </li>
+            @endif
+        </ul>
+      </li>
+    
+    
+     
+      {{-- //Test///// --}}
 
 
       @if($userRole == 1 )
@@ -105,3 +134,16 @@
      
     </ul>
   </aside>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let menuToggle = document.querySelector('.menu-toggle');
+      let menuSub = document.querySelector('.menu-sub');
+  
+      menuToggle.addEventListener('click', function() {
+        menuSub.style.display = menuSub.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  </script>
+   
