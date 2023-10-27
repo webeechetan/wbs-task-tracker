@@ -12,6 +12,10 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'created_at'
+    ];
+
    
     public function client() {
         return $this->belongsTo(Client::class);

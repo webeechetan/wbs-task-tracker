@@ -95,6 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/tasks/calender/member_tasks/{id}/{date}', [TaskController::class, 'member_task'])->name('member_tasks')->middleware('auth');
 
+
     Route::get('/tasks/mytodo', [TaskController::class, 'mytodo'])->name('mytodo')->middleware('auth');
 
     

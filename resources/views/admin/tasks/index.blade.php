@@ -186,6 +186,7 @@
         $('#myIcon').toggleClass('fa-star fa-check');
     });
         let table = $('#tasksTable').DataTable({
+            pageLength: 50,
             responsive: true,
             dom: '<"top"f>rt<"bottom"lip><"clear">'
         });
