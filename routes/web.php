@@ -48,6 +48,9 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware('admin');
 
 
+
+
+
     /*--------------------------------- User Routes ---------------------------------*/
 
     Route::get('/user/create', [UserController::class, 'create'])->name('user-create')
@@ -95,7 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/tasks/mytodo', [TaskController::class, 'mytodo'])->name('mytodo')->middleware('auth');
 
-
+    
 
     /*--------------------------------- Activities ---------------------------------*/
 
