@@ -72,8 +72,20 @@
         </script>
         
       @endif
-      @yield('scripts')
 
+      <script>
+         document.addEventListener("DOMContentLoaded", function() {
+           let menuToggle = document.querySelector('.menu-toggle');
+           let menuSub = document.querySelector('.menu-sub');
+       
+           menuToggle.addEventListener('click', function() {
+             menuSub.style.display = menuSub.style.display === 'block' ? 'none' : 'block';
+           });
+         });
+      </script>
+
+      @yield('scripts')
+      
    
    </body>
 </html>

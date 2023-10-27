@@ -24,16 +24,27 @@
 
 <div class="row">
     @foreach($calanderData as $data)
-    <div class="col-md-3 mb-2">
-        <div class="card">
-            <div class="card-body text-center">
-                <h5><b><div>{{ date('D d M Y', strtotime($data['date'])) }}</div></b></h5>
-                <h6>Total Task:-{{ $data['tasks']->count() }}</h6>
-                <p>Pending : {{ $data['pendingCount'] }} / Completed : {{ $data['completedCount'] }}</p>
-                <a href="{{route('task-index',['date'=> $data['date']])}}"><button class="btn btn-action btn-primary btn-sm">View</button></a>
+        <div class="col-md-3 mb-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>
+                        <b>
+                            <div>{{ date('D d M Y', strtotime($data['date'])) }}</div> 
+                            @php
+                                $today = \Carbon\Carbon::now()->format('Y-m-d');
+                                $card_date = \Carbon\Carbon::parse($data['date'])->format('Y-m-d');
+                            @endphp
+                            @if($today == $card_date)
+                                <small>Today</small>
+                            @endif
+                        </b>
+                    </h5>
+                    <h6>Total Task:-{{ $data['tasks']->count() }}</h6>
+                    <p>Pending : {{ $data['pendingCount'] }} / Completed : {{ $data['completedCount'] }}</p>
+                    <a href="{{route('task-index',['date'=> $data['date']])}}"><button class="btn btn-action btn-primary btn-sm">View</button></a>
+                </div>
             </div>
         </div>
-    </div>
     @endforeach
 </div>
 

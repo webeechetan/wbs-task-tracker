@@ -24,4 +24,9 @@ class Team extends Model
         return Team::where('lead_id',$id)->get();
     }
 
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
 }

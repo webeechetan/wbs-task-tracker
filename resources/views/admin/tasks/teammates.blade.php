@@ -12,6 +12,14 @@
 
 @section('content')
 
+@if($teammates->count() == 0)
+<div class="row">
+    <div class="alert alert-danger" role="alert">
+        No Teammates found!
+    </div>
+</div>
+@endif
+
 @foreach ($teammates as $team)
 
 <h4 class="py-3 mb-4"><span class="text-muted fw-light">Team To-do's-  {{ $team->name}}</span> </h4>

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Team;
+use App\Models\Task;
 use App\Models\Activity;
 
 class User extends Authenticatable
@@ -52,6 +53,10 @@ class User extends Authenticatable
     public function activities()
     {
         return $this->belongsToMany(Activity::class);
+    }
+
+    public function tasks(){
+        return $this->hasMany(Task::class);
     }
 
 }

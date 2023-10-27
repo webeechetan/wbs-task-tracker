@@ -19,7 +19,7 @@
                         <tr>
                             <th>Task</th>
                             <th>Client</th>
-                            <th>Due Date</th>
+                            <th>Project</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -30,11 +30,9 @@
                             <tr class=" @if($task->status == 'completed') completed-task @endif ">
                                 
                                 <td>{{$task->name}}</td>
-                                <td>{{$task->client}}</td>
+                                <td>{{$task->client->name}}</td>
+                                <td>{{$task->project->name}}</td>
                                 <td>
-                                    @php
-                                    $date = Carbon\Carbon::parse($task->due_date);
-                                    @endphp
                                     @if($date->isPast())
                                     <span class="text-danger">{{ $date->format('d-m-Y') }}</span>
                                     @else

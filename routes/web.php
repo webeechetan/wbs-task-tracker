@@ -9,6 +9,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ClientAndProjectController;
 
+/*****  error routes *********/
+
+Route::fallback(function(){ return response()->view('errors.404', [], 404); });
+
 
 /*--------------------------------- Auth Routes ---------------------------------*/
 
@@ -100,7 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     
     
-    Route::get('/tasks/team', [TaskController::class, 'team'])->name('team')->middleware('auth');
+    Route::get('/tasks/teams', [TaskController::class, 'team'])->name('team')->middleware('auth');
 
     
 

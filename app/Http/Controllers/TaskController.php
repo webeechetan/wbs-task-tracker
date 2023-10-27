@@ -243,6 +243,7 @@ class TaskController extends Controller
             }
             $dates->push($date);
         }
+        $dates = $dates->reverse();      
 
         $calanderData = $dates->map(function($date){
             $tasks = Task::where('user_id', auth()->user()->id)
@@ -261,6 +262,7 @@ class TaskController extends Controller
                 'completedCount' => $completedCount
             ];
         });
+        
 
         return view('admin.tasks.mytodo' ,compact('calanderData'));
     }
@@ -268,10 +270,7 @@ class TaskController extends Controller
 
     public function team(Request $request) {
 
-        $teams = Team::getTeam();
-
-       
-
+        $teams = Team::all();
         return view('admin.tasks.teams', compact('teams'));
 
     }
