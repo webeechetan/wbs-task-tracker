@@ -302,7 +302,7 @@
                         }
                     });
                 },
-                'bhai check kar de': () => {
+                'read all': () => {
                     $.ajax({
                         type: 'POST',
                         url: '{{ route("mark_all_as_complete") }}' ,
@@ -318,7 +318,7 @@
                         }
                     });
                 },
-                'madarchod': () => {
+                'unread all': () => {
                     $.ajax({
                         type: 'POST',
                         url: '{{ route("mark_all_as_pending") }}' ,
