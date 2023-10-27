@@ -74,18 +74,32 @@
                     <div class="text-truncate" data-i18n="Analytics">My To-do's</div>
                 </a>
             </li>
-            @if($userRole == 2 || $userRole == 1)       
+            @if($userRole == 2)       
             <li class="menu-item @if(request()->is('tasks/teammates')) active @endif">
+
                 <a href="{{ route('team-members')}}" class="menu-link">
-                    <div class="text-truncate" data-i18n="CRM">Team To-do's</div>
+                    <div class="text-truncate" data-i18n="CRM">My Team To-do's</div>
                 </a>
             </li>
             @endif
+
+            @if($userRole == 1)       
+            <li class="menu-item @if(request()->is('tasks/team')) active @endif">
+                <a href="{{ route('team')}}" class="menu-link">
+                    <div class="text-truncate" data-i18n="CRM">Teams To-do's</div>
+                </a>
+            </li>
+            @endif
+
         </ul>
       </li>
     
      
       {{-- //Test///// --}}
+
+
+      
+
 
 
       @if($userRole == 1 )

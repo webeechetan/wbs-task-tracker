@@ -98,6 +98,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tasks/mytodo', [TaskController::class, 'mytodo'])->name('mytodo')->middleware('auth');
 
     
+    
+    Route::get('/tasks/team', [TaskController::class, 'team'])->name('team')->middleware('auth');
+
+    
 
     /*--------------------------------- Activities ---------------------------------*/
 

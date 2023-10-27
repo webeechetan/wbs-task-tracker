@@ -266,7 +266,14 @@ class TaskController extends Controller
     }
 
 
+    public function team(Request $request) {
 
+        $teams = Team::getTeam();
 
+       
+
+        return view('admin.tasks.teams', compact('teams'));
+
+    }
 
 }
