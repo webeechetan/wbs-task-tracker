@@ -39,7 +39,7 @@
                                 <div><span class='bx bx-calendar'></span></div>
                                 <div class="card-text calendar-info">
                                   
-                                   <h4><b><div>{{ date('D d M Y', strtotime($date)) }}</div></b></h4>
+                                   <h6 class="mb-0"><div>{{ date('D d M Y', strtotime($date)) }}</div></h6>
                                 </div>
                             </div>
                         </div>

@@ -471,6 +471,12 @@ table.dataTable tbody tr.even {
   align-items: center;
   flex-wrap: wrap;
 }
+.calendar-info h6{
+   font-size: 16px;
+}
+.calendar-info h6:hover{
+  color: var(--primary);
+}
 .calendar-box{
   color: #000;
 }

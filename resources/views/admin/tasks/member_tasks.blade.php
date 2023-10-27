@@ -32,13 +32,15 @@
                                 <td>{{$task->name}}</td>
                                 <td>{{$task->client->name}}</td>
                                 <td>{{$task->project->name}}</td>
-                                <td>
+                                {{-- <td>
                                     @if($date->isPast())
                                     <span class="text-danger">{{ $date->format('d-m-Y') }}</span>
                                     @else
                                     <span class="text-success">{{ $date->format('d-m-Y') }}</span>
                                     @endif
-                                </td>
+
+                                   
+                                </td> --}}
                                 <td>{{ $task->status }}</td>
 
                                 
