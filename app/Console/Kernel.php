@@ -17,11 +17,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {  
-        // get flags from command 
-        Log::info('Queue worker is running');
-        // kill after 5 minutes
+        // Log::info('Queue worker is running');
         $schedule->command('activity:due')->daily()->at('10:30');
         $schedule->command('activity:reminder')->daily()->at('10:35');
+        $schedule->command('move-task:tomorrow')->daily()->at('23:55');
     }
 
     /**

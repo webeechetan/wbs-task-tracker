@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
 
+
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -63,7 +65,6 @@ class TaskController extends Controller
 
         }
         $projects = Project::all();
-        // return view('admin.tasks.index', compact('tasks','projects'));
         return view('admin.tasks.index', compact('tasks','projects','calanderData'));
     }
 
@@ -135,19 +136,33 @@ class TaskController extends Controller
 
     public function update(Request $request)
     {
+        // $task = Task::find($request->taskId);
+        // $task->due_date = $request->due_date;
+        // $task->name = $request->task_name;
+        // $task->client = $request->client;
+        // $task->project_id = $request->project_name;
+
+
         $task = Task::find($request->taskId);
         $task->due_date = $request->due_date;
         $task->name = $request->task_name;
-        $task->client = $request->client;
 
         $task->project_id = $request->project_name;
+
+        $project = Project::where('id', $request->project_name)->first();
+        $clientId = $project->client_id;
+        $task->client_id = $clientId;
+
+
         try{
             $task->save();
             $this->alert('success','Task Updated successfully','success');
-            return redirect()->route('task-index');
+            //return redirect()->route('task-mytodo');
+            return back();
         }
         catch(\Exception $e){
-            $this->alert('error','Something went wrong','danger');
+            Log::critical($e->getMessage());
+            $this->alert('error',$e->getMessage(),'danger');
             return redirect()->back();
         }
 
@@ -163,7 +178,9 @@ class TaskController extends Controller
     {
         if ($task->delete()) {
             $this->alert('success', 'Task Deleted successfully', 'success');
-            return redirect()->route('task-index');
+            // return redirect()->route('task-index');
+            return back();
+
         } else {
             $this->alert('error', 'Something went wrong', 'danger');
             return redirect()->back();
@@ -192,10 +209,6 @@ class TaskController extends Controller
     
     public function teammates()
     {
-        // if(auth()->user()->role != 2 ){
-        //     $this->alert('error','You are not authorized to access this ppage','danger');
-        //    return redirect()->route('dashboard');
-        // }
         $team = Team::getTeam();
         $teammates= $team->load('members');
         
@@ -205,51 +218,51 @@ class TaskController extends Controller
 
     public function member_task($id, $date)
     {
-
-        
+   
         $tasks = Task::where('user_id', $id)
         ->where('created_at', 'LIKE', $date . '%')->get();
         return view('admin.tasks.member_tasks', compact('tasks'));
-        
+    
 
     }
 
-    public function create_with_speech(Request $request){
-        $user = Auth::user();
-        $task = new Task();
-        $task->user_id = $user->id;
-        $task->due_date = '';
-        $task->name = $request->name;
-        $task->project_id = '2';
-        $task->client_id = '2';
+ 
+    public function mytodo(Request $request) {
+    
+        $startOfTheMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $endOfTheMonth = Carbon::now()->endOfMonth()->format('Y-m-d');
 
-        if ($task->save()) {
-           return response()->json(['success' => true, 'message' => 'Task Added successfully', 'data' => $task], 200);
+        $dates = collect();
+
+        for ($date = $startOfTheMonth; $date <= $endOfTheMonth; $date = Carbon::parse($date)->addDay()->format('Y-m-d')) {
+            if(Carbon::parse($date)->isWeekend()){
+                continue;
+            }
+            if(Carbon::parse($date)->isFuture()){
+                continue;
+            }
+            $dates->push($date);
         }
-        return response()->json(['success' => false, 'message' => 'Something went wrong'], 500);
 
+        $calanderData = $dates->map(function($date){
+            $tasks = Task::where('user_id', auth()->user()->id)
+                ->whereDate('created_at', $date)
+                ->orderBy('status')
+                ->get();
+
+                $pendingCount = $tasks->where('status', 'pending')->count();
+                $completedCount = $tasks->where('status', 'completed')->count();
+            
+                
+        return [
+                'date' => $date,
+                'tasks' => $tasks,
+                'pendingCount' => $pendingCount,
+                'completedCount' => $completedCount
+            ];
+        });
+
+        return view('admin.tasks.mytodo' ,compact('calanderData'));
     }
-
-    public function mark_all_as_complete(){
-        $user = Auth::user();
-        $tasks = Task::where('user_id', $user->id)->where('status', 'pending')->get();
-        foreach($tasks as $task){
-            $task->status = 'completed';
-            $task->save();
-        }
-        return response()->json(['success' => true, 'message' => 'All tasks marked as completed successfully'], 200);
-    }
-
-    public function mark_all_as_pending(){
-        $user = Auth::user();
-        $tasks = Task::where('user_id', $user->id)->where('status', 'completed')->get();
-        foreach($tasks as $task){
-            $task->status = 'pending';
-            $task->save();
-        }
-        return response()->json(['success' => true, 'message' => 'All tasks marked as pending successfully'], 200);
-    }
-
-
 
 }

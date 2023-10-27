@@ -90,30 +90,28 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/tasks/member-calander/{user}', [UserController::class, 'member_calander'])->name('member-calander');
 
-
     Route::get('/tasks/calender/member_tasks/{id}/{date}', [TaskController::class, 'member_task'])->name('member_tasks')->middleware('auth');
 
-    Route::post('/tasks/create_with_speech', [TaskController::class, 'create_with_speech'])->name('create_with_speech')->middleware('auth');
-    Route::post('/tasks/mark_all_as_complete', [TaskController::class, 'mark_all_as_complete'])->name('mark_all_as_complete')->middleware('auth');
-    Route::post('/tasks/mark_all_as_pending', [TaskController::class, 'mark_all_as_pending'])->name('mark_all_as_pending')->middleware('auth');
 
-
+    Route::get('/tasks/mytodo', [TaskController::class, 'mytodo'])->name('mytodo')->middleware('auth');
 
 
 
     /*--------------------------------- Activities ---------------------------------*/
 
-    Route::get('/activities/{filter?}', [ActivityController::class, 'index'])->name('activity-index')->middleware('auth');
+    Route::get('/activities/filter/{filter?}', [ActivityController::class, 'index'])->name('activity-index')->middleware('auth');
+    
     Route::post('/activities/store', [ActivityController::class, 'store'])->name('activity-store')->middleware('auth');
-
+    
     Route::post('/activities/update', [ActivityController::class, 'update'])->name('activity-update')->middleware('auth');
-
+    
     Route::post('/activities/status_update/{activity}', [ActivityController::class, 'statusupdate'])->name('activity-statusupdate')->middleware('auth');
     Route::delete('/activities/destroy/{activity}', [ActivityController::class, 'destroy'])->name('activity-destroy')->middleware('auth');
-
+    
     Route::get('/activities/pending', [ActivityController::class, 'pending'])->name('activity-pending')->middleware('auth');
     Route::get('/activities/completed', [ActivityController::class, 'completed'])->name('activity-completed')->middleware('auth');
-
+    
+    
     /*-------------------------- Clients & Projects Routes -----------------------*/
 
     Route::get('/clients-and-projects',[ClientAndProjectController::class,'index'])->name('clients-and-projects-index')->middleware('auth');

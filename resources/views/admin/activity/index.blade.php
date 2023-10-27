@@ -181,17 +181,24 @@ $userType = $user->type;
 <div class="card">
     <h5 class="card-header">Activities</h5>
     <div class="card-body">
-        {{-- <div class="filter-form">
+        <div class="filter-form">
+
+
+            
+      @if($userType == 1 )
+  
             <form action="" method="GET">
-                <div class="input-group">
+                <div class="input-group mb-3 input-group-filter">
                     @foreach($teams as $team)
                         <label for="">{{ $team->name }}</label>
                         <input class="form-check-input" type="checkbox" name="team[]" value="{{ $team->id }}" @if(isset($_GET['team']) && in_array($team->id, $_GET['team'])) checked @endif>
                     @endforeach
-                    <button class="btn btn-primary" type="submit">Filter</button>
+                    <button class="btn btn-primary btn-sm" type="submit">Filter</button>
                 </div>
             </form>
-        </div> --}}
+
+            @endif
+        </div>
         <div class="table-responsive text-nowrap">
             <table class="table mb-3 table-hover" id="activityTable">
                 <thead>
@@ -328,18 +335,21 @@ $userType = $user->type;
         $('#cron_month').select2({
             placeholder: "Select Month",
             allowClear: true,
+            closeOnSelect: false
         });
 
         $("#cron_day").select2({
             placeholder: "Select Day",
             tags: true,
-            tokenSeparators: [',', ' ']
+            tokenSeparators: [',', ' '],
+            closeOnSelect: false
         });
 
         let reminder_dates = $("#reminder_dates").select2({
             placeholder: "Select Day",
             tags: true,
-            tokenSeparators: [',', ' ']
+            tokenSeparators: [',', ' '],
+            closeOnSelect: false
         });
         
 
