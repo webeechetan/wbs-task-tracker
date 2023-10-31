@@ -750,3 +750,7 @@ text-transform: capitalize;
   background: transparent ! important;
   border: none ! important;
 }
+
+.mytodo-card{
+  min-height: 100%;
+}

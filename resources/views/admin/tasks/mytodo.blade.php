@@ -24,8 +24,8 @@
 
 <div class="row">
     @foreach($calanderData as $data)
-        <div class="col-md-3 mb-2">
-            <div class="card">
+        <div class="col-md-3 mb-3">
+            <div class="card mytodo-card">
                 <div class="card-body text-center">
                     <h5>
                         <b>
