@@ -200,7 +200,7 @@ $userType = $user->type;
             @endif
         </div>
         <div class="table-responsive text-nowrap">
-            <table class="table mb-3 table-hover" id="activityTable">
+            <table class="table mb-3 table-hover activity-table" id="activityTable">
                 <thead>
                     <tr>
                         <th></th>

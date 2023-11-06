@@ -780,3 +780,6 @@ text-transform: capitalize;
 .card-link + .card-link{
   margin-left: 0 !important;
 }
+.activity-table tr td{
+  text-wrap: balance !important;
+}
