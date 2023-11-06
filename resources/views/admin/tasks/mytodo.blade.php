@@ -18,8 +18,8 @@
 
 @section('content')
 
-<div class="d-flex main-title">
-    <h3 class="title">Calendar View</h3>
+<div class="mb-4">
+    <h4>Calendar View</h4>
 </div>
 
 <div class="row">

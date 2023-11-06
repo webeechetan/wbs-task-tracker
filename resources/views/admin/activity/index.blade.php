@@ -27,9 +27,9 @@ $userType = $user->type;
 @section('content')
 
 <!-- Add Product -->
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
     {{-- <div class="d-flex flex-column justify-content-center"> --}}
-        <h4 class="d-flex align-items-center">
+        <h4 class="d-flex align-items-center mb-0">
             All Activity
         </h4>
         

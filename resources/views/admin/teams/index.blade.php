@@ -7,10 +7,18 @@
 @endsection
 
 @section('content')
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between">
+            <h4 class="mb-0">Teams</h4> 
+            <small class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewTeamModal">Create New</small>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-12">
         <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
+            <!-- <div class="card-header d-flex align-items-center justify-content-between">
                {{-- <div class="custom_search_filter">
                     <form action="#" method="GET">
                             <input type="text" class="form-control" id="search" name="search" placeholder="Search" value="">
@@ -19,7 +27,7 @@
                  </div> --}}
                  <h5 class="mb-0">Teams</h5> 
                 <small class="float-end btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewTeamModal">Create New</small>
-            </div>
+            </div> -->
             <div class="card-body">
                 <table class="table table-hover mb-3" id="teamsTable">
                     <thead>

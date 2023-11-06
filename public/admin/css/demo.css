@@ -356,7 +356,7 @@ table.dataTable tbody tr.even {
   width: 100% !important;
 }
 .task-form{
-  column-gap: 30px;
+  column-gap: 22px;
 }
 .task-form .task-group:not(:last-child){
   width: 37%;
@@ -753,4 +753,30 @@ text-transform: capitalize;
 
 .mytodo-card{
   min-height: 100%;
+}
+/*--- clients & Project ---*/
+.client-heading{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+}
+.dropdown-trigger-menu{
+  right: -160px;
+  top: 52px;
+}
+.dropdown-trigger-menu::before{
+  left: 3px;
+  top: -4px;
+  border: none;
+
+}
+.edit:hover{
+ color: var(--primary) !important;
+}
+.delete:hover{
+  color: #ff3e1d !important;
+}
+.card-link + .card-link{
+  margin-left: 0 !important;
 }
