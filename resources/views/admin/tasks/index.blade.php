@@ -27,16 +27,16 @@
 
 @if ($urlDate && $urlDate !== $today)
     <style>
-        .client-project-header {
+        /* .client-project-header {
             display: none;
-        }
+        } */
     </style>
 @endif
 
 <div class="row align-items-center">
     <div class="col-md-5">
         <div class="d-flex main-title">
-            <h3 class="title mb-0">Todo's</h3>
+            <h3 class="title mb-0">Todo's </h3>
             <div class="d-flex align-items-center"> <span class='bx bx-calendar me-2'></span><p class="mb-0">{{ \Carbon\Carbon::now()->format('d-m-Y') }}</p></div>
         </div>
     </div>
@@ -45,7 +45,8 @@
             <div class="card-header client-project-header">
                 <form method="POST" action="{{ route('task-store') }}" id="todo_task_add_form">
                     @csrf
-                    <input type="hidden" name="taskId" id="taskId">
+                    <input type="hidden" name="taskId" id="taskId"> 
+                    <input type="hidden" name="urlDate" id="urlDate" value="{{$urlDate}}">
                     <div class="d-flex justify-content-between align-items-center task-form">
 
                         <div class="mb-3 mb-md-0 task-group">
@@ -57,7 +58,7 @@
 
                         <div class="mb-3 mb-md-0 task-group task-group-1">
                             <div class="form-group">
-                                <select class="form-control select-control" id="project_name" name="project_name">
+                                <select class="form-control select-control" id="project_name" name="project_name" required>
                                     <option value="">Select Project</option>
                                     @foreach ($projects as $project)
                                     <option value="{{$project->id}}">{{$project->name}}</option>
@@ -214,6 +215,14 @@
             $('#project_name').val(task.project_id).trigger('change.select2');
             //$('#project_name').val(task.project_id);
             $('#taskId').val(task.id);
+
+
+            
+            // Get the value of urlDate from the hidden field
+            let urlDate = $('#urlDate').val();
+
+           
+
             $('.action_btn').html('Update');
             let taskId = $('#taskId').val();
             if (taskId) {

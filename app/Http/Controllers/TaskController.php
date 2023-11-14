@@ -64,8 +64,16 @@ class TaskController extends Controller
             ->get();
 
         }
+
+
+        $urlDate = null;
+        if ($request->has('date')) {
+            // Validate and format the date as needed
+            $urlDate = Carbon::parse($request->date);
+        }
+
         $projects = Project::all();
-        return view('admin.tasks.index', compact('tasks','projects','calanderData'));
+        return view('admin.tasks.index', compact('tasks','projects','calanderData','urlDate'));
     }
 
     /**
@@ -86,15 +94,22 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+
+      
         $user = Auth::user();
         $task = new Task();
         $task->user_id = $user->id;
-        $task->due_date = $request->due_date;
         $task->name = $request->task_name;
         $task->project_id = $request->project_name;
         $project = Project::where('id', $request->project_name)->first();
         $clientId = $project->client_id;
         $task->client_id = $clientId;
+
+
+        $task->created_at = $request->urlDate;
+
+       
+
 
         if ($task->save()) {
             $this->alert('success', 'Task Added successfully', 'success');
