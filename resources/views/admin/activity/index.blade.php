@@ -27,9 +27,9 @@ $userType = $user->type;
 @section('content')
 
 <!-- Add Product -->
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
     {{-- <div class="d-flex flex-column justify-content-center"> --}}
-        <h4 class="d-flex align-items-center">
+        <h4 class="d-flex align-items-center mb-0">
             All Activity
         </h4>
         
@@ -200,7 +200,7 @@ $userType = $user->type;
             @endif
         </div>
         <div class="table-responsive text-nowrap">
-            <table class="table mb-3 table-hover" id="activityTable">
+            <table class="table mb-3 table-hover activity-table" id="activityTable">
                 <thead>
                     <tr>
                         <th></th>

@@ -22,22 +22,29 @@
     @foreach($clients as $client)
     <div class="col-lg-3 col-sm-6 mb-4">
         <div class="card mb-4">
-            <div class="card-body text-center">
-                <h5 class="card-title">{{ $client->name }}</h5>
+            <div class="card-body">
+                <div class="client-heading">
+                    <h5 class="card-title mb-0">{{ $client->name }}</h5>
+                    <div class="dropdown-dots">
+                        <span class="dropdown-trigger" id="dropdown-trigger">
+                            <i class='bx bx-dots-vertical-rounded'></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="dropdown-menu dropdown-trigger-menu" id="dropdown-menu">
+                    <a href="javascript:void(0)" class="card-link edit_client dropdown-item edit" data-client='{{ $client }}'> <i class='bx bx-edit' ></i> Edit</a>
+                    <a href="{{ route('client.destroy', $client->id) }}" class="card-link dropdown-item delete"><i class="bx bxs-trash" aria-hidden="true"></i> Delete</a>
+                </div>
                 <p class="card-text">
                     @foreach($client->projects as $project)
                         <a href="" class="edit_project" data-project='{{ $project }}'>
-                            <span class="badge bg-primary badge-xs">
+                            <span class="badge bg-primary badge-xs mb-2">
                                 {{ $project->name }}
                             </span>
                         </a>
                         
                     @endforeach
                 </p>
-                <div class="card-text">
-                    <a href="javascript:void(0)" class="card-link edit_cleint" data-client='{{ $client }}'><i class="bx bx-edit"></i></a>
-                    <a href="{{ route('client.destroy',$client->id) }}" class="card-link"><i class='bx bxs-trash'></i></a>
-                </div>
             </div>
         </div>
     </div>
@@ -359,6 +366,28 @@
             });
         });
 
+    });
+</script>
+<script>
+    var dropdownTrigger = document.getElementById('dropdown-trigger');
+    var dropdownMenu = document.getElementById('dropdown-menu');
+
+    dropdownTrigger.addEventListener('click', function (event) {
+
+        if (dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none';
+        } else {
+            dropdownMenu.style.display = 'block';
+        }
+
+        event.stopPropagation();
+    });
+
+
+    document.addEventListener('click', function (event) {
+        if (event.target !== dropdownTrigger && event.target !== dropdownMenu) {
+            dropdownMenu.style.display = 'none';
+        }
     });
 </script>
 @endsection

@@ -77,54 +77,57 @@
             </div>
         </div>
     </div>
+</div>
+   
 
-    <div class="col-md-12">
-        <div class="card task-table">      
-            <div class="card-body">
-                <div class="table-responsive text-nowrap">
-                    <table class="table table-hover mb-3" id="tasksTable">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Task</th>
-                                <th>Client</th>
-                                <th>Project</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-border-bottom-0">
+    <div class="row align-items-center">
+        <div class="col-md-12">
+            <div class="card task-table">      
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover mb-3" id="tasksTable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Task</th>
+                                    <th>Client</th>
+                                    <th>Project</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
 
-                            @foreach ($tasks as $task)
-                            <tr class=" @if($task->status == 'completed') completed-task @endif   task-id-{{ $task->id }}">
-                                <td>
-                                    @if($task->status == 'completed')
-                                        <i class='toggle-icon bx bxs-checkbox-checked icon-id-{{ $task->id }}' onclick="changeStatus({{$task->id}})"></i>  
-                                    @else
-                                        <i class='toggle-icon bx bxs-checkbox icon-id-{{ $task->id }}' onclick="changeStatus({{$task->id}})"></i>  
-                                    @endif          
-                                </td>
-                                <td>{{$task->name}}</td>
-                                <td>{{$task->client->name}}</td>
-                                <td>{{$task->project->name}}</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm edit_task edit_team"
-                                        data-task='{{ json_encode($task) }}'><i class='bx bx-edit'></i></button>
-                                    <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"><i
-                                                class='bx bxs-trash'></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                @foreach ($tasks as $task)
+                                <tr class=" @if($task->status == 'completed') completed-task @endif   task-id-{{ $task->id }}">
+                                    <td>
+                                        @if($task->status == 'completed')
+                                            <i class='toggle-icon bx bxs-checkbox-checked icon-id-{{ $task->id }}' onclick="changeStatus({{$task->id}})"></i>  
+                                        @else
+                                            <i class='toggle-icon bx bxs-checkbox icon-id-{{ $task->id }}' onclick="changeStatus({{$task->id}})"></i>  
+                                        @endif          
+                                    </td>
+                                    <td>{{$task->name}}</td>
+                                    <td>{{$task->client->name}}</td>
+                                    <td>{{$task->project->name}}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm edit_task edit_team"
+                                            data-task='{{ json_encode($task) }}'><i class='bx bx-edit'></i></button>
+                                        <form action="{{route('task-destroy',$task->id)}}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    class='bx bxs-trash'></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 @endsection
 
