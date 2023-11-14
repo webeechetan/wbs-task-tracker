@@ -20,6 +20,7 @@
         </div>
     </div>
     @foreach($clients as $client)
+
     <div class="col-lg-3 col-sm-6 mb-4">
         <div class="card mb-4">
             <div class="card-body">

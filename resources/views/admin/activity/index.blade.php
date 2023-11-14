@@ -385,7 +385,7 @@ $userType = $user->type;
 
         let assignTo = $('#assign_to').select2({
             placeholder: "Assign To",
-            tags: true,
+            tags: false,
             allowClear: true
         });
 
