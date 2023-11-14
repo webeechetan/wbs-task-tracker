@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="dropdown-menu dropdown-trigger-menu" id="dropdown-menu">
-                    <a href="javascript:void(0)" class="card-link edit_client dropdown-item edit" data-client='{{ $client }}'> <i class='bx bx-edit' ></i> Edit</a>
+                    <a href="javascript:void(0)" class="card-link edit_cleint dropdown-item edit" data-client='{{ $client }}'> <i class='bx bx-edit' ></i> Edit</a>
                     <a href="{{ route('client.destroy', $client->id) }}" class="card-link dropdown-item delete"><i class="bx bxs-trash" aria-hidden="true"></i> Delete</a>
                 </div>
                 <p class="card-text">
@@ -369,7 +369,7 @@
 
     });
 </script>
-<script>
+<!-- <script>
     var dropdownTrigger = document.getElementById('dropdown-trigger');
     var dropdownMenu = document.getElementById('dropdown-menu');
 
@@ -390,5 +390,45 @@
             dropdownMenu.style.display = 'none';
         }
     });
+</script> -->
+<!-- Add this script at the end of your HTML file, or in the <head> section -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+        var dropdownMenus = document.querySelectorAll('.dropdown-menu');
+        var openDropdown = null;
+
+        dropdownTriggers.forEach(function (dropdownTrigger, index) {
+            dropdownTrigger.addEventListener('click', function (event) {
+                // Get the dropdown menu associated with the clicked trigger
+                var dropdownMenu = dropdownTrigger.closest('.card').querySelector('.dropdown-menu');
+
+                // Close the currently open dropdown, if any
+                if (openDropdown !== null && openDropdown !== dropdownMenu) {
+                    openDropdown.style.display = 'none';
+                }
+
+                // Toggle the dropdown for the clicked card
+                if (dropdownMenu.style.display === 'block') {
+                    dropdownMenu.style.display = 'none';
+                    openDropdown = null;
+                } else {
+                    dropdownMenu.style.display = 'block';
+                    openDropdown = dropdownMenu;
+                }
+
+                event.stopPropagation();
+            });
+        });
+
+        document.addEventListener('click', function (event) {
+            // Close all dropdowns when clicking outside of any card
+            dropdownMenus.forEach(function (dropdownMenu) {
+                dropdownMenu.style.display = 'none';
+            });
+            openDropdown = null;
+        });
+    });
 </script>
+
 @endsection
