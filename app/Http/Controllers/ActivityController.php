@@ -85,29 +85,20 @@ class ActivityController extends Controller
             $cron_expression = '30 10 '.$day.' '.$month.' *';
             $activity->cron_expression = $cron_expression;
             $activity->cron_string = $request->cron_string;
+
+            $activity->is_recurring = 1; 
         }
         try {
             $activity->save();
             $activity->assignedUsers()->attach($request->assign_to);
 
             if($request->has('reminder_date')){
-
-               
-               
                 $reminder_dates = $request->reminder_date;
-
-               
                 // $reminder_dates = implode(',',$reminder_dates);
-
                 $currentMonth = Carbon::now()->format('m');
                 $currentYear = Carbon::now()->format('Y');
 
-              
-               
-                
-                foreach ($reminder_dates as $key => $value) {
-
-                    
+                foreach ($reminder_dates as $key => $value) {                    
                 $reminder_date = $currentYear . '-' . $currentMonth . '-' . $value;
                   
                     $reminder = new Reminder();
@@ -117,10 +108,8 @@ class ActivityController extends Controller
                 }
             }
 
-            $activity->notify(new NewActivityAssigned($activity));
-
+             $activity->notify(new NewActivityAssigned($activity));
             $this->alert('Success','Activity created successfully','success');
-            
             return redirect()->back();
         } catch (\Throwable $th) {
             $msg = $th->getMessage();

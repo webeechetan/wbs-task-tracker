@@ -141,13 +141,6 @@ $userType = $user->type;
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
 
-                    
-                    {{-- <div class="reminders">
-                        <div class="mt-3">
-                            <label for="activity">Reminder Date</label>
-                            <input type="date" class="form-control" id="reminder_dates" name="reminder_date">
-                        </div>
-                    </div> --}}
 
                     <div class="reminders">
                         <div class="mt-3">
@@ -476,8 +469,6 @@ $userType = $user->type;
     });
 
 
-
-
     $(".delete_form").submit(function (e) {
         e.preventDefault();
         let form = $(this);
@@ -525,10 +516,7 @@ $userType = $user->type;
 
 });
 
-    
-
-
 </script>
 
-
 @endsection
+

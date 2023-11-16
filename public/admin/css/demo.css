@@ -784,3 +784,13 @@ text-transform: capitalize;
 .activity-table tr td{
   text-wrap: balance !important;
 }
+
+
+
+#recurring-container{
+  display: none ;
+}
+
+.recurring-show{
+  display: flex !important;
+}
