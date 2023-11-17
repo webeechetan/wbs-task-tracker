@@ -22,7 +22,7 @@
     @foreach($clients as $client)
 
     <div class="col-lg-3 col-sm-6 mb-4">
-        <div class="card mb-4">
+        <div class="card client-card mb-4">
             <div class="card-body">
                 <div class="client-heading">
                     <h5 class="card-title mb-0">{{ $client->name }}</h5>

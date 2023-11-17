@@ -785,12 +785,14 @@ text-transform: capitalize;
   text-wrap: balance !important;
 }
 
-
-
 #recurring-container{
   display: none ;
 }
 
 .recurring-show{
   display: flex !important;
+}
+
+.client-card{
+  min-height: 100%;
 }
