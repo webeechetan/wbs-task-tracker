@@ -72,8 +72,6 @@ class ActivityController extends Controller
 
         $activity = new Activity();
 
-       
-
         $activity->team_id = $request->team;
         $activity->name = $request->activity;
         $activity->first_due_date = $request->first_due_date;
@@ -86,7 +84,7 @@ class ActivityController extends Controller
             $activity->cron_expression = $cron_expression;
             $activity->cron_string = $request->cron_string;
 
-            $activity->is_recurring = 1; 
+            //$activity->is_recurring = 1; 
         }
         try {
             $activity->save();
@@ -108,7 +106,7 @@ class ActivityController extends Controller
                 }
             }
 
-             $activity->notify(new NewActivityAssigned($activity));
+             //$activity->notify(new NewActivityAssigned($activity));
             $this->alert('Success','Activity created successfully','success');
             return redirect()->back();
         } catch (\Throwable $th) {
